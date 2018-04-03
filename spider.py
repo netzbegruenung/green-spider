@@ -17,7 +17,7 @@ import json
 # configuration
 
 # number of parallel processes to use for crawling
-concurrency = 6
+concurrency = 4
 
 # connection timeout for website checks (seconds)
 connect_timeout = 5
