@@ -1,7 +1,7 @@
 {
   "http://gruene-abgland.de/startseite/": {
     "aliases": [],
-    "duration": 88.081,
+    "duration": 78,
     "error": null,
     "final_url": null,
     "hostname": "gruene-abgland.de",
@@ -14,7 +14,7 @@
   },
   "http://gruene-ak.de/": {
     "aliases": [],
-    "duration": 49.003,
+    "duration": 36,
     "error": null,
     "final_url": "http://gruene-ak.de/home/",
     "hostname": "gruene-ak.de",
@@ -27,7 +27,7 @@
   },
   "http://gruene-altmark.de/": {
     "aliases": [],
-    "duration": 733.967,
+    "duration": 629,
     "error": null,
     "final_url": null,
     "hostname": "gruene-altmark.de",
@@ -40,7 +40,7 @@
   },
   "http://gruene-alzey-worms.de/": {
     "aliases": [],
-    "duration": 64.465,
+    "duration": 43,
     "error": null,
     "final_url": "http://gruene-alzey-worms.de/startseite/",
     "hostname": "gruene-alzey-worms.de",
@@ -53,7 +53,7 @@
   },
   "http://gruene-bernkastel-wittlich.de/": {
     "aliases": [],
-    "duration": 129.947,
+    "duration": 121,
     "error": null,
     "final_url": "http://gruene-bernkastel-wittlich.de/startseite/",
     "hostname": "gruene-bernkastel-wittlich.de",
@@ -66,7 +66,7 @@
   },
   "http://gruene-bezirksverband-mittelrhein.de/": {
     "aliases": [],
-    "duration": 68.224,
+    "duration": 95,
     "error": null,
     "final_url": null,
     "hostname": "gruene-bezirksverband-mittelrhein.de",
@@ -79,7 +79,7 @@
   },
   "http://gruene-birkenfeld.de/": {
     "aliases": [],
-    "duration": 35.914,
+    "duration": 199,
     "error": null,
     "final_url": "http://gruene-birkenfeld.de/home/",
     "hostname": "gruene-birkenfeld.de",
@@ -92,7 +92,7 @@
   },
   "http://gruene-blieskastel.de/": {
     "aliases": [],
-    "duration": 701.175,
+    "duration": 673,
     "error": null,
     "final_url": null,
     "hostname": "gruene-blieskastel.de",
@@ -105,7 +105,7 @@
   },
   "http://gruene-blk.de/startseite/": {
     "aliases": [],
-    "duration": 78.139,
+    "duration": 118,
     "error": null,
     "final_url": null,
     "hostname": "gruene-blk.de",
@@ -118,7 +118,7 @@
   },
   "http://gruene-bous.de/": {
     "aliases": [],
-    "duration": 841.294,
+    "duration": 281,
     "error": null,
     "final_url": "https://gruene-bous.de/",
     "hostname": "gruene-bous.de",
@@ -131,7 +131,7 @@
   },
   "http://gruene-donnersberg.de/": {
     "aliases": [],
-    "duration": 51.775,
+    "duration": 60,
     "error": null,
     "final_url": "http://gruene-donnersberg.de/home/",
     "hostname": "gruene-donnersberg.de",
@@ -144,7 +144,7 @@
   },
   "http://gruene-dudweiler.de/": {
     "aliases": [],
-    "duration": 365.328,
+    "duration": 929,
     "error": null,
     "final_url": "https://gruene-dudweiler.de/",
     "hostname": "gruene-dudweiler.de",
@@ -157,7 +157,7 @@
   },
   "http://gruene-ensdorf.de/": {
     "aliases": [],
-    "duration": 726.853,
+    "duration": 746,
     "error": null,
     "final_url": "https://gruene-ensdorf.de/",
     "hostname": "gruene-ensdorf.de",
@@ -170,7 +170,7 @@
   },
   "http://gruene-essen.de/kreisverband/": {
     "aliases": [],
-    "duration": 175.586,
+    "duration": 507,
     "error": null,
     "final_url": null,
     "hostname": "gruene-essen.de",
@@ -183,7 +183,7 @@
   },
   "http://gruene-frankenthal.de/": {
     "aliases": [],
-    "duration": 35.171,
+    "duration": 41,
     "error": null,
     "final_url": "http://gruene-frankenthal.de/home/",
     "hostname": "gruene-frankenthal.de",
@@ -196,7 +196,7 @@
   },
   "http://gruene-friedrichsthal.de/": {
     "aliases": [],
-    "duration": 628.084,
+    "duration": 726,
     "error": null,
     "final_url": "https://gruene-friedrichsthal.de/",
     "hostname": "gruene-friedrichsthal.de",
@@ -209,7 +209,7 @@
   },
   "http://gruene-ger.de/": {
     "aliases": [],
-    "duration": 50.584,
+    "duration": 138,
     "error": null,
     "final_url": "http://gruene-ger.de/home/",
     "hostname": "gruene-ger.de",
@@ -222,7 +222,7 @@
   },
   "http://gruene-gera.de/startseite/": {
     "aliases": [],
-    "duration": 236.539,
+    "duration": 92,
     "error": null,
     "final_url": null,
     "hostname": "gruene-gera.de",
@@ -235,7 +235,7 @@
   },
   "http://gruene-gersheim.de/": {
     "aliases": [],
-    "duration": 343.042,
+    "duration": 543,
     "error": null,
     "final_url": "https://gruene-gersheim.de/",
     "hostname": "gruene-gersheim.de",
@@ -248,7 +248,7 @@
   },
   "http://gruene-gotha.de/aktuelles/": {
     "aliases": [],
-    "duration": 79.618,
+    "duration": 97,
     "error": null,
     "final_url": null,
     "hostname": "gruene-gotha.de",
@@ -261,7 +261,7 @@
   },
   "http://gruene-greiz.de/startseite/": {
     "aliases": [],
-    "duration": 85.779,
+    "duration": 76,
     "error": null,
     "final_url": null,
     "hostname": "gruene-greiz.de",
@@ -274,7 +274,7 @@
   },
   "http://gruene-halberg.de/": {
     "aliases": [],
-    "duration": 71.937,
+    "duration": 109,
     "error": null,
     "final_url": null,
     "hostname": "gruene-halberg.de",
@@ -287,7 +287,7 @@
   },
   "http://gruene-heusweiler.de": {
     "aliases": [],
-    "duration": 473.864,
+    "duration": 585,
     "error": null,
     "final_url": "https://gruene-heusweiler.de/",
     "hostname": "gruene-heusweiler.de",
@@ -300,7 +300,7 @@
   },
   "http://gruene-homburg.de/": {
     "aliases": [],
-    "duration": 911.324,
+    "duration": 730,
     "error": null,
     "final_url": "http://www.gruene-homburg.de/",
     "hostname": "gruene-homburg.de",
@@ -313,7 +313,7 @@
   },
   "http://gruene-igb.de/": {
     "aliases": [],
-    "duration": 635.491,
+    "duration": 637,
     "error": null,
     "final_url": null,
     "hostname": "gruene-igb.de",
@@ -326,7 +326,7 @@
   },
   "http://gruene-im-vest.de/": {
     "aliases": [],
-    "duration": 41.439,
+    "duration": 73,
     "error": null,
     "final_url": "http://gruene-im-vest.de/home/",
     "hostname": "gruene-im-vest.de",
@@ -339,7 +339,7 @@
   },
   "http://gruene-im-weimarer-land.de/gruene-neuigkeiten/": {
     "aliases": [],
-    "duration": 87.881,
+    "duration": 91,
     "error": null,
     "final_url": null,
     "hostname": "gruene-im-weimarer-land.de",
@@ -352,7 +352,7 @@
   },
   "http://gruene-jena.de/aktuelles/": {
     "aliases": [],
-    "duration": 90.399,
+    "duration": 74,
     "error": null,
     "final_url": null,
     "hostname": "gruene-jena.de",
@@ -365,7 +365,7 @@
   },
   "http://gruene-jerichower-land.de/": {
     "aliases": [],
-    "duration": 356.77,
+    "duration": 403,
     "error": null,
     "final_url": null,
     "hostname": "gruene-jerichower-land.de",
@@ -378,7 +378,7 @@
   },
   "http://gruene-kassel.de/": {
     "aliases": [],
-    "duration": 181.105,
+    "duration": 874,
     "error": null,
     "final_url": "http://www.gruene-kassel.de/",
     "hostname": "gruene-kassel.de",
@@ -391,7 +391,7 @@
   },
   "http://gruene-kl.de/": {
     "aliases": [],
-    "duration": 770.729,
+    "duration": 471,
     "error": null,
     "final_url": "http://gruene-kl.de/home-aktuelles/",
     "hostname": "gruene-kl.de",
@@ -404,7 +404,7 @@
   },
   "http://gruene-kleinblittersdorf.de/": {
     "aliases": [],
-    "duration": 388.688,
+    "duration": 233,
     "error": null,
     "final_url": "https://gruene-kleinblittersdorf.de/",
     "hostname": "gruene-kleinblittersdorf.de",
@@ -417,7 +417,7 @@
   },
   "http://gruene-koblenz.de/": {
     "aliases": [],
-    "duration": 141.01,
+    "duration": 37,
     "error": null,
     "final_url": "http://gruene-koblenz.de/home/",
     "hostname": "gruene-koblenz.de",
@@ -430,7 +430,7 @@
   },
   "http://gruene-kusel.de/": {
     "aliases": [],
-    "duration": 35.001,
+    "duration": 38,
     "error": null,
     "final_url": "http://gruene-kusel.de/willkommen/",
     "hostname": "gruene-kusel.de",
@@ -443,7 +443,7 @@
   },
   "http://gruene-kv-borken.de/": {
     "aliases": [],
-    "duration": 459.915,
+    "duration": 724,
     "error": null,
     "final_url": null,
     "hostname": "gruene-kv-borken.de",
@@ -456,7 +456,7 @@
   },
   "http://gruene-lebach.de/": {
     "aliases": [],
-    "duration": 435.606,
+    "duration": 13,
     "error": null,
     "final_url": "https://gruene-lebach.de/",
     "hostname": "gruene-lebach.de",
@@ -469,7 +469,7 @@
   },
   "http://gruene-magdeburg.de/": {
     "aliases": [],
-    "duration": 465.393,
+    "duration": 345,
     "error": null,
     "final_url": "http://gruene-magdeburg.de/start/",
     "hostname": "gruene-magdeburg.de",
@@ -482,7 +482,7 @@
   },
   "http://gruene-main-kinzig.de/": {
     "aliases": [],
-    "duration": 64.666,
+    "duration": 59,
     "error": null,
     "final_url": "http://gruene-main-kinzig.de/home/",
     "hostname": "gruene-main-kinzig.de",
@@ -495,7 +495,7 @@
   },
   "http://gruene-mansfeld-suedharz.de/": {
     "aliases": [],
-    "duration": 57.84,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-mansfeld-suedharz.de/home/",
     "hostname": "gruene-mansfeld-suedharz.de",
@@ -508,7 +508,7 @@
   },
   "http://gruene-neuwied.de/": {
     "aliases": [],
-    "duration": 37.072,
+    "duration": 39,
     "error": null,
     "final_url": "http://gruene-neuwied.de/home/",
     "hostname": "gruene-neuwied.de",
@@ -521,7 +521,7 @@
   },
   "http://gruene-nw.de/": {
     "aliases": [],
-    "duration": 36.528,
+    "duration": 57,
     "error": null,
     "final_url": "http://gruene-nw.de/home/",
     "hostname": "gruene-nw.de",
@@ -534,7 +534,7 @@
   },
   "http://gruene-oberbayern.de/": {
     "aliases": [],
-    "duration": 132.762,
+    "duration": 197,
     "error": null,
     "final_url": "https://gruene-oberbayern.de/",
     "hostname": "gruene-oberbayern.de",
@@ -547,7 +547,7 @@
   },
   "http://gruene-oberfranken.de/startseite/": {
     "aliases": [],
-    "duration": 109.622,
+    "duration": 115,
     "error": null,
     "final_url": null,
     "hostname": "gruene-oberfranken.de",
@@ -560,7 +560,7 @@
   },
   "http://gruene-ottweiler.de": {
     "aliases": [],
-    "duration": 317.086,
+    "duration": 501,
     "error": null,
     "final_url": "https://gruene-ottweiler.de/",
     "hostname": "gruene-ottweiler.de",
@@ -573,7 +573,7 @@
   },
   "http://gruene-pirmasens.de/": {
     "aliases": [],
-    "duration": 75.14,
+    "duration": 45,
     "error": null,
     "final_url": "http://gruene-pirmasens.de/home/",
     "hostname": "gruene-pirmasens.de",
@@ -586,7 +586,7 @@
   },
   "http://gruene-rh.de/": {
     "aliases": [],
-    "duration": 35.09,
+    "duration": 95,
     "error": null,
     "final_url": "http://gruene-rh.de/home/",
     "hostname": "gruene-rh.de",
@@ -599,7 +599,7 @@
   },
   "http://gruene-rhein-sieg.de/": {
     "aliases": [],
-    "duration": 102.732,
+    "duration": 51,
     "error": null,
     "final_url": null,
     "hostname": "gruene-rhein-sieg.de",
@@ -612,7 +612,7 @@
   },
   "http://gruene-riegelsberg.de/": {
     "aliases": [],
-    "duration": 389.389,
+    "duration": 177,
     "error": null,
     "final_url": "https://gruene-riegelsberg.de/",
     "hostname": "gruene-riegelsberg.de",
@@ -625,7 +625,7 @@
   },
   "http://gruene-rlp.de/": {
     "aliases": [],
-    "duration": 65.32,
+    "duration": 73,
     "error": null,
     "final_url": "http://gruene-rlp.de/startseite/",
     "hostname": "gruene-rlp.de",
@@ -638,7 +638,7 @@
   },
   "http://gruene-saarbruecken.de/": {
     "aliases": [],
-    "duration": 310.556,
+    "duration": 302,
     "error": null,
     "final_url": null,
     "hostname": "gruene-saarbruecken.de",
@@ -651,7 +651,7 @@
   },
   "http://gruene-saarlouis.de/": {
     "aliases": [],
-    "duration": 366.658,
+    "duration": 533,
     "error": null,
     "final_url": "https://gruene-saarlouis.de/",
     "hostname": "gruene-saarlouis.de",
@@ -664,7 +664,7 @@
   },
   "http://gruene-saarwellingen.de/": {
     "aliases": [],
-    "duration": 72.319,
+    "duration": 702,
     "error": null,
     "final_url": "https://gruene-saarwellingen.de/",
     "hostname": "gruene-saarwellingen.de",
@@ -677,7 +677,7 @@
   },
   "http://gruene-schmelz.de/": {
     "aliases": [],
-    "duration": 338.059,
+    "duration": 456,
     "error": null,
     "final_url": "https://gruene-schmelz.de/",
     "hostname": "gruene-schmelz.de",
@@ -690,7 +690,7 @@
   },
   "http://gruene-schwalbach-saar.de/": {
     "aliases": [],
-    "duration": 331.99,
+    "duration": 409,
     "error": null,
     "final_url": "https://gruene-schwalbach-saar.de/",
     "hostname": "gruene-schwalbach-saar.de",
@@ -703,7 +703,7 @@
   },
   "http://gruene-sonneberg-hildburghausen.de/": {
     "aliases": [],
-    "duration": 966.1,
+    "duration": 921,
     "error": null,
     "final_url": null,
     "hostname": "gruene-sonneberg-hildburghausen.de",
@@ -716,7 +716,7 @@
   },
   "http://gruene-suedwestpfalz.de/": {
     "aliases": [],
-    "duration": 45.339,
+    "duration": 878,
     "error": null,
     "final_url": "http://gruene-suedwestpfalz.de/startseite/",
     "hostname": "gruene-suedwestpfalz.de",
@@ -729,7 +729,7 @@
   },
   "http://gruene-suew.de/": {
     "aliases": [],
-    "duration": 43.48,
+    "duration": 43,
     "error": null,
     "final_url": "http://gruene-suew.de/startseite/",
     "hostname": "gruene-suew.de",
@@ -742,7 +742,7 @@
   },
   "http://gruene-tholey.de/": {
     "aliases": [],
-    "duration": 628.485,
+    "duration": 263,
     "error": null,
     "final_url": null,
     "hostname": "gruene-tholey.de",
@@ -755,7 +755,7 @@
   },
   "http://gruene-trier-saarburg.de/": {
     "aliases": [],
-    "duration": 78.205,
+    "duration": 153,
     "error": null,
     "final_url": "http://gruene-trier-saarburg.de/home/",
     "hostname": "gruene-trier-saarburg.de",
@@ -768,7 +768,7 @@
   },
   "http://gruene-ueberherrn.de/": {
     "aliases": [],
-    "duration": 901.553,
+    "duration": 376,
     "error": null,
     "final_url": "https://gruene-ueberherrn.de/",
     "hostname": "gruene-ueberherrn.de",
@@ -781,7 +781,7 @@
   },
   "http://gruene-voelklingen.de/": {
     "aliases": [],
-    "duration": 385.901,
+    "duration": 839,
     "error": null,
     "final_url": "https://gruene-voelklingen.de/",
     "hostname": "gruene-voelklingen.de",
@@ -794,7 +794,7 @@
   },
   "http://gruene-wadern.de/": {
     "aliases": [],
-    "duration": 584.184,
+    "duration": 703,
     "error": null,
     "final_url": "https://gruene-wadern.de/",
     "hostname": "gruene-wadern.de",
@@ -807,7 +807,7 @@
   },
   "http://gruene-wallerfangen.de/": {
     "aliases": [],
-    "duration": 625.224,
+    "duration": 702,
     "error": null,
     "final_url": "https://gruene-wallerfangen.de/",
     "hostname": "gruene-wallerfangen.de",
@@ -820,7 +820,7 @@
   },
   "http://gruene-westfalen.de/": {
     "aliases": [],
-    "duration": 115.895,
+    "duration": 116,
     "error": null,
     "final_url": "http://www.gruene-westfalen.de/startseite/",
     "hostname": "gruene-westfalen.de",
@@ -833,7 +833,7 @@
   },
   "http://gruene-zweibruecken.de/": {
     "aliases": [],
-    "duration": 58.693,
+    "duration": 44,
     "error": null,
     "final_url": "http://gruene-zweibruecken.de/startseite/",
     "hostname": "gruene-zweibruecken.de",
@@ -846,7 +846,7 @@
   },
   "http://grueneboerde.de/": {
     "aliases": [],
-    "duration": 133.619,
+    "duration": 881,
     "error": null,
     "final_url": null,
     "hostname": "grueneboerde.de",
@@ -859,7 +859,7 @@
   },
   "http://gruenekoeln.de/": {
     "aliases": [],
-    "duration": 516.611,
+    "duration": 57,
     "error": null,
     "final_url": "https://www.gruenekoeln.de/",
     "hostname": "gruenekoeln.de",
@@ -872,7 +872,7 @@
   },
   "http://gruenekreiskh.de/": {
     "aliases": [],
-    "duration": 67.75,
+    "duration": 86,
     "error": null,
     "final_url": "http://gruenekreiskh.de/startseite/",
     "hostname": "gruenekreiskh.de",
@@ -885,7 +885,7 @@
   },
   "http://gr\u00fcne-deggendorf.de/": {
     "aliases": [],
-    "duration": 550.652,
+    "duration": 241,
     "error": null,
     "final_url": null,
     "hostname": "xn--grne-deggendorf-0vb.de",
@@ -898,7 +898,7 @@
   },
   "http://uns-gruener-trier.de/": {
     "aliases": [],
-    "duration": 50.514,
+    "duration": 44,
     "error": null,
     "final_url": "http://uns-gruener-trier.de/startseite/",
     "hostname": "uns-gruener-trier.de",
@@ -911,7 +911,7 @@
   },
   "http://www.die-gruenen-leverkusen.de/": {
     "aliases": [],
-    "duration": 120.164,
+    "duration": 199,
     "error": null,
     "final_url": "http://die-gruenen-leverkusen.de/home/",
     "hostname": "www.die-gruenen-leverkusen.de",
@@ -924,7 +924,7 @@
   },
   "http://www.eichsfeldgruene.de/WP/": {
     "aliases": [],
-    "duration": 135.38,
+    "duration": 122,
     "error": null,
     "final_url": null,
     "hostname": "www.eichsfeldgruene.de",
@@ -939,7 +939,7 @@
     "aliases": [
       "www.gal.bamberg.de"
     ],
-    "duration": 175.754,
+    "duration": 177,
     "error": null,
     "final_url": "http://www.gal-bamberg.de/index.php?id=titelseite",
     "hostname": "gal.bamberg.de",
@@ -952,8 +952,8 @@
   },
   "http://www.gg-gruene.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
+    "duration": 277,
+    "error": null,
     "final_url": null,
     "hostname": "www.gg-gruene.de",
     "ip_addresses": [
@@ -961,13 +961,13 @@
     ],
     "redirects": 0,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-aalen.de/": {
     "aliases": [
       "www.gruene-aalen.de"
     ],
-    "duration": 659.814,
+    "duration": 864,
     "error": null,
     "final_url": "https://www.gruene-aalen.de/index.php?id=1229",
     "hostname": "gruene-aalen.de",
@@ -980,7 +980,7 @@
   },
   "http://www.gruene-ab.de": {
     "aliases": [],
-    "duration": 42.165,
+    "duration": 200,
     "error": null,
     "final_url": "http://gruene-ab.de/die-gruenen-aschaffenburg/",
     "hostname": "www.gruene-ab.de",
@@ -993,7 +993,7 @@
   },
   "http://www.gruene-aichach-friedberg.de": {
     "aliases": [],
-    "duration": 56.841,
+    "duration": 53,
     "error": null,
     "final_url": "http://gruene-aichach-friedberg.de/startseite/",
     "hostname": "www.gruene-aichach-friedberg.de",
@@ -1008,7 +1008,7 @@
     "aliases": [
       "www.gruene-alb-donau.de"
     ],
-    "duration": 599.863,
+    "duration": 926,
     "error": null,
     "final_url": "https://www.gruene-alb-donau.de/startseite/",
     "hostname": "gruene-alb-donau.de",
@@ -1021,7 +1021,7 @@
   },
   "http://www.gruene-amberg-sulzbach.de": {
     "aliases": [],
-    "duration": 35.549,
+    "duration": 56,
     "error": null,
     "final_url": "http://gruene-amberg-sulzbach.de/personen/",
     "hostname": "www.gruene-amberg-sulzbach.de",
@@ -1034,7 +1034,7 @@
   },
   "http://www.gruene-amberg.de": {
     "aliases": [],
-    "duration": 51.666,
+    "duration": 40,
     "error": null,
     "final_url": "http://gruene-amberg.de/startseite/",
     "hostname": "www.gruene-amberg.de",
@@ -1049,7 +1049,7 @@
     "aliases": [
       "www.gruene-anhalt-bitterfeld.de"
     ],
-    "duration": 927.915,
+    "duration": 882,
     "error": null,
     "final_url": null,
     "hostname": "gruene-anhalt-bitterfeld.de",
@@ -1062,7 +1062,7 @@
   },
   "http://www.gruene-ansbach.de": {
     "aliases": [],
-    "duration": 179.321,
+    "duration": 215,
     "error": null,
     "final_url": "https://www.gruene-ansbach.de/",
     "hostname": "www.gruene-ansbach.de",
@@ -1075,7 +1075,7 @@
   },
   "http://www.gruene-aoe.de": {
     "aliases": [],
-    "duration": 36.765,
+    "duration": 60,
     "error": null,
     "final_url": "http://www.gruene-aoe.de/aktuelles/",
     "hostname": "www.gruene-aoe.de",
@@ -1090,7 +1090,7 @@
     "aliases": [
       "www.gruene-aschaffenburg.de"
     ],
-    "duration": 535.368,
+    "duration": 432,
     "error": null,
     "final_url": null,
     "hostname": "gruene-aschaffenburg.de",
@@ -1103,7 +1103,7 @@
   },
   "http://www.gruene-augsburg.de": {
     "aliases": [],
-    "duration": 33.401,
+    "duration": 58,
     "error": null,
     "final_url": "http://gruene-augsburg.de/home/",
     "hostname": "www.gruene-augsburg.de",
@@ -1116,7 +1116,7 @@
   },
   "http://www.gruene-augsburgland.de": {
     "aliases": [],
-    "duration": 782.385,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-augsburgland.de/home/",
     "hostname": "www.gruene-augsburgland.de",
@@ -1129,7 +1129,7 @@
   },
   "http://www.gruene-bamberg-land.de": {
     "aliases": [],
-    "duration": 51.695,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-bamberg-land.de/themen/",
     "hostname": "www.gruene-bamberg-land.de",
@@ -1142,7 +1142,7 @@
   },
   "http://www.gruene-bayreuth-land.de": {
     "aliases": [],
-    "duration": 103.917,
+    "duration": 42,
     "error": null,
     "final_url": "http://gruene-bayreuth-land.de/startseite/",
     "hostname": "www.gruene-bayreuth-land.de",
@@ -1155,7 +1155,7 @@
   },
   "http://www.gruene-bayreuth.de": {
     "aliases": [],
-    "duration": 52.039,
+    "duration": 97,
     "error": null,
     "final_url": "http://www.gruene-bayreuth.de/kv-bayreuth-stadt/",
     "hostname": "www.gruene-bayreuth.de",
@@ -1170,7 +1170,7 @@
     "aliases": [
       "www.gruene-bc.de"
     ],
-    "duration": 387.384,
+    "duration": 649,
     "error": null,
     "final_url": "https://www.gruene-bc.de/index.php?id=1274",
     "hostname": "gruene-bc.de",
@@ -1183,7 +1183,7 @@
   },
   "http://www.gruene-bergstrasse.de/": {
     "aliases": [],
-    "duration": 34.766,
+    "duration": 44,
     "error": null,
     "final_url": "http://www.gruene-bergstrasse.de/aktuell/",
     "hostname": "www.gruene-bergstrasse.de",
@@ -1196,7 +1196,7 @@
   },
   "http://www.gruene-bgl.de": {
     "aliases": [],
-    "duration": 361.083,
+    "duration": 314,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-bgl.de",
@@ -1209,7 +1209,7 @@
   },
   "http://www.gruene-bielefeld.de/": {
     "aliases": [],
-    "duration": 394.368,
+    "duration": 575,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-bielefeld.de",
@@ -1222,7 +1222,7 @@
   },
   "http://www.gruene-bitburg-pruem.de/": {
     "aliases": [],
-    "duration": 52.177,
+    "duration": 46,
     "error": null,
     "final_url": "http://www.gruene-bitburg-pruem.de/startseite/",
     "hostname": "www.gruene-bitburg-pruem.de",
@@ -1235,7 +1235,7 @@
   },
   "http://www.gruene-bochum.de/": {
     "aliases": [],
-    "duration": 37.346,
+    "duration": 36,
     "error": null,
     "final_url": "http://gruene-bochum.de/startseite/",
     "hostname": "www.gruene-bochum.de",
@@ -1248,7 +1248,7 @@
   },
   "http://www.gruene-bodenseekreis.de/": {
     "aliases": [],
-    "duration": 466.679,
+    "duration": 787,
     "error": null,
     "final_url": "https://www.gruene-bodenseekreis.de/aktuelles/",
     "hostname": "www.gruene-bodenseekreis.de",
@@ -1263,7 +1263,7 @@
     "aliases": [
       "www.gruene-boeblingen.de"
     ],
-    "duration": 385.923,
+    "duration": 340,
     "error": null,
     "final_url": "https://www.gruene-boeblingen.de/",
     "hostname": "gruene-boeblingen.de",
@@ -1276,7 +1276,7 @@
   },
   "http://www.gruene-bonn.de/": {
     "aliases": [],
-    "duration": 42.198,
+    "duration": 796,
     "error": null,
     "final_url": "http://gruene-bonn.de/",
     "hostname": "www.gruene-bonn.de",
@@ -1289,7 +1289,7 @@
   },
   "http://www.gruene-bottrop.de/": {
     "aliases": [],
-    "duration": 37.777,
+    "duration": 49,
     "error": null,
     "final_url": "http://gruene-bottrop.de/startseite/",
     "hostname": "www.gruene-bottrop.de",
@@ -1302,7 +1302,7 @@
   },
   "http://www.gruene-breisgau-hochschwarzwald.de/": {
     "aliases": [],
-    "duration": 633.68,
+    "duration": 226,
     "error": null,
     "final_url": "https://gruene-breisgau-hochschwarzwald.de/",
     "hostname": "www.gruene-breisgau-hochschwarzwald.de",
@@ -1315,7 +1315,7 @@
   },
   "http://www.gruene-cham.de": {
     "aliases": [],
-    "duration": 58.504,
+    "duration": 67,
     "error": null,
     "final_url": "http://gruene-cham.de/aktuelles/",
     "hostname": "www.gruene-cham.de",
@@ -1328,7 +1328,7 @@
   },
   "http://www.gruene-coburg-land.de": {
     "aliases": [],
-    "duration": 69.152,
+    "duration": 43,
     "error": null,
     "final_url": "http://gruene-coburg-land.de/startseite/",
     "hostname": "www.gruene-coburg-land.de",
@@ -1341,7 +1341,7 @@
   },
   "http://www.gruene-coburg.de": {
     "aliases": [],
-    "duration": 772.747,
+    "duration": 457,
     "error": null,
     "final_url": "https://gruene-coburg.de/start/",
     "hostname": "www.gruene-coburg.de",
@@ -1354,7 +1354,7 @@
   },
   "http://www.gruene-cochemzell.de/": {
     "aliases": [],
-    "duration": 813.738,
+    "duration": 419,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-cochemzell.de",
@@ -1367,7 +1367,7 @@
   },
   "http://www.gruene-coe.de/": {
     "aliases": [],
-    "duration": 87.825,
+    "duration": 110,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-coe.de",
@@ -1380,7 +1380,7 @@
   },
   "http://www.gruene-dachau.de": {
     "aliases": [],
-    "duration": 691.92,
+    "duration": 738,
     "error": null,
     "final_url": "http://gruene-dachau.de/",
     "hostname": "www.gruene-dachau.de",
@@ -1393,7 +1393,7 @@
   },
   "http://www.gruene-dadi.de/": {
     "aliases": [],
-    "duration": 343.485,
+    "duration": 290,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-dadi.de",
@@ -1406,7 +1406,7 @@
   },
   "http://www.gruene-darmstadt.de/": {
     "aliases": [],
-    "duration": 66.881,
+    "duration": 72,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-darmstadt.de",
@@ -1419,7 +1419,7 @@
   },
   "http://www.gruene-dessau.de/": {
     "aliases": [],
-    "duration": 491.171,
+    "duration": 385,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-dessau.de",
@@ -1432,7 +1432,7 @@
   },
   "http://www.gruene-dgf-lan.de": {
     "aliases": [],
-    "duration": 109.914,
+    "duration": 77,
     "error": null,
     "final_url": "http://gruene-dgf-lan.de/home/",
     "hostname": "www.gruene-dgf-lan.de",
@@ -1445,7 +1445,7 @@
   },
   "http://www.gruene-dillingen-saar.de/": {
     "aliases": [],
-    "duration": 408.423,
+    "duration": 465,
     "error": null,
     "final_url": "https://gruene-dillingen-saar.de/",
     "hostname": "www.gruene-dillingen-saar.de",
@@ -1458,7 +1458,7 @@
   },
   "http://www.gruene-dillingen.de": {
     "aliases": [],
-    "duration": 64.599,
+    "duration": 35,
     "error": null,
     "final_url": "http://www.gruene-dillingen.de/startseite/",
     "hostname": "www.gruene-dillingen.de",
@@ -1471,7 +1471,7 @@
   },
   "http://www.gruene-donau-ries.de": {
     "aliases": [],
-    "duration": 205.733,
+    "duration": 357,
     "error": null,
     "final_url": "https://gruene-donau-ries.de/",
     "hostname": "www.gruene-donau-ries.de",
@@ -1484,7 +1484,7 @@
   },
   "http://www.gruene-dortmund.de/": {
     "aliases": [],
-    "duration": 401.809,
+    "duration": 274,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-dortmund.de",
@@ -1497,7 +1497,7 @@
   },
   "http://www.gruene-dueren.de/": {
     "aliases": [],
-    "duration": 369.589,
+    "duration": 382,
     "error": null,
     "final_url": "https://gruene-dueren.de/",
     "hostname": "www.gruene-dueren.de",
@@ -1510,7 +1510,7 @@
   },
   "http://www.gruene-duesseldorf.de/": {
     "aliases": [],
-    "duration": 425.213,
+    "duration": 134,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-duesseldorf.de",
@@ -1523,20 +1523,20 @@
   },
   "http://www.gruene-duew.de/": {
     "aliases": [],
-    "duration": 52.36,
-    "error": null,
-    "final_url": "http://www.gruene-duew.de/startseite/",
+    "duration": 0,
+    "error": "connection",
+    "final_url": null,
     "hostname": "www.gruene-duew.de",
     "ip_addresses": [
       "91.102.13.20"
     ],
-    "redirects": 1,
+    "redirects": 0,
     "scheme": "http",
-    "status_code": 200
+    "status_code": 0
   },
   "http://www.gruene-ebe.de": {
     "aliases": [],
-    "duration": 324.374,
+    "duration": 202,
     "error": null,
     "final_url": "https://gruene-ebersberg.de/",
     "hostname": "www.gruene-ebe.de",
@@ -1549,7 +1549,7 @@
   },
   "http://www.gruene-eichstaett.de": {
     "aliases": [],
-    "duration": 34.269,
+    "duration": 36,
     "error": null,
     "final_url": "http://www.gruene-eichstaett.de/home/",
     "hostname": "www.gruene-eichstaett.de",
@@ -1562,7 +1562,7 @@
   },
   "http://www.gruene-em.de/": {
     "aliases": [],
-    "duration": 285.617,
+    "duration": 43,
     "error": null,
     "final_url": "https://gruene-em.de/",
     "hostname": "www.gruene-em.de",
@@ -1575,7 +1575,7 @@
   },
   "http://www.gruene-en.de/": {
     "aliases": [],
-    "duration": 36.122,
+    "duration": 54,
     "error": null,
     "final_url": "http://gruene-en.de/home/",
     "hostname": "www.gruene-en.de",
@@ -1588,7 +1588,7 @@
   },
   "http://www.gruene-eppelborn.de/": {
     "aliases": [],
-    "duration": 433.106,
+    "duration": 483,
     "error": null,
     "final_url": "http://gruene-saar.de/",
     "hostname": "www.gruene-eppelborn.de",
@@ -1601,7 +1601,7 @@
   },
   "http://www.gruene-erding.de": {
     "aliases": [],
-    "duration": 38.656,
+    "duration": 303,
     "error": null,
     "final_url": "http://www.gruene-erding.de/home/",
     "hostname": "www.gruene-erding.de",
@@ -1614,7 +1614,7 @@
   },
   "http://www.gruene-erlangen-land.de": {
     "aliases": [],
-    "duration": 42.601,
+    "duration": 44,
     "error": null,
     "final_url": "http://www.gruene-erlangen-land.de/home/",
     "hostname": "www.gruene-erlangen-land.de",
@@ -1627,7 +1627,7 @@
   },
   "http://www.gruene-erlangen.de": {
     "aliases": [],
-    "duration": 62.335,
+    "duration": 213,
     "error": null,
     "final_url": "http://gruene-erlangen.de/start/",
     "hostname": "www.gruene-erlangen.de",
@@ -1640,7 +1640,7 @@
   },
   "http://www.gruene-es.de": {
     "aliases": [],
-    "duration": 47.458,
+    "duration": 39,
     "error": null,
     "final_url": "http://www.gruene-es.de/home/",
     "hostname": "www.gruene-es.de",
@@ -1653,7 +1653,7 @@
   },
   "http://www.gruene-ettlingen.de/": {
     "aliases": [],
-    "duration": 37.834,
+    "duration": 39,
     "error": null,
     "final_url": "http://gruene-ettlingen.de/kreisverband/",
     "hostname": "www.gruene-ettlingen.de",
@@ -1666,7 +1666,7 @@
   },
   "http://www.gruene-euskirchen.de/": {
     "aliases": [],
-    "duration": 946.345,
+    "duration": 319,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-euskirchen.de",
@@ -1679,7 +1679,7 @@
   },
   "http://www.gruene-fichtelgebirge.de": {
     "aliases": [],
-    "duration": 39.993,
+    "duration": 40,
     "error": null,
     "final_url": "http://gruene-fichtelgebirge.de/home/",
     "hostname": "www.gruene-fichtelgebirge.de",
@@ -1692,7 +1692,7 @@
   },
   "http://www.gruene-forchheim.de": {
     "aliases": [],
-    "duration": 52.945,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-forchheim.de/startseite/",
     "hostname": "www.gruene-forchheim.de",
@@ -1707,7 +1707,7 @@
     "aliases": [
       "www.gruene-frankfurt.de"
     ],
-    "duration": 734.889,
+    "duration": 746,
     "error": null,
     "final_url": "http://www.gruene-frankfurt.de/home/",
     "hostname": "gruene-frankfurt.de",
@@ -1722,7 +1722,7 @@
     "aliases": [
       "www.gruene-freiburg.de"
     ],
-    "duration": 78.627,
+    "duration": 769,
     "error": null,
     "final_url": "https://gruene-freiburg.de/das-neueste.html",
     "hostname": "gruene-freiburg.de",
@@ -1735,7 +1735,7 @@
   },
   "http://www.gruene-freisen.de/": {
     "aliases": [],
-    "duration": 749.345,
+    "duration": 446,
     "error": null,
     "final_url": "http://gruene-saar.de/",
     "hostname": "www.gruene-freisen.de",
@@ -1748,7 +1748,7 @@
   },
   "http://www.gruene-freising.de": {
     "aliases": [],
-    "duration": 292.163,
+    "duration": 38,
     "error": null,
     "final_url": "http://gruene-freising.de/kreisverband/",
     "hostname": "www.gruene-freising.de",
@@ -1763,7 +1763,7 @@
     "aliases": [
       "www.gruene-freudenstadt.de"
     ],
-    "duration": 570.884,
+    "duration": 534,
     "error": null,
     "final_url": "http://gruene-freudenstadt.de/",
     "hostname": "gruene-freudenstadt.de",
@@ -1776,7 +1776,7 @@
   },
   "http://www.gruene-frg.de": {
     "aliases": [],
-    "duration": 145.16,
+    "duration": 76,
     "error": null,
     "final_url": "http://www.gruene-frg.de/ansprechpartnerinnen/",
     "hostname": "www.gruene-frg.de",
@@ -1789,7 +1789,7 @@
   },
   "http://www.gruene-fuerstenfeldbruck.de": {
     "aliases": [],
-    "duration": 37.48,
+    "duration": 58,
     "error": null,
     "final_url": "http://gruene-kreisverband-ffb.de/home/",
     "hostname": "www.gruene-fuerstenfeldbruck.de",
@@ -1804,7 +1804,7 @@
     "aliases": [
       "www.gruene-fuerth-land.de"
     ],
-    "duration": 426.8,
+    "duration": 646,
     "error": null,
     "final_url": null,
     "hostname": "gruene-fuerth-land.de",
@@ -1817,7 +1817,7 @@
   },
   "http://www.gruene-fuerth.de": {
     "aliases": [],
-    "duration": 259.567,
+    "duration": 268,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-fuerth.de",
@@ -1830,7 +1830,7 @@
   },
   "http://www.gruene-fulda.de/": {
     "aliases": [],
-    "duration": 265.569,
+    "duration": 350,
     "error": null,
     "final_url": "http://www.gruene-fulda.de/home/",
     "hostname": "www.gruene-fulda.de",
@@ -1843,7 +1843,7 @@
   },
   "http://www.gruene-gap.de": {
     "aliases": [],
-    "duration": 37.631,
+    "duration": 157,
     "error": null,
     "final_url": "http://gruene-gap.de/startseite/",
     "hostname": "www.gruene-gap.de",
@@ -1856,7 +1856,7 @@
   },
   "http://www.gruene-gelsenkirchen.de/": {
     "aliases": [],
-    "duration": 988.267,
+    "duration": 924,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-gelsenkirchen.de",
@@ -1869,8 +1869,8 @@
   },
   "http://www.gruene-giessen.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
+    "duration": 214,
+    "error": null,
     "final_url": null,
     "hostname": "www.gruene-giessen.de",
     "ip_addresses": [
@@ -1878,13 +1878,13 @@
     ],
     "redirects": 0,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-goeppingen.de/": {
     "aliases": [
       "www.gruene-goeppingen.de"
     ],
-    "duration": 632.465,
+    "duration": 380,
     "error": null,
     "final_url": "http://www.gruene-goeppingen.de/bundestagswahl-2017/",
     "hostname": "gruene-goeppingen.de",
@@ -1899,7 +1899,7 @@
     "aliases": [
       "www.gruene-guenzburg.de"
     ],
-    "duration": 300.589,
+    "duration": 363,
     "error": null,
     "final_url": "http://gruene-guenzburg.de/",
     "hostname": "gruene-guenzburg.de",
@@ -1912,7 +1912,7 @@
   },
   "http://www.gruene-hagen.de/": {
     "aliases": [],
-    "duration": 94.139,
+    "duration": 107,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-hagen.de",
@@ -1925,7 +1925,7 @@
   },
   "http://www.gruene-hamm.de/": {
     "aliases": [],
-    "duration": 454.05,
+    "duration": 506,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-hamm.de",
@@ -1940,7 +1940,7 @@
     "aliases": [
       "www.gruene-hardt.de"
     ],
-    "duration": 79.86,
+    "duration": 143,
     "error": null,
     "final_url": null,
     "hostname": "gruene-hardt.de",
@@ -1953,7 +1953,7 @@
   },
   "http://www.gruene-harz.de/": {
     "aliases": [],
-    "duration": 48.487,
+    "duration": 198,
     "error": null,
     "final_url": "http://gruene-harz.de/willkommen/",
     "hostname": "www.gruene-harz.de",
@@ -1966,7 +1966,7 @@
   },
   "http://www.gruene-hassberge.de": {
     "aliases": [],
-    "duration": 63.651,
+    "duration": 864,
     "error": null,
     "final_url": "http://gruene-hassberge.de/home/",
     "hostname": "www.gruene-hassberge.de",
@@ -1981,7 +1981,7 @@
     "aliases": [
       "www.gruene-heidelberg.de"
     ],
-    "duration": 243.989,
+    "duration": 745,
     "error": null,
     "final_url": "https://www.gruene-heidelberg.de/",
     "hostname": "gruene-heidelberg.de",
@@ -1994,7 +1994,7 @@
   },
   "http://www.gruene-heidenheim.de/": {
     "aliases": [],
-    "duration": 174.329,
+    "duration": 434,
     "error": null,
     "final_url": "https://gruene-heidenheim.de/",
     "hostname": "www.gruene-heidenheim.de",
@@ -2009,7 +2009,7 @@
     "aliases": [
       "www.gruene-heilbronn.de"
     ],
-    "duration": 355.063,
+    "duration": 619,
     "error": null,
     "final_url": "https://www.gruene-heilbronn.de/",
     "hostname": "gruene-heilbronn.de",
@@ -2022,7 +2022,7 @@
   },
   "http://www.gruene-herne.de/": {
     "aliases": [],
-    "duration": 811.835,
+    "duration": 904,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-herne.de",
@@ -2035,7 +2035,7 @@
   },
   "http://www.gruene-hersfeld-rotenburg.de/": {
     "aliases": [],
-    "duration": 36.806,
+    "duration": 99,
     "error": null,
     "final_url": "http://gruene-hersfeld-rotenburg.de/home/",
     "hostname": "www.gruene-hersfeld-rotenburg.de",
@@ -2048,7 +2048,7 @@
   },
   "http://www.gruene-hessen.de/": {
     "aliases": [],
-    "duration": 661.985,
+    "duration": 697,
     "error": null,
     "final_url": "https://www.gruene-hessen.de/",
     "hostname": "www.gruene-hessen.de",
@@ -2061,7 +2061,7 @@
   },
   "http://www.gruene-hochtaunus.de/": {
     "aliases": [],
-    "duration": 34.636,
+    "duration": 128,
     "error": null,
     "final_url": "http://gruene-hochtaunus.de/startseite/",
     "hostname": "www.gruene-hochtaunus.de",
@@ -2074,7 +2074,7 @@
   },
   "http://www.gruene-hoexter.de/": {
     "aliases": [],
-    "duration": 35.489,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-hoexter.de/start/",
     "hostname": "www.gruene-hoexter.de",
@@ -2087,7 +2087,7 @@
   },
   "http://www.gruene-hof.de": {
     "aliases": [],
-    "duration": 55.116,
+    "duration": 97,
     "error": null,
     "final_url": "http://gruene-hof.de/home/",
     "hostname": "www.gruene-hof.de",
@@ -2100,7 +2100,7 @@
   },
   "http://www.gruene-hohenlohe.de": {
     "aliases": [],
-    "duration": 47.534,
+    "duration": 50,
     "error": null,
     "final_url": "http://gruene-hohenlohe.de/startseite/",
     "hostname": "www.gruene-hohenlohe.de",
@@ -2113,7 +2113,7 @@
   },
   "http://www.gruene-hsk.de/": {
     "aliases": [],
-    "duration": 564.618,
+    "duration": 589,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-hsk.de",
@@ -2126,7 +2126,7 @@
   },
   "http://www.gruene-ilmkreis.de/home/": {
     "aliases": [],
-    "duration": 95.652,
+    "duration": 83,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-ilmkreis.de",
@@ -2139,7 +2139,7 @@
   },
   "http://www.gruene-in-halle.de/": {
     "aliases": [],
-    "duration": 40.269,
+    "duration": 63,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-in-halle.de",
@@ -2152,7 +2152,7 @@
   },
   "http://www.gruene-ingolstadt.de": {
     "aliases": [],
-    "duration": 35.894,
+    "duration": 165,
     "error": null,
     "final_url": "http://ingolstadt-gruene.de/startseite/",
     "hostname": "www.gruene-ingolstadt.de",
@@ -2165,7 +2165,7 @@
   },
   "http://www.gruene-karlsruhe-land.de/": {
     "aliases": [],
-    "duration": 54.239,
+    "duration": 180,
     "error": null,
     "final_url": "http://gruene-karlsruhe-land.de/home/",
     "hostname": "www.gruene-karlsruhe-land.de",
@@ -2178,7 +2178,7 @@
   },
   "http://www.gruene-karlsruhe.de/": {
     "aliases": [],
-    "duration": 941.072,
+    "duration": 709,
     "error": null,
     "final_url": "http://gruenekarlsruhe.de/",
     "hostname": "www.gruene-karlsruhe.de",
@@ -2191,7 +2191,7 @@
   },
   "http://www.gruene-keh.de/": {
     "aliases": [],
-    "duration": 162.482,
+    "duration": 45,
     "error": null,
     "final_url": "http://gruene-keh.de/startseite/",
     "hostname": "www.gruene-keh.de",
@@ -2204,7 +2204,7 @@
   },
   "http://www.gruene-kempten.de": {
     "aliases": [],
-    "duration": 114.24,
+    "duration": 710,
     "error": null,
     "final_url": "http://gruene-kempten.de/home/",
     "hostname": "www.gruene-kempten.de",
@@ -2217,7 +2217,7 @@
   },
   "http://www.gruene-kg.de": {
     "aliases": [],
-    "duration": 234.56,
+    "duration": 209,
     "error": null,
     "final_url": "https://www.gruene-kg.de/",
     "hostname": "www.gruene-kg.de",
@@ -2230,7 +2230,7 @@
   },
   "http://www.gruene-kirkel.de/": {
     "aliases": [],
-    "duration": 71.274,
+    "duration": 98,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-kirkel.de",
@@ -2243,7 +2243,7 @@
   },
   "http://www.gruene-kitzingen.de": {
     "aliases": [],
-    "duration": 38.494,
+    "duration": 39,
     "error": null,
     "final_url": "http://www.gruene-kitzingen.de/home/",
     "hostname": "www.gruene-kitzingen.de",
@@ -2256,7 +2256,7 @@
   },
   "http://www.gruene-konstanz.de/": {
     "aliases": [],
-    "duration": 49.665,
+    "duration": 47,
     "error": null,
     "final_url": "http://gruene-konstanz.de/startseite/",
     "hostname": "www.gruene-konstanz.de",
@@ -2271,7 +2271,7 @@
     "aliases": [
       "www.gruene-krefeld.de"
     ],
-    "duration": 229.476,
+    "duration": 505,
     "error": null,
     "final_url": "http://www.gruene-krefeld.de/index.php?id=106",
     "hostname": "gruene-krefeld.de",
@@ -2286,7 +2286,7 @@
     "aliases": [
       "www.gruene-kreis-calw.de"
     ],
-    "duration": 560.066,
+    "duration": 925,
     "error": null,
     "final_url": "https://www.gruene-kreis-calw.de/aktuelles/",
     "hostname": "gruene-kreis-calw.de",
@@ -2299,7 +2299,7 @@
   },
   "http://www.gruene-kreis-herford.de/": {
     "aliases": [],
-    "duration": 87.311,
+    "duration": 48,
     "error": null,
     "final_url": "http://gruene-kreis-herford.de/home/",
     "hostname": "www.gruene-kreis-herford.de",
@@ -2312,7 +2312,7 @@
   },
   "http://www.gruene-kreis-kleve.de/": {
     "aliases": [],
-    "duration": 523.091,
+    "duration": 593,
     "error": null,
     "final_url": "https://gruene-kreis-kleve.de/",
     "hostname": "www.gruene-kreis-kleve.de",
@@ -2325,7 +2325,7 @@
   },
   "http://www.gruene-kreis-mettmann.de/": {
     "aliases": [],
-    "duration": 105.041,
+    "duration": 89,
     "error": null,
     "final_url": "http://www.gruener-kreisverband-mettmann.de/",
     "hostname": "www.gruene-kreis-mettmann.de",
@@ -2338,7 +2338,7 @@
   },
   "http://www.gruene-kreis-steinfurt.de/": {
     "aliases": [],
-    "duration": 39.547,
+    "duration": 59,
     "error": null,
     "final_url": "http://www.gruene-kreis-steinfurt.de/news/",
     "hostname": "www.gruene-kreis-steinfurt.de",
@@ -2351,7 +2351,7 @@
   },
   "http://www.gruene-kreis-unna.de/": {
     "aliases": [],
-    "duration": 270.001,
+    "duration": 474,
     "error": null,
     "final_url": "http://gruene-kreis-unna.de/",
     "hostname": "www.gruene-kreis-unna.de",
@@ -2364,7 +2364,7 @@
   },
   "http://www.gruene-kreis-viersen.de/": {
     "aliases": [],
-    "duration": 601.306,
+    "duration": 619,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-kreis-viersen.de",
@@ -2377,7 +2377,7 @@
   },
   "http://www.gruene-kreis-wesel.de/": {
     "aliases": [],
-    "duration": 38.071,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-kreis-wesel.de/startseite/",
     "hostname": "www.gruene-kreis-wesel.de",
@@ -2390,7 +2390,7 @@
   },
   "http://www.gruene-kreisgt.de/": {
     "aliases": [],
-    "duration": 77.888,
+    "duration": 94,
     "error": null,
     "final_url": "http://gruene-kreisgt.de/",
     "hostname": "www.gruene-kreisgt.de",
@@ -2403,7 +2403,7 @@
   },
   "http://www.gruene-kreisrheinberg.de/": {
     "aliases": [],
-    "duration": 48.854,
+    "duration": 41,
     "error": null,
     "final_url": "http://www.gruene-kreisrheinberg.de/home/",
     "hostname": "www.gruene-kreisrheinberg.de",
@@ -2418,7 +2418,7 @@
     "aliases": [
       "www.gruene-kronach.de"
     ],
-    "duration": 112.284,
+    "duration": 103,
     "error": null,
     "final_url": null,
     "hostname": "gruene-kronach.de",
@@ -2431,7 +2431,7 @@
   },
   "http://www.gruene-kulmbach.de": {
     "aliases": [],
-    "duration": 38.584,
+    "duration": 60,
     "error": null,
     "final_url": "http://www.gruene-kulmbach.de/home/",
     "hostname": "www.gruene-kulmbach.de",
@@ -2444,7 +2444,7 @@
   },
   "http://www.gruene-kv-heinsberg.de/": {
     "aliases": [],
-    "duration": 49.226,
+    "duration": 277,
     "error": null,
     "final_url": "http://gruene-kv-heinsberg.de/startseite/",
     "hostname": "www.gruene-kv-heinsberg.de",
@@ -2459,7 +2459,7 @@
     "aliases": [
       "www.gruene-kvwuppertal.de"
     ],
-    "duration": 674.382,
+    "duration": 792,
     "error": null,
     "final_url": "https://www.gruene-kvwuppertal.de/",
     "hostname": "gruene-kvwuppertal.de",
@@ -2472,7 +2472,7 @@
   },
   "http://www.gruene-kyffhaeuserkreis.de/home/": {
     "aliases": [],
-    "duration": 544.332,
+    "duration": 827,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-kyffhaeuserkreis.de",
@@ -2485,7 +2485,7 @@
   },
   "http://www.gruene-la.de": {
     "aliases": [],
-    "duration": 72.014,
+    "duration": 91,
     "error": null,
     "final_url": "http://www.gruene-btw-landshut.de/willkommen-bei-den-landshuter-gruenen/",
     "hostname": "www.gruene-la.de",
@@ -2498,7 +2498,7 @@
   },
   "http://www.gruene-lahn-dill.de/": {
     "aliases": [],
-    "duration": 59.967,
+    "duration": 70,
     "error": null,
     "final_url": "http://www.gruene-lahn-dill.de/home/",
     "hostname": "www.gruene-lahn-dill.de",
@@ -2511,7 +2511,7 @@
   },
   "http://www.gruene-landau.de/": {
     "aliases": [],
-    "duration": 495.586,
+    "duration": 494,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-landau.de",
@@ -2524,7 +2524,7 @@
   },
   "http://www.gruene-landkreis-kassel.de/": {
     "aliases": [],
-    "duration": 154.421,
+    "duration": 203,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-landkreis-kassel.de",
@@ -2537,7 +2537,7 @@
   },
   "http://www.gruene-landsberg.de": {
     "aliases": [],
-    "duration": 15.301,
+    "duration": 840,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-landsberg.de",
@@ -2550,7 +2550,7 @@
   },
   "http://www.gruene-landshut.de": {
     "aliases": [],
-    "duration": 284.936,
+    "duration": 36,
     "error": null,
     "final_url": "http://gruene-landshut.de/home/",
     "hostname": "www.gruene-landshut.de",
@@ -2563,7 +2563,7 @@
   },
   "http://www.gruene-lichtenfels.de": {
     "aliases": [],
-    "duration": 43.769,
+    "duration": 34,
     "error": null,
     "final_url": "http://gruene-lichtenfels.de/home/",
     "hostname": "www.gruene-lichtenfels.de",
@@ -2576,22 +2576,22 @@
   },
   "http://www.gruene-limburg-weilburg.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
-    "final_url": null,
+    "duration": 470,
+    "error": null,
+    "final_url": "https://www.gruene-limburg-weilburg.de/",
     "hostname": "www.gruene-limburg-weilburg.de",
     "ip_addresses": [
       "46.30.215.127"
     ],
-    "redirects": 0,
+    "redirects": 1,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-lindau.eu": {
     "aliases": [
       "www.gruene-lindau.eu"
     ],
-    "duration": 295.459,
+    "duration": 449,
     "error": null,
     "final_url": "https://gruene.li",
     "hostname": "gruene-lindau.eu",
@@ -2604,7 +2604,7 @@
   },
   "http://www.gruene-lippe.de/": {
     "aliases": [],
-    "duration": 36.081,
+    "duration": 36,
     "error": null,
     "final_url": "http://xn--grne-lippe-beb.de/startseite/",
     "hostname": "www.gruene-lippe.de",
@@ -2617,7 +2617,7 @@
   },
   "http://www.gruene-loerrach.de/": {
     "aliases": [],
-    "duration": 537.737,
+    "duration": 526,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-loerrach.de",
@@ -2630,7 +2630,7 @@
   },
   "http://www.gruene-lsa.de": {
     "aliases": [],
-    "duration": 894.269,
+    "duration": 70,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-lsa.de",
@@ -2643,7 +2643,7 @@
   },
   "http://www.gruene-lu.de/": {
     "aliases": [],
-    "duration": 55.919,
+    "duration": 38,
     "error": null,
     "final_url": "http://www.gruene-lu.de/home/",
     "hostname": "www.gruene-lu.de",
@@ -2658,7 +2658,7 @@
     "aliases": [
       "www.gruene-ludwigsburg.de"
     ],
-    "duration": 978.882,
+    "duration": 686,
     "error": null,
     "final_url": "https://www.gruene-ludwigsburg.de/",
     "hostname": "gruene-ludwigsburg.de",
@@ -2671,7 +2671,7 @@
   },
   "http://www.gruene-main-tauber.de/": {
     "aliases": [],
-    "duration": 353.6,
+    "duration": 314,
     "error": null,
     "final_url": "http://gruene-main-tauber.de/startseite.html",
     "hostname": "www.gruene-main-tauber.de",
@@ -2684,7 +2684,7 @@
   },
   "http://www.gruene-mainz-bingen.de/": {
     "aliases": [],
-    "duration": 39.055,
+    "duration": 118,
     "error": null,
     "final_url": "http://www.gruene-mainz-bingen.de/home/",
     "hostname": "www.gruene-mainz-bingen.de",
@@ -2697,7 +2697,7 @@
   },
   "http://www.gruene-mandelbachtal.de/": {
     "aliases": [],
-    "duration": 530.96,
+    "duration": 768,
     "error": null,
     "final_url": "https://gruene-mandelbachtal.de/",
     "hostname": "www.gruene-mandelbachtal.de",
@@ -2712,7 +2712,7 @@
     "aliases": [
       "www.gruene-mannheim.de"
     ],
-    "duration": 680.945,
+    "duration": 720,
     "error": null,
     "final_url": null,
     "hostname": "gruene-mannheim.de",
@@ -2725,7 +2725,7 @@
   },
   "http://www.gruene-marburg.de/": {
     "aliases": [],
-    "duration": 114.112,
+    "duration": 71,
     "error": null,
     "final_url": "http://www.gruene-marburg.de/startseite/",
     "hostname": "www.gruene-marburg.de",
@@ -2742,7 +2742,7 @@
       "web.jimdo.com",
       "web-prod.jimdo-platform.net"
     ],
-    "duration": 744.401,
+    "duration": 330,
     "error": null,
     "final_url": "https://www.gruene-memmingen.de/",
     "hostname": "web-prod-3fab4a-1499954829-1392918184.eu-west-1.elb.amazonaws.com",
@@ -2756,7 +2756,7 @@
   },
   "http://www.gruene-merzig.de/": {
     "aliases": [],
-    "duration": 397.076,
+    "duration": 758,
     "error": null,
     "final_url": "https://gruene-merzig.de/",
     "hostname": "www.gruene-merzig.de",
@@ -2769,7 +2769,7 @@
   },
   "http://www.gruene-mg.de/": {
     "aliases": [],
-    "duration": 80.22,
+    "duration": 76,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-mg.de",
@@ -2782,7 +2782,7 @@
   },
   "http://www.gruene-mh.de/": {
     "aliases": [],
-    "duration": 252.589,
+    "duration": 332,
     "error": null,
     "final_url": "http://gruene-mh.de/",
     "hostname": "www.gruene-mh.de",
@@ -2795,7 +2795,7 @@
   },
   "http://www.gruene-miesbach.de": {
     "aliases": [],
-    "duration": 382.738,
+    "duration": 807,
     "error": null,
     "final_url": "https://gruene-miesbach.de/aktuelles/",
     "hostname": "www.gruene-miesbach.de",
@@ -2823,7 +2823,7 @@
     "aliases": [
       "www.gruene-miltenberg.de"
     ],
-    "duration": 3.733,
+    "duration": 345,
     "error": null,
     "final_url": null,
     "hostname": "gruene-miltenberg.de",
@@ -2836,7 +2836,7 @@
   },
   "http://www.gruene-mittelfranken.de/": {
     "aliases": [],
-    "duration": 143.016,
+    "duration": 38,
     "error": null,
     "final_url": "http://gruene-mittelfranken.de/startseite/",
     "hostname": "www.gruene-mittelfranken.de",
@@ -2849,7 +2849,7 @@
   },
   "http://www.gruene-mk.de/": {
     "aliases": [],
-    "duration": 539.408,
+    "duration": 614,
     "error": null,
     "final_url": "https://www.gruene-mk.de/",
     "hostname": "www.gruene-mk.de",
@@ -2862,7 +2862,7 @@
   },
   "http://www.gruene-ml.de": {
     "aliases": [],
-    "duration": 910.329,
+    "duration": 942,
     "error": null,
     "final_url": "https://gruene-ml.de/wordpress/",
     "hostname": "www.gruene-ml.de",
@@ -2875,7 +2875,7 @@
   },
   "http://www.gruene-mtk.de/": {
     "aliases": [],
-    "duration": 39.308,
+    "duration": 56,
     "error": null,
     "final_url": "http://gruene-mtk.de/startseite/",
     "hostname": "www.gruene-mtk.de",
@@ -2888,7 +2888,7 @@
   },
   "http://www.gruene-muehldorf.de": {
     "aliases": [],
-    "duration": 62.142,
+    "duration": 37,
     "error": null,
     "final_url": "http://gruene-muehldorf.de/home/",
     "hostname": "www.gruene-muehldorf.de",
@@ -2901,7 +2901,7 @@
   },
   "http://www.gruene-muenchen.de": {
     "aliases": [],
-    "duration": 239.624,
+    "duration": 223,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-muenchen.de",
@@ -2914,7 +2914,7 @@
   },
   "http://www.gruene-myk.de/": {
     "aliases": [],
-    "duration": 60.145,
+    "duration": 49,
     "error": null,
     "final_url": "http://www.gruene-myk.de/home/",
     "hostname": "www.gruene-myk.de",
@@ -2929,7 +2929,7 @@
     "aliases": [
       "www.gruene-neckar-bergstrasse.de"
     ],
-    "duration": 145.78,
+    "duration": 97,
     "error": null,
     "final_url": "https://www.gruene-neckar-bergstrasse.de/index.php?id=2116",
     "hostname": "gruene-neckar-bergstrasse.de",
@@ -2944,7 +2944,7 @@
     "aliases": [
       "www.gruene-neu-ulm.de"
     ],
-    "duration": 362.153,
+    "duration": 230,
     "error": null,
     "final_url": "https://gruene-neu-ulm.th-vi.de/",
     "hostname": "gruene-neu-ulm.de",
@@ -2957,7 +2957,7 @@
   },
   "http://www.gruene-neuburg.de": {
     "aliases": [],
-    "duration": 749.209,
+    "duration": 787,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-neuburg.de",
@@ -2970,7 +2970,7 @@
   },
   "http://www.gruene-neumarkt.de": {
     "aliases": [],
-    "duration": 34.116,
+    "duration": 36,
     "error": null,
     "final_url": "http://gruene-neumarkt.de/startseite/",
     "hostname": "www.gruene-neumarkt.de",
@@ -2983,7 +2983,7 @@
   },
   "http://www.gruene-neustadt-aisch.de": {
     "aliases": [],
-    "duration": 52.981,
+    "duration": 69,
     "error": null,
     "final_url": "http://www.gruene-neustadt-aisch.de/764.html",
     "hostname": "www.gruene-neustadt-aisch.de",
@@ -2996,7 +2996,7 @@
   },
   "http://www.gruene-neustadt-waldnaab.de": {
     "aliases": [],
-    "duration": 45.529,
+    "duration": 48,
     "error": null,
     "final_url": "http://gruene-weiden.de/startseite/",
     "hostname": "www.gruene-neustadt-waldnaab.de",
@@ -3009,7 +3009,7 @@
   },
   "http://www.gruene-niederbayern.de/": {
     "aliases": [],
-    "duration": 118.374,
+    "duration": 137,
     "error": null,
     "final_url": "http://gruene-niederbayern.de/aktuelles/",
     "hostname": "www.gruene-niederbayern.de",
@@ -3022,7 +3022,7 @@
   },
   "http://www.gruene-niederrhein-wupper.de/": {
     "aliases": [],
-    "duration": 89.781,
+    "duration": 69,
     "error": null,
     "final_url": "http://gruene-niederrhein-wupper.de/",
     "hostname": "www.gruene-niederrhein-wupper.de",
@@ -3035,7 +3035,7 @@
   },
   "http://www.gruene-nok.de/": {
     "aliases": [],
-    "duration": 437.809,
+    "duration": 609,
     "error": null,
     "final_url": "https://www.gruene-nok.de/",
     "hostname": "www.gruene-nok.de",
@@ -3048,7 +3048,7 @@
   },
   "http://www.gruene-nordhausen.de/": {
     "aliases": [],
-    "duration": 40.263,
+    "duration": 36,
     "error": null,
     "final_url": "http://www.gruene-nordhausen.de/partei/",
     "hostname": "www.gruene-nordhausen.de",
@@ -3061,7 +3061,7 @@
   },
   "http://www.gruene-nrw.de/": {
     "aliases": [],
-    "duration": 215.672,
+    "duration": 179,
     "error": null,
     "final_url": "https://gruene-nrw.de/",
     "hostname": "www.gruene-nrw.de",
@@ -3074,7 +3074,7 @@
   },
   "http://www.gruene-nuernberg.de": {
     "aliases": [],
-    "duration": 184.085,
+    "duration": 180,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-nuernberg.de",
@@ -3087,7 +3087,7 @@
   },
   "http://www.gruene-nuernberger-land.de": {
     "aliases": [],
-    "duration": 59.343,
+    "duration": 34,
     "error": null,
     "final_url": "http://gruene-nuernberger-land.de/startseite/",
     "hostname": "www.gruene-nuernberger-land.de",
@@ -3100,7 +3100,7 @@
   },
   "http://www.gruene-oa.de": {
     "aliases": [],
-    "duration": 155.504,
+    "duration": 226,
     "error": null,
     "final_url": "https://www.gruene-oa.de/",
     "hostname": "www.gruene-oa.de",
@@ -3113,7 +3113,7 @@
   },
   "http://www.gruene-oal.de": {
     "aliases": [],
-    "duration": 562.261,
+    "duration": 559,
     "error": null,
     "final_url": "https://gruene-oal.de/",
     "hostname": "www.gruene-oal.de",
@@ -3126,7 +3126,7 @@
   },
   "http://www.gruene-oberberg.de/": {
     "aliases": [],
-    "duration": 33.493,
+    "duration": 39,
     "error": null,
     "final_url": "http://gruene-oberberg.de/startseite/",
     "hostname": "www.gruene-oberberg.de",
@@ -3139,7 +3139,7 @@
   },
   "http://www.gruene-oberhausen.de/": {
     "aliases": [],
-    "duration": 47.87,
+    "duration": 50,
     "error": null,
     "final_url": "http://gruene-oberhausen.de/home/",
     "hostname": "www.gruene-oberhausen.de",
@@ -3152,7 +3152,7 @@
   },
   "http://www.gruene-oberpfalz.de/": {
     "aliases": [],
-    "duration": 489.161,
+    "duration": 125,
     "error": null,
     "final_url": "http://gruene-oberpfalz.de/",
     "hostname": "www.gruene-oberpfalz.de",
@@ -3165,7 +3165,7 @@
   },
   "http://www.gruene-odenwald-kraichgau.de/": {
     "aliases": [],
-    "duration": 37.969,
+    "duration": 48,
     "error": null,
     "final_url": "http://gruene-odenwald-kraichgau.de/startseite/",
     "hostname": "www.gruene-odenwald-kraichgau.de",
@@ -3178,7 +3178,7 @@
   },
   "http://www.gruene-odenwald.de/": {
     "aliases": [],
-    "duration": 851.223,
+    "duration": 468,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-odenwald.de",
@@ -3191,20 +3191,20 @@
   },
   "http://www.gruene-offenbach-land.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
-    "final_url": null,
+    "duration": 483,
+    "error": null,
+    "final_url": "http://partei.gruene-offenbach-land.de",
     "hostname": "www.gruene-offenbach-land.de",
     "ip_addresses": [
       "128.127.71.229"
     ],
-    "redirects": 0,
+    "redirects": 1,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-olpe.de/": {
     "aliases": [],
-    "duration": 173.49,
+    "duration": 328,
     "error": null,
     "final_url": "http://gruene-olpe.de/start/",
     "hostname": "www.gruene-olpe.de",
@@ -3217,7 +3217,7 @@
   },
   "http://www.gruene-ortenau.de/": {
     "aliases": [],
-    "duration": 462.598,
+    "duration": 455,
     "error": null,
     "final_url": "http://gruene-ortenau.de/",
     "hostname": "www.gruene-ortenau.de",
@@ -3230,7 +3230,7 @@
   },
   "http://www.gruene-owl.de/": {
     "aliases": [],
-    "duration": 41.431,
+    "duration": 71,
     "error": null,
     "final_url": "http://www.gruene-owl.de/aktuell-aus-owl/",
     "hostname": "www.gruene-owl.de",
@@ -3256,7 +3256,7 @@
   },
   "http://www.gruene-passauland.de": {
     "aliases": [],
-    "duration": 264.064,
+    "duration": 164,
     "error": null,
     "final_url": "https://gruene-passauland.de/",
     "hostname": "www.gruene-passauland.de",
@@ -3269,7 +3269,7 @@
   },
   "http://www.gruene-perl.de/": {
     "aliases": [],
-    "duration": 352.693,
+    "duration": 774,
     "error": null,
     "final_url": "https://gruene-perl.de/",
     "hostname": "www.gruene-perl.de",
@@ -3282,7 +3282,7 @@
   },
   "http://www.gruene-pfaffenhofen.de": {
     "aliases": [],
-    "duration": 34.988,
+    "duration": 339,
     "error": null,
     "final_url": "http://gruene-pfaffenhofen.de/startseite/",
     "hostname": "www.gruene-pfaffenhofen.de",
@@ -3295,7 +3295,7 @@
   },
   "http://www.gruene-pforzheim-enz.de/": {
     "aliases": [],
-    "duration": 672.352,
+    "duration": 771,
     "error": null,
     "final_url": "http://gruene-pforzheim-enz.de/",
     "hostname": "www.gruene-pforzheim-enz.de",
@@ -3310,7 +3310,7 @@
     "aliases": [
       "www.gruene-ra-bad.de"
     ],
-    "duration": 953.784,
+    "duration": 557,
     "error": null,
     "final_url": "https://www.gruene-ra-bad.de/",
     "hostname": "gruene-ra-bad.de",
@@ -3325,7 +3325,7 @@
     "aliases": [
       "www.gruene-ravensburg.de"
     ],
-    "duration": 185.373,
+    "duration": 331,
     "error": null,
     "final_url": "http://www.gruene-rv.de/start/",
     "hostname": "gruene-ravensburg.de",
@@ -3338,7 +3338,7 @@
   },
   "http://www.gruene-regen.de": {
     "aliases": [],
-    "duration": 41.926,
+    "duration": 42,
     "error": null,
     "final_url": "http://gruene-regen.de/home/",
     "hostname": "www.gruene-regen.de",
@@ -3351,7 +3351,7 @@
   },
   "http://www.gruene-regensburg-land.de": {
     "aliases": [],
-    "duration": 40.249,
+    "duration": 328,
     "error": null,
     "final_url": "http://gruene-regensburg-land.de/aktuelles/",
     "hostname": "www.gruene-regensburg-land.de",
@@ -3364,7 +3364,7 @@
   },
   "http://www.gruene-regensburg.de": {
     "aliases": [],
-    "duration": 28.515,
+    "duration": 415,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-regensburg.de",
@@ -3377,7 +3377,7 @@
   },
   "http://www.gruene-region-aachen.de/": {
     "aliases": [],
-    "duration": 552.067,
+    "duration": 547,
     "error": null,
     "final_url": "http://gruene-region-aachen.de/kreisverband/",
     "hostname": "www.gruene-region-aachen.de",
@@ -3390,7 +3390,7 @@
   },
   "http://www.gruene-rek.de/": {
     "aliases": [],
-    "duration": 567.048,
+    "duration": 749,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-rek.de",
@@ -3405,7 +3405,7 @@
     "aliases": [
       "www.gruene-rems-murr.de"
     ],
-    "duration": 516.429,
+    "duration": 64,
     "error": null,
     "final_url": "https://www.gruene-rems-murr.de/",
     "hostname": "gruene-rems-murr.de",
@@ -3418,7 +3418,7 @@
   },
   "http://www.gruene-remscheid.de/": {
     "aliases": [],
-    "duration": 61.906,
+    "duration": 39,
     "error": null,
     "final_url": "http://gruene-remscheid.de/startseite/",
     "hostname": "www.gruene-remscheid.de",
@@ -3433,7 +3433,7 @@
     "aliases": [
       "www.gruene-reutlingen.de"
     ],
-    "duration": 199.923,
+    "duration": 334,
     "error": null,
     "final_url": "https://www.gruene-reutlingen.de/home/",
     "hostname": "gruene-reutlingen.de",
@@ -3446,7 +3446,7 @@
   },
   "http://www.gruene-rhein-lahn.de/": {
     "aliases": [],
-    "duration": 586.068,
+    "duration": 34,
     "error": null,
     "final_url": "http://www.gruene-rhein-lahn.de/home/",
     "hostname": "www.gruene-rhein-lahn.de",
@@ -3459,7 +3459,7 @@
   },
   "http://www.gruene-rhoen-grabfeld.de": {
     "aliases": [],
-    "duration": 34.891,
+    "duration": 55,
     "error": null,
     "final_url": "http://www.gruene-rhoen-grabfeld.de/home/",
     "hostname": "www.gruene-rhoen-grabfeld.de",
@@ -3472,7 +3472,7 @@
   },
   "http://www.gruene-rkn.de/": {
     "aliases": [],
-    "duration": 140.63,
+    "duration": 125,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-rkn.de",
@@ -3485,7 +3485,7 @@
   },
   "http://www.gruene-rosenheim.de": {
     "aliases": [],
-    "duration": 52.32,
+    "duration": 53,
     "error": null,
     "final_url": "http://www.gruene-rosenheim.de/aktuell/",
     "hostname": "www.gruene-rosenheim.de",
@@ -3498,7 +3498,7 @@
   },
   "http://www.gruene-roth.de": {
     "aliases": [],
-    "duration": 45.464,
+    "duration": 81,
     "error": null,
     "final_url": "http://www.gruene-roth.de/startseite/",
     "hostname": "www.gruene-roth.de",
@@ -3511,7 +3511,7 @@
   },
   "http://www.gruene-rottal-inn.de": {
     "aliases": [],
-    "duration": 113.705,
+    "duration": 127,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-rottal-inn.de",
@@ -3526,7 +3526,7 @@
     "aliases": [
       "www.gruene-rottweil.de"
     ],
-    "duration": 513.698,
+    "duration": 310,
     "error": null,
     "final_url": "https://www.gruene-rottweil.de/",
     "hostname": "gruene-rottweil.de",
@@ -3539,7 +3539,7 @@
   },
   "http://www.gruene-rtk.de/": {
     "aliases": [],
-    "duration": 239.888,
+    "duration": 229,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-rtk.de",
@@ -3552,7 +3552,7 @@
   },
   "http://www.gruene-ruhr.de/": {
     "aliases": [],
-    "duration": 552.981,
+    "duration": 67,
     "error": null,
     "final_url": "http://gruene-ruhr.de/",
     "hostname": "www.gruene-ruhr.de",
@@ -3565,7 +3565,7 @@
   },
   "http://www.gruene-saalekreis.de/": {
     "aliases": [],
-    "duration": 622.625,
+    "duration": 598,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-saalekreis.de",
@@ -3578,7 +3578,7 @@
   },
   "http://www.gruene-saar.de/": {
     "aliases": [],
-    "duration": 429.806,
+    "duration": 418,
     "error": null,
     "final_url": "http://gruene-saar.de/",
     "hostname": "www.gruene-saar.de",
@@ -3591,7 +3591,7 @@
   },
   "http://www.gruene-schwabach.de": {
     "aliases": [],
-    "duration": 70.917,
+    "duration": 41,
     "error": null,
     "final_url": "http://www.gruene-schwabach.de/home/",
     "hostname": "www.gruene-schwabach.de",
@@ -3604,7 +3604,7 @@
   },
   "http://www.gruene-schwaben.de/": {
     "aliases": [],
-    "duration": 42.692,
+    "duration": 817,
     "error": null,
     "final_url": "http://gruene-schwaben.de/startseite/nachrichten/",
     "hostname": "www.gruene-schwaben.de",
@@ -3617,7 +3617,7 @@
   },
   "http://www.gruene-schwaebisch-gmuend.de/": {
     "aliases": [],
-    "duration": 782.373,
+    "duration": 537,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-schwaebisch-gmuend.de",
@@ -3630,7 +3630,7 @@
   },
   "http://www.gruene-schwalm-eder.de/": {
     "aliases": [],
-    "duration": 64.857,
+    "duration": 37,
     "error": null,
     "final_url": "http://www.gruene-schwalm-eder.de/startseite/",
     "hostname": "www.gruene-schwalm-eder.de",
@@ -3643,7 +3643,7 @@
   },
   "http://www.gruene-schwandorf.de": {
     "aliases": [],
-    "duration": 61.132,
+    "duration": 52,
     "error": null,
     "final_url": "http://gruene-schwandorf.de/startseite/",
     "hostname": "www.gruene-schwandorf.de",
@@ -3658,7 +3658,7 @@
     "aliases": [
       "www.gruene-schwarzwald-baar.de"
     ],
-    "duration": 344.35,
+    "duration": 51,
     "error": null,
     "final_url": "https://www.gruene-schwarzwald-baar.de/",
     "hostname": "gruene-schwarzwald-baar.de",
@@ -3671,7 +3671,7 @@
   },
   "http://www.gruene-schweinfurt.de": {
     "aliases": [],
-    "duration": 68.985,
+    "duration": 51,
     "error": null,
     "final_url": "http://www.gruene-schweinfurt.de/startseite/",
     "hostname": "www.gruene-schweinfurt.de",
@@ -3684,7 +3684,7 @@
   },
   "http://www.gruene-sha.de/": {
     "aliases": [],
-    "duration": 96.542,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-sha.de/home/",
     "hostname": "www.gruene-sha.de",
@@ -3699,7 +3699,7 @@
     "aliases": [
       "www.gruene-siegen-wittgenstein.de"
     ],
-    "duration": 528.635,
+    "duration": 567,
     "error": null,
     "final_url": null,
     "hostname": "gruene-siegen-wittgenstein.de",
@@ -3714,7 +3714,7 @@
     "aliases": [
       "www.gruene-sigmaringen.de"
     ],
-    "duration": 216.608,
+    "duration": 536,
     "error": null,
     "final_url": "http://gruene-sigmaringen.de/",
     "hostname": "gruene-sigmaringen.de",
@@ -3729,7 +3729,7 @@
     "aliases": [
       "www.gruene-slf-ru.de"
     ],
-    "duration": 285.494,
+    "duration": 287,
     "error": null,
     "final_url": null,
     "hostname": "gruene-slf-ru.de",
@@ -3744,7 +3744,7 @@
     "aliases": [
       "www.gruene-sm.de"
     ],
-    "duration": 234.059,
+    "duration": 272,
     "error": null,
     "final_url": "http://www.gruene-sms.de/",
     "hostname": "gruene-sms.de",
@@ -3757,7 +3757,7 @@
   },
   "http://www.gruene-solingen.de/": {
     "aliases": [],
-    "duration": 167.629,
+    "duration": 182,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-solingen.de",
@@ -3770,7 +3770,7 @@
   },
   "http://www.gruene-starnberg.de": {
     "aliases": [],
-    "duration": 50.693,
+    "duration": 214,
     "error": null,
     "final_url": "http://gruene-starnberg.de/home/",
     "hostname": "www.gruene-starnberg.de",
@@ -3783,7 +3783,7 @@
   },
   "http://www.gruene-straubing-bogen.de": {
     "aliases": [],
-    "duration": 42.204,
+    "duration": 158,
     "error": null,
     "final_url": "http://www.gruene-straubing-bogen.de/home/",
     "hostname": "www.gruene-straubing-bogen.de",
@@ -3796,7 +3796,7 @@
   },
   "http://www.gruene-stuttgart.de/": {
     "aliases": [],
-    "duration": 250.243,
+    "duration": 616,
     "error": null,
     "final_url": "https://gruene-stuttgart.de/startseite/",
     "hostname": "www.gruene-stuttgart.de",
@@ -3809,7 +3809,7 @@
   },
   "http://www.gruene-toelz-wor.de": {
     "aliases": [],
-    "duration": 74.976,
+    "duration": 45,
     "error": null,
     "final_url": "http://gruene-toelz-wor.de/home/",
     "hostname": "www.gruene-toelz-wor.de",
@@ -3822,7 +3822,7 @@
   },
   "http://www.gruene-traunstein.de": {
     "aliases": [],
-    "duration": 135.062,
+    "duration": 937,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-traunstein.de",
@@ -3835,7 +3835,7 @@
   },
   "http://www.gruene-tuebingen.de/": {
     "aliases": [],
-    "duration": 35.347,
+    "duration": 44,
     "error": null,
     "final_url": "http://www.gruene-tuebingen.de/home/",
     "hostname": "www.gruene-tuebingen.de",
@@ -3850,7 +3850,7 @@
     "aliases": [
       "www.gruene-tuttlingen.de"
     ],
-    "duration": 756.71,
+    "duration": 732,
     "error": null,
     "final_url": "https://www.gruene-tuttlingen.de/kreisverband/aktuelles/",
     "hostname": "gruene-tuttlingen.de",
@@ -3863,7 +3863,7 @@
   },
   "http://www.gruene-ulm.de/": {
     "aliases": [],
-    "duration": 51.458,
+    "duration": 63,
     "error": null,
     "final_url": "http://www.gruene-ulm.de/termine/",
     "hostname": "www.gruene-ulm.de",
@@ -3876,7 +3876,7 @@
   },
   "http://www.gruene-unterallgaeu.de": {
     "aliases": [],
-    "duration": 62.533,
+    "duration": 34,
     "error": null,
     "final_url": "http://www.gruene-unterallgaeu.de/startseite/",
     "hostname": "www.gruene-unterallgaeu.de",
@@ -3889,7 +3889,7 @@
   },
   "http://www.gruene-unterfranken.de/": {
     "aliases": [],
-    "duration": 49.636,
+    "duration": 56,
     "error": null,
     "final_url": "http://gruene-unterfranken.de/startseite/",
     "hostname": "www.gruene-unterfranken.de",
@@ -3902,8 +3902,8 @@
   },
   "http://www.gruene-vogelsberg.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
+    "duration": 252,
+    "error": null,
     "final_url": null,
     "hostname": "www.gruene-vogelsberg.de",
     "ip_addresses": [
@@ -3911,11 +3911,11 @@
     ],
     "redirects": 0,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-waf.de/": {
     "aliases": [],
-    "duration": 154.866,
+    "duration": 39,
     "error": null,
     "final_url": "http://gruene-kreis-warendorf.de/startseite/",
     "hostname": "www.gruene-waf.de",
@@ -3928,8 +3928,8 @@
   },
   "http://www.gruene-waldeck-frankenberg.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
+    "duration": 529,
+    "error": null,
     "final_url": null,
     "hostname": "www.gruene-waldeck-frankenberg.de",
     "ip_addresses": [
@@ -3937,11 +3937,11 @@
     ],
     "redirects": 0,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-wangen.de/": {
     "aliases": [],
-    "duration": 775.011,
+    "duration": 97,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-wangen.de",
@@ -3954,7 +3954,7 @@
   },
   "http://www.gruene-wartburgkreis-eisenach.de/": {
     "aliases": [],
-    "duration": 646.235,
+    "duration": 725,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-wartburgkreis-eisenach.de",
@@ -3967,7 +3967,7 @@
   },
   "http://www.gruene-weiden.de": {
     "aliases": [],
-    "duration": 195.308,
+    "duration": 35,
     "error": null,
     "final_url": "http://gruene-weiden.de/startseite/",
     "hostname": "www.gruene-weiden.de",
@@ -3980,7 +3980,7 @@
   },
   "http://www.gruene-weilheim.de": {
     "aliases": [],
-    "duration": 39.635,
+    "duration": 37,
     "error": null,
     "final_url": "http://www.gruene-weilheim.de/aktivitaeten-termine-ereignisse-2018/",
     "hostname": "www.gruene-weilheim.de",
@@ -3993,7 +3993,7 @@
   },
   "http://www.gruene-weimar.de": {
     "aliases": [],
-    "duration": 54.329,
+    "duration": 214,
     "error": null,
     "final_url": "http://gruene-weimar.de/gruene-neuigkeiten/",
     "hostname": "www.gruene-weimar.de",
@@ -4006,7 +4006,7 @@
   },
   "http://www.gruene-weissenburg.de": {
     "aliases": [],
-    "duration": 38.126,
+    "duration": 285,
     "error": null,
     "final_url": "http://gruene-weissenburg.de/home/",
     "hostname": "www.gruene-weissenburg.de",
@@ -4019,7 +4019,7 @@
   },
   "http://www.gruene-werra-meissner.de/": {
     "aliases": [],
-    "duration": 301.388,
+    "duration": 739,
     "error": null,
     "final_url": "http://gruene-werra-meissner.de/startseite/",
     "hostname": "www.gruene-werra-meissner.de",
@@ -4032,8 +4032,8 @@
   },
   "http://www.gruene-wetterau.de/": {
     "aliases": [],
-    "duration": 0,
-    "error": "connection_timeout",
+    "duration": 486,
+    "error": null,
     "final_url": null,
     "hostname": "www.gruene-wetterau.de",
     "ip_addresses": [
@@ -4041,11 +4041,11 @@
     ],
     "redirects": 0,
     "scheme": "http",
-    "status_code": 0
+    "status_code": 200
   },
   "http://www.gruene-wiesbaden.de/": {
     "aliases": [],
-    "duration": 654.351,
+    "duration": 44,
     "error": null,
     "final_url": "http://gruene-wiesbaden.de/startseite/",
     "hostname": "www.gruene-wiesbaden.de",
@@ -4058,7 +4058,7 @@
   },
   "http://www.gruene-wittenberg.de/": {
     "aliases": [],
-    "duration": 647.5,
+    "duration": 701,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-wittenberg.de",
@@ -4071,7 +4071,7 @@
   },
   "http://www.gruene-worms.de/": {
     "aliases": [],
-    "duration": 63.696,
+    "duration": 46,
     "error": null,
     "final_url": "http://www.gruene-worms.de/start/",
     "hostname": "www.gruene-worms.de",
@@ -4086,7 +4086,7 @@
     "aliases": [
       "www.gruene-wt.de"
     ],
-    "duration": 897.663,
+    "duration": 321,
     "error": null,
     "final_url": "https://www.gruene-wt.de/",
     "hostname": "gruene-wt.de",
@@ -4099,7 +4099,7 @@
   },
   "http://www.gruene-wuerzburg-land.de": {
     "aliases": [],
-    "duration": 668.622,
+    "duration": 590,
     "error": null,
     "final_url": "https://www.gruene-wuerzburg-land.de/cms/index.php/",
     "hostname": "www.gruene-wuerzburg-land.de",
@@ -4112,7 +4112,7 @@
   },
   "http://www.gruene-wuerzburg.de": {
     "aliases": [],
-    "duration": 915.016,
+    "duration": 678,
     "error": null,
     "final_url": "https://www.gruene-wuerzburg.de/cms/",
     "hostname": "www.gruene-wuerzburg.de",
@@ -4125,7 +4125,7 @@
   },
   "http://www.gruene-ww.de/": {
     "aliases": [],
-    "duration": 150.329,
+    "duration": 187,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-ww.de",
@@ -4140,7 +4140,7 @@
     "aliases": [
       "www.gruene-zollernalb.de"
     ],
-    "duration": 566.145,
+    "duration": 199,
     "error": null,
     "final_url": "https://www.gruene-zollernalb.de/index.php?id=2000",
     "hostname": "gruene-zollernalb.de",
@@ -4155,7 +4155,7 @@
     "aliases": [
       "www.grueneduisburg.de"
     ],
-    "duration": 75.402,
+    "duration": 100,
     "error": null,
     "final_url": null,
     "hostname": "grueneduisburg.de",
@@ -4168,7 +4168,7 @@
   },
   "http://www.gruenemsp.de": {
     "aliases": [],
-    "duration": 37.545,
+    "duration": 42,
     "error": null,
     "final_url": "http://www.gruenemsp.de/startseite/",
     "hostname": "www.gruenemsp.de",
@@ -4181,7 +4181,7 @@
   },
   "http://www.gruenestadterfurt.de/": {
     "aliases": [],
-    "duration": 289.81,
+    "duration": 193,
     "error": null,
     "final_url": null,
     "hostname": "www.gruenestadterfurt.de",
@@ -4194,7 +4194,7 @@
   },
   "http://www.gruenetir.de": {
     "aliases": [],
-    "duration": 233.068,
+    "duration": 254,
     "error": null,
     "final_url": "https://gruenetir.de/startseite/",
     "hostname": "www.gruenetir.de",
@@ -4209,13 +4209,13 @@
     "aliases": [
       "www.grueneuhk.wordpress.com"
     ],
-    "duration": 318.778,
+    "duration": 892,
     "error": null,
     "final_url": "https://grueneuhk.wordpress.com/",
     "hostname": "lb.wordpress.com",
     "ip_addresses": [
-      "192.0.78.13",
-      "192.0.78.12"
+      "192.0.78.12",
+      "192.0.78.13"
     ],
     "redirects": 2,
     "scheme": "http",
@@ -4223,7 +4223,7 @@
   },
   "http://www.offenbach-gruene.de/": {
     "aliases": [],
-    "duration": 285.651,
+    "duration": 244,
     "error": null,
     "final_url": "http://www.gruene-offenbach.de/start/",
     "hostname": "www.offenbach-gruene.de",
@@ -4236,7 +4236,7 @@
   },
   "http://www.padergruen.de": {
     "aliases": [],
-    "duration": 98.564,
+    "duration": 943,
     "error": null,
     "final_url": "http://www.xn--padergrn-d6a.de/",
     "hostname": "www.padergruen.de",
@@ -4249,7 +4249,7 @@
   },
   "http://www.salzlandgr\u00fcne.de/": {
     "aliases": [],
-    "duration": 858.752,
+    "duration": 963,
     "error": null,
     "final_url": null,
     "hostname": "www.xn--salzlandgrne-mlb.de",
@@ -4262,7 +4262,7 @@
   },
   "http://www.xn--grne-mnster-uhbe.de/": {
     "aliases": [],
-    "duration": 480.329,
+    "duration": 472,
     "error": null,
     "final_url": null,
     "hostname": "www.xn--grne-mnster-uhbe.de",
@@ -4275,7 +4275,7 @@
   },
   "http://www.xn--grne-speyer-uhb.de/": {
     "aliases": [],
-    "duration": 39.262,
+    "duration": 76,
     "error": null,
     "final_url": "http://www.xn--grne-speyer-uhb.de/home/",
     "hostname": "www.xn--grne-speyer-uhb.de",
@@ -4288,7 +4288,7 @@
   },
   "https://gruene-aw.de/": {
     "aliases": [],
-    "duration": 663.266,
+    "duration": 343,
     "error": null,
     "final_url": null,
     "hostname": "gruene-aw.de",
@@ -4301,7 +4301,7 @@
   },
   "https://gruene-bayern.de/": {
     "aliases": [],
-    "duration": 191.087,
+    "duration": 16,
     "error": null,
     "final_url": null,
     "hostname": "gruene-bayern.de",
@@ -4314,7 +4314,7 @@
   },
   "https://gruene-bw.de/": {
     "aliases": [],
-    "duration": 194.273,
+    "duration": 365,
     "error": null,
     "final_url": "https://www.gruene-bw.de/",
     "hostname": "gruene-bw.de",
@@ -4327,7 +4327,7 @@
   },
   "https://gruene-illingen-saar.de/": {
     "aliases": [],
-    "duration": 545.39,
+    "duration": 555,
     "error": null,
     "final_url": null,
     "hostname": "gruene-illingen-saar.de",
@@ -4340,7 +4340,7 @@
   },
   "https://gruene-kv-soest.de/": {
     "aliases": [],
-    "duration": 699.225,
+    "duration": 719,
     "error": null,
     "final_url": null,
     "hostname": "gruene-kv-soest.de",
@@ -4353,7 +4353,7 @@
   },
   "https://gruene-neunkirchen-saar.de": {
     "aliases": [],
-    "duration": 524.899,
+    "duration": 563,
     "error": null,
     "final_url": null,
     "hostname": "gruene-neunkirchen-saar.de",
@@ -4366,7 +4366,7 @@
   },
   "https://gruene-rehlingen.de/": {
     "aliases": [],
-    "duration": 854.084,
+    "duration": 162,
     "error": null,
     "final_url": null,
     "hostname": "gruene-rehlingen.de",
@@ -4379,7 +4379,7 @@
   },
   "https://gruene-roesrath.de/": {
     "aliases": [],
-    "duration": 70.844,
+    "duration": 258,
     "error": null,
     "final_url": "https://gruene-roesrath.de/startseite/",
     "hostname": "gruene-roesrath.de",
@@ -4392,7 +4392,7 @@
   },
   "https://gruene-sb.de/": {
     "aliases": [],
-    "duration": 386.103,
+    "duration": 680,
     "error": null,
     "final_url": null,
     "hostname": "gruene-sb.de",
@@ -4405,7 +4405,7 @@
   },
   "https://gruene-sls.de/": {
     "aliases": [],
-    "duration": 401.379,
+    "duration": 543,
     "error": null,
     "final_url": null,
     "hostname": "gruene-sls.de",
@@ -4418,7 +4418,7 @@
   },
   "https://gruene-vulkaneifel.de/": {
     "aliases": [],
-    "duration": 846.135,
+    "duration": 13,
     "error": null,
     "final_url": null,
     "hostname": "gruene-vulkaneifel.de",
@@ -4431,7 +4431,7 @@
   },
   "https://gruene-wadgassen.de/": {
     "aliases": [],
-    "duration": 391.488,
+    "duration": 339,
     "error": null,
     "final_url": null,
     "hostname": "gruene-wadgassen.de",
@@ -4444,7 +4444,7 @@
   },
   "https://kreis.gruene-merzig.de/": {
     "aliases": [],
-    "duration": 574.36,
+    "duration": 580,
     "error": null,
     "final_url": null,
     "hostname": "kreis.gruene-merzig.de",
@@ -4457,7 +4457,7 @@
   },
   "https://www.gruene-mainz.de/": {
     "aliases": [],
-    "duration": 994.736,
+    "duration": 719,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-mainz.de",
@@ -4470,7 +4470,7 @@
   },
   "https://www.gruene-rhein-pfalz.de/": {
     "aliases": [],
-    "duration": 646.823,
+    "duration": 486,
     "error": null,
     "final_url": null,
     "hostname": "www.gruene-rhein-pfalz.de",
@@ -4483,7 +4483,7 @@
   },
   "https://www.gruene-thueringen.de/": {
     "aliases": [],
-    "duration": 442.705,
+    "duration": 515,
     "error": null,
     "final_url": "https://gruene-thueringen.de/",
     "hostname": "www.gruene-thueringen.de",
@@ -4496,7 +4496,7 @@
   },
   "https://www.gruene.de/": {
     "aliases": [],
-    "duration": 133.296,
+    "duration": 122,
     "error": null,
     "final_url": "https://www.gruene.de/startseite.html",
     "hostname": "www.gruene.de",
