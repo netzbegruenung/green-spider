@@ -109,7 +109,7 @@ def check_site(url):
         if len(r.history) > 0:
             result['redirects'] = len(r.history)
             result['final_url'] = r.url
-        result['duration'] = r.elapsed.microseconds / 1000
+        result['duration'] = round(r.elapsed.microseconds / 1000)
     except requests.exceptions.ConnectionError as e:
         logging.error(str(e) + " " + url)
         result['error'] = "connection"
