@@ -13,6 +13,8 @@ Written and tested in Python3
 - submit the URL against a service like Google Page Speed and retrieve the score
 - Check against our own webpagetest.org instance
 - Detect which one of the well-known CMS is used?
+- Certificate expiry warning
+- Export and publish the report as a single page web app via GitHub pages
 
 ### Usage
 

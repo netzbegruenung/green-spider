@@ -1,9 +1,11 @@
 # coding: utf8
 
+from datetime import datetime
 from git import Repo
 from multiprocessing import Pool
-from urllib.parse import urlparse
 from socket import gethostbyname_ex
+from urllib.parse import urlparse
+import certifi
 import json
 import logging
 import os
@@ -12,7 +14,6 @@ import requests
 import shutil
 import sys
 import yaml
-import json
 
 # configuration
 
@@ -31,12 +32,15 @@ green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 green_direcory_data_path = 'data'
 green_directory_local_path = './cache/green-directory'
 
+result_path = './webapp/data'
 
 # end configuration
 
+
 def get_green_directory():
     """
-    Clones the green directory into the local file system
+    Clones the source of website URLs, the green directory,
+    into the local file system using git
     """
     if os.path.exists(green_directory_local_path):
         shutil.rmtree(green_directory_local_path)
@@ -44,6 +48,9 @@ def get_green_directory():
 
 
 def dir_entries():
+    """
+    Iterator over all data files in the cloned green directory
+    """
     path = os.path.join(green_directory_local_path, green_direcory_data_path)
     for root, dirs, files in os.walk(path):
         for fname in files:
@@ -56,9 +63,11 @@ def dir_entries():
                 for doc in yaml.load_all(yamlfile):
                     yield doc
 
+
 def repr_entry(entry):
     """
-    Return string representation of an entry
+    Return string representation of a directory entry,
+    for logging/debugging purposes
     """
     r = entry['type']
     if 'level' in entry:
@@ -69,65 +78,160 @@ def repr_entry(entry):
         r += "/" + entry['district']
     return r
 
-def resolve_hostname(url):
-    parsed = urlparse(url)
-    hostname, aliaslist, ipaddrlist = gethostbyname_ex(parsed.hostname)
-    return (parsed.scheme, hostname, aliaslist, ipaddrlist)
+
+def derive_test_hostnames(hostname):
+    """
+    Derives the hostnames variants to test for a given host name.
+    From 'gruene-x.de' or 'www.gruene-x.de' it makes
+
+      ['gruene-x.de', 'www.gruene-x.de']
+
+    which are both plausible web URLs to be used for a domain.
+    """
+
+    hostnames = set()
+
+    hostnames.add(hostname)
+    if hostname.startswith('www.'):
+        hostnames.add(hostname[4:])
+    else:
+        hostnames.add('www.' + hostname)
+
+    return list(hostnames)
+
+
+def reduce_urls(urllist):
+    """
+    Reduce a list of urls with metadata by eliminating those
+    that either don't work or lead somewhere else
+    """
+    targets = set()
+    for u in urllist:
+        if u['error'] is not None:
+            continue
+        if u['redirects_to'] is not None:
+            targets.add(u['redirects_to'])
+        else:
+            targets.add(u['url'])
+    return list(targets)
+
 
 def check_site(url):
     """
-    Performs our site check and returns results as a dict
+    Performs our site check and returns results as a dict.
+
+    1. Normalize the input URL and derive the URLs to check for
+    2. HEAD the check urls
+    3. Determine the canonical URL
+    4. Run full check on canonical URL
     """
-    result = {
-        'status_code': 0,
-        'error': None,
-        'redirects': 0,
-        'final_url': None,
-        'hostname': None,
-        'scheme': None,
-        'aliases': None,
-        'ip_addresses': None,
-        'duration': 0,
-    }
-
-    try:
-        (scheme, hostname, aliases, ip_addresses) = resolve_hostname(url)
-        result['scheme'] = scheme
-        result['hostname'] = hostname
-        result['aliases'] = aliases
-        result['ip_addresses'] = ip_addresses
-    except Exception as e:
-        logging.error(str(e) + " " + url)
-
     headers = {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 green-spider/0.1'
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 green-spider/0.1'
     }
 
-    try:
-        r = requests.get(url, headers=headers, timeout=(connect_timeout, read_timeout))
-        result['status_code'] = r.status_code
-        if len(r.history) > 0:
-            result['redirects'] = len(r.history)
-            result['final_url'] = r.url
-        result['duration'] = round(r.elapsed.microseconds / 1000)
-    except requests.exceptions.ConnectionError as e:
-        logging.error(str(e) + " " + url)
-        result['error'] = "connection"
-    except requests.exceptions.Timeout as e:
-        logging.error(str(e) + " " + url)
-        result['error'] = "connection_timeout"
-    except requests.exceptions.ReadTimeout as e:
-        logging.error(str(e) + " " + url)
-        result['error'] = "read_timeout"
-    except Exception as e:
-        logging.error(str(e) + " " + url)
-        result['error'] = "unknown"
+    result = {
+        'input_url': url,
+        'hostnames': [],
+        'resolvable_urls': [],
+        'canonical_urls': [],
+        'urlchecks': [],
+    }
 
-    logging.info("%s done" % url)
+    # derive hostnames to test
+    parsed = urlparse(url)
+    hostnames = derive_test_hostnames(parsed.hostname)
+
+
+    processed_hostnames = []
+    for hn in hostnames:
+
+        record  = {
+            'input_hostname': hn,
+            'resolvable': False,
+        }
+
+        try:
+            hostname, aliases, ip_addresses = gethostbyname_ex(hn)
+            record['resolvable'] = True
+            record['resolved_hostname'] = hostname
+            record['aliases'] = aliases
+            record['ip_addresses'] = ip_addresses
+        except:
+            pass
+
+        processed_hostnames.append(record)
+
+    result['hostnames'] = processed_hostnames
+
+    checked_urls = []
+    for item in processed_hostnames:
+        if not item['resolvable']:
+            continue
+
+        for scheme in ('http', 'https'):
+
+            record = {
+                'url': scheme + '://' + item['resolved_hostname'] + '/',
+                'error': None,
+                'redirects_to': None,
+            }
+
+            try:
+                r = requests.head(record['url'], headers=headers, allow_redirects=True)
+                if r.url == url:
+                    logging.info("URL: %s - status %s - no redirect" % (record['url'], r.status_code))
+                else:
+                    logging.info("URL: %s - status %s - redirects to %s" % (record['url'], r.status_code, r.url))
+                    record['redirects_to'] = r.url
+            except Exception as e:
+                record['error'] = {
+                    'type': str(type(e)),
+                    'message': str(e),
+                }
+                logging.info("URL %s: %s %s" % (url, str(type(e)), e))
+
+            checked_urls.append(record)
+
+    result['resolvable_urls'] = checked_urls
+    result['canonical_urls'] = reduce_urls(checked_urls)
+
+    # Deeper test for the remaining (canonical) URL(s)
+    for check_url in result['canonical_urls']:
+
+        logging.info("Checking URL %s" % check_url)
+
+        check = {
+            'url': check_url,
+            'status_code': None,
+            'duration': None,
+            'error': None,
+        }
+
+        try:
+            r = requests.get(check_url, headers=headers, timeout=(connect_timeout, read_timeout))
+            check['status_code'] = r.status_code
+            check['duration'] = round(r.elapsed.microseconds / 1000)
+        except requests.exceptions.ConnectionError as e:
+            logging.error(str(e) + " " + check_url)
+            check['error'] = "connection"
+        except requests.exceptions.Timeout as e:
+            logging.error(str(e) + " " + check_url)
+            check['error'] = "connection_timeout"
+        except requests.exceptions.ReadTimeout as e:
+            logging.error(str(e) + " " + check_url)
+            check['error'] = "read_timeout"
+        except Exception as e:
+            logging.error(str(e) + " " + check_url)
+            check['error'] = "unknown"
+
+        result['urlchecks'].append(check)
+
     return result
+
 
 def main():
     logging.basicConfig(level=logging.INFO)
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 
     get_green_directory()
 
@@ -139,7 +243,7 @@ def main():
             continue
 
         if 'urls' not in entry:
-            logging.info("Entry %s does not have any URLs." % repr_entry(entry))
+            logging.debug("Entry %s does not have any URLs." % repr_entry(entry))
             continue
 
         website_url = None
@@ -167,12 +271,21 @@ def main():
         for url in urls:
             results[url] = check_site(url)
 
-    results2 = {}
+    results2 = []
+    done = set()
 
+    # convert results from ApplyResult to dict
     for url in results.keys():
-        results2[url] = results[url].get()
+        if url not in done:
+            results2.append(results[url].get())
+        done.add(url)
 
-    with open('result.json', 'w', encoding="utf8") as jsonfile:
+    now = datetime.utcnow()
+
+    # Write result as JSON
+    now_stamp = now.strftime('%Y-%m-%d_%H-%M')
+    output_filename = os.path.join(result_path, 'check_' + now_stamp + ".json")
+    with open(output_filename, 'w', encoding="utf8") as jsonfile:
         json.dump(results2, jsonfile, indent=2, sort_keys=True)
 
 
