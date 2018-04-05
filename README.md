@@ -4,6 +4,22 @@ Collects data on green websites and checks for things like SEO, performance, TLS
 
 Written and tested in Python3
 
+### Usage
+
+Run the spider:
+
+```nohighlight
+make spider
+```
+
+The result will be in `webapp/dist/data`.
+
+Build the webapp:
+
+```nohighlight
+make webapp
+```
+
 ### Ideas
 
 - If the URL does not start with `www.`, will entering `www.<url>` also work?
@@ -15,13 +31,3 @@ Written and tested in Python3
 - Detect which one of the well-known CMS is used
 - Certificate expiry warning
 - Favourite icon availability check
-
-### Usage
-
-```nohighlight
-virtualenv -p python3 venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-python spider.py
-```
