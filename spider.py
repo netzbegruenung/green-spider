@@ -160,7 +160,7 @@ def check_site(url):
 
         processed_hostnames.append(record)
 
-    result['hostnames'] = processed_hostnames
+    result['hostnames'] = sorted(processed_hostnames, key=lambda hn: hn['input_hostname'])
 
     checked_urls = []
     for item in processed_hostnames:
@@ -191,8 +191,8 @@ def check_site(url):
 
             checked_urls.append(record)
 
-    result['resolvable_urls'] = checked_urls
-    result['canonical_urls'] = reduce_urls(checked_urls)
+    result['resolvable_urls'] = sorted(checked_urls, key=lambda url: url['url'])
+    result['canonical_urls'] = sorted(reduce_urls(checked_urls))
 
     # Deeper test for the remaining (canonical) URL(s)
     for check_url in result['canonical_urls']:
@@ -224,6 +224,9 @@ def check_site(url):
             check['error'] = "unknown"
 
         result['urlchecks'].append(check)
+
+
+    result['urlchecks'] = sorted(result['urlchecks'], key=lambda url: url['url'])
 
     return result
 
