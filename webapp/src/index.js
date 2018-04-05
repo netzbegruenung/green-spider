@@ -12,7 +12,14 @@ $(function(){
     var tbody = $('tbody');
     $.each(data, function(index, item) {
       var row = $(document.createElement('tr'));
+
+      // input URL
       row.append('<td><a href="' + item.input_url + '">' + punycode.toUnicode(item.input_url) + '</a></td>');
+
+      // IPs
+      var ips = _.uniq(_.flatten(_.map(item.hostnames, 'ip_addresses')));
+      console.log(ips);
+      row.append('<td>' + _.join(ips, ', ') + '</a></td>');
 
       // hostnames
       var twoHostnames = false;
