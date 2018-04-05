@@ -18,7 +18,6 @@ $(function(){
 
       // IPs
       var ips = _.uniq(_.flatten(_.map(item.hostnames, 'ip_addresses')));
-      console.log(ips);
       row.append('<td>' + _.join(ips, ', ') + '</a></td>');
 
       // hostnames
