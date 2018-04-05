@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>green spider report: Auswertung einiger Merkmale von Bündnis 90/Die Grünen Websites</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+  <style type="text/css">
+  body {
+    padding: 20px;
+  }
+  .bad {
+    background-color: #ffdbdb;
+  }
+  .good {
+    background-color: #cfeaa8;
+  }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <p>Erläuterungen der Testkriterien am <a href="#docs">Ende der Seite</a>. Gehe zum <a href="https://github.com/netzbegruenung/green-spider/">green-spider GitHub repository</a> um mehr zu erfahren.</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">URL</th>
+        <th scope="col"><abbr title="Site ist sowohl mit www. als auch ohne www. in URL erreichbar">www. optional</abbr></th>
+        <th scope="col"><abbr title="URL-Varianten leiten auf eine einzige Startseiten-URL weiter">Kanonische URL</abbr></th>
+        <th scope="col"><abbr title="Site nutzt HTTP-Verschlüsselung">HTTPS</abbr></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h3 id="docs">Testkriterien</h3>
+
+  <h4>www. optional</h4>
+
+  <p>Die Site sollte sowohl mit &quot;www.&quot; als auch ohne &quot;www.&quot; am Anfang der URL erreichbar sein.</p>
+
+  <h4>Kanonische URL</h4>
+
+  <p>Verschiedene URLs zum Aufruf der Site (mit/ohne &quot;www.&quot; Präfix, mit/ohne HTTPS) sollten alle per HTTP Redirect auf eine einzige &quot;kanonische&quot; URL weiter leiten.</p>
+
+  <h4>HTTPS</h4>
+
+  <p>Die Site ist per verschlüsselter HTTP-Verbindung (HTTPS-Protokoll) erreichbar.</p>
+
+</div>
+
+<script src="bundle.js"></script>
+</body>
+</html>

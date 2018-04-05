@@ -1,6 +1,5 @@
 # coding: utf8
 
-from datetime import datetime
 from git import Repo
 from multiprocessing import Pool
 from socket import gethostbyname_ex
@@ -32,7 +31,7 @@ green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 green_direcory_data_path = 'data'
 green_directory_local_path = './cache/green-directory'
 
-result_path = './webapp/data'
+result_path = './webapp/dist/data'
 
 # end configuration
 
@@ -275,16 +274,13 @@ def main():
     done = set()
 
     # convert results from ApplyResult to dict
-    for url in results.keys():
+    for url in sorted(results.keys()):
         if url not in done:
             results2.append(results[url].get())
         done.add(url)
 
-    now = datetime.utcnow()
-
     # Write result as JSON
-    now_stamp = now.strftime('%Y-%m-%d_%H-%M')
-    output_filename = os.path.join(result_path, 'check_' + now_stamp + ".json")
+    output_filename = os.path.join(result_path, "spider_result.json")
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
         json.dump(results2, jsonfile, indent=2, sort_keys=True)
 
