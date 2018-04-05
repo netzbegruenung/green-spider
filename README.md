@@ -4,6 +4,8 @@ Collects data on green websites and checks for things like SEO, performance, TLS
 
 Written and tested in Python3
 
+Results published at https://netzbegruenung.github.io/green-spider/
+
 ### Usage
 
 Run the spider:
