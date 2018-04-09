@@ -1,5 +1,6 @@
 # coding: utf8
 
+from bs4 import BeautifulSoup
 from git import Repo
 from multiprocessing import Pool
 from socket import gethostbyname_ex
@@ -9,6 +10,7 @@ import json
 import logging
 import os
 import random
+import re
 import requests
 import shutil
 import sys
@@ -115,6 +117,69 @@ def reduce_urls(urllist):
     return list(targets)
 
 
+def normalize_title(s):
+    """
+    Removes garbage from HTML page titles
+    """
+    s = s.replace('\u00a0', ' ')
+    s = s.replace('  ', ' ')
+    s = s.strip()
+    return s
+
+def check_content(r):
+    """
+    Adds details to check regarding content of the page
+
+    check: the dict containing details for this URL
+    r: requests request/response object
+    """
+    result = {}
+
+    result['encoding'] = r.encoding
+    soup = BeautifulSoup(r.text, 'html.parser')
+
+    # page title
+    result['title'] = None
+    title = soup.find('head').find('title')
+    if title is not None:
+        result['title'] = normalize_title(title.get_text())
+
+    # canonical link
+    result['canonical_link'] = None
+    link = soup.find('link', rel='canonical')
+    if link:
+        result['canonical_link'] = link.get('href')
+
+    # feed links
+    result['feeds'] = []
+    rss_links = soup.find_all('link', type='application/rss+xml')
+    atom_links = soup.find_all('link', type='application/atom+xml')
+
+    if len(rss_links) > 0:
+        for l in rss_links:
+            result['feeds'].append(l.get('href'))
+    if len(atom_links) > 0:
+        for l in rss_links:
+            result['feeds'].append(l.get('href'))
+
+    # generator meta tag
+    result['generator'] = None
+    generator = soup.head.select('[name=generator]')
+    if len(generator):
+        result['generator'] = generator[0].get('content')
+
+    # opengraph meta tags
+    result['opengraph'] = None
+    og = set()
+    for item in soup.head.find_all(property=re.compile('^og:')):
+        og.add(item.get('property'))
+    for item in soup.head.find_all(itemprop=re.compile('^og:')):
+        og.add(item.get('itemprop'))
+    if len(og):
+        result['opengraph'] = list(og)
+
+    return result
+
 def check_site(url):
     """
     Performs our site check and returns results as a dict.
@@ -204,12 +269,18 @@ def check_site(url):
             'status_code': None,
             'duration': None,
             'error': None,
+            'content': None,
         }
 
         try:
             r = requests.get(check_url, headers=headers, timeout=(connect_timeout, read_timeout))
             check['status_code'] = r.status_code
             check['duration'] = round(r.elapsed.microseconds / 1000)
+
+            # Content checks
+            if r.status_code < 300:
+                check['content'] = check_content(r)
+
         except requests.exceptions.ConnectionError as e:
             logging.error(str(e) + " " + check_url)
             check['error'] = "connection"
