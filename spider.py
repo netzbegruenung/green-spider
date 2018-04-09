@@ -356,7 +356,7 @@ def main():
     # Write result as JSON
     output_filename = os.path.join(result_path, "spider_result.json")
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
-        json.dump(results2, jsonfile, indent=2, sort_keys=True)
+        json.dump(results2, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
 
 
 if __name__ == "__main__":
