@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from git import Repo
 from multiprocessing import Pool
 from socket import gethostbyname_ex
+from urllib.parse import urljoin
 from urllib.parse import urlparse
 import certifi
 import json
@@ -148,7 +149,17 @@ def check_content(r):
     result['canonical_link'] = None
     link = soup.find('link', rel='canonical')
     if link:
-        result['canonical_link'] = link.get('href')
+        result['canonical_link'] = urljoin(r.url, link.get('href'))
+
+    # icon
+    result['icon'] = None
+    link = soup.find('link', rel='icon')
+    if link:
+        result['icon'] = urljoin(r.url, link.get('href'))
+    else:
+        link = soup.find('link', rel='shortcut icon')
+        if link:
+            result['icon'] = urljoin(r.url, link.get('href'))
 
     # feed links
     result['feeds'] = []
@@ -157,10 +168,10 @@ def check_content(r):
 
     if len(rss_links) > 0:
         for l in rss_links:
-            result['feeds'].append(l.get('href'))
+            result['feeds'].append(urljoin(r.url, l.get('href')))
     if len(atom_links) > 0:
         for l in rss_links:
-            result['feeds'].append(l.get('href'))
+            result['feeds'].append(urljoin(r.url, l.get('href')))
 
     # generator meta tag
     result['generator'] = None
@@ -179,6 +190,7 @@ def check_content(r):
         result['opengraph'] = list(og)
 
     return result
+
 
 def check_site(url):
     """
