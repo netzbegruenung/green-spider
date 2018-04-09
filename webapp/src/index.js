@@ -17,8 +17,8 @@ $(function(){
       row.append('<td><a href="' + item.input_url + '">' + punycode.toUnicode(item.input_url) + '</a></td>');
 
       // IPs
-      var ips = _.uniq(_.flatten(_.map(item.hostnames, 'ip_addresses')));
-      row.append('<td>' + _.join(ips, ', ') + '</a></td>');
+      var ips = _.join(_.uniq(_.flatten(_.map(item.hostnames, 'ip_addresses'))), ', ');
+      row.append('<td class="'+ (ips === '' ? 'bad' : 'good') +' text-center">' + (ips === '' ? '❌  Keine' : ips) + '</td>');
 
       // hostnames
       var twoHostnames = false;
