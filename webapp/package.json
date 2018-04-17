@@ -27,7 +27,6 @@
     "lodash": "^4.17.5",
     "npm": "^5.8.0",
     "popper.js": "^1.14.3",
-    "punycode": "^2.1.0",
-    "vanilla-lazyload": "^8.7.1"
+    "punycode": "^2.1.0"
   }
 }

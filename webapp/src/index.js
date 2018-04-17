@@ -8,10 +8,6 @@ import LazyLoad from 'vanilla-lazyload';
 
 $(function(){
 
-  var lazyload = new LazyLoad({
-    elements_selector: "img.screenshot"
-  });
-
   var table = null;
 
   $.getJSON('data/screenshots.json', function(screenshots){
@@ -70,8 +66,8 @@ $(function(){
           if (typeof screenshots[item.canonical_urls[0]] !== 'undefined') {
             var surl = 'http://green-spider-screenshots.sendung.de/320x640/'+screenshots[item.canonical_urls[0]];
             var lurl = 'http://green-spider-screenshots.sendung.de/1500x1500/'+screenshots[item.canonical_urls[0]];
-            screenshot = '<a href="'+ surl +'" target="_blank"><img class="screenshot small" alt="Mobile Screenshot" data-src="'+ surl +'" width="32" height="64"></a>';
-            screenshot += '<a href="'+ lurl +'" target="_blank"><img class="screenshot large" alt="Desktop Screenshot" data-src="'+ lurl +'" width="64" height="64"></a>';
+            screenshot = '<a class="screenshot" href="'+ surl +'" target="_blank" title="Mobile">M</a>';
+            screenshot += '<a class="screenshot" href="'+ lurl +'" target="_blank" title="Desktop">D</a>';
           }
         }
         row.append('<td class="'+ (screenshot ? 'good' : 'bad') +' text-center">' + (screenshot ? screenshot : '❌') + '</td>');
@@ -88,14 +84,6 @@ $(function(){
           "search": "Suche"
         }
       });
-
-      // after a table search/sort, force lazyload update
-      table.on('draw', function(){
-          lazyload.update();
-      });
-
-      // activate lazy image loading
-      lazyload.update();
 
     });
 
