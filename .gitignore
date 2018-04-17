@@ -1,3 +1,5 @@
 venv
 cache
 webapp/node_modules
+secrets
+temp
