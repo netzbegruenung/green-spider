@@ -14,9 +14,9 @@ Es ist geplant, auf Basis der gesammelten Informationen (siehe Spider) Informati
 
 ## Community
 
-Green Spider ist ein Projekt des [netzbegrünung](https://blog.netzbegruenung.de/) e. V. Mitwirkung ist herzlich willkommen.
+Green Spider ist ein Projekt des [netzbegrünung](https://blog.netzbegruenung.de/) e. V. -- Mitwirkung ist herzlich willkommen.
 
-Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die Issues hier in diesem Repository.
+Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die [Issues](https://github.com/netzbegruenung/green-spider/issues) hier in diesem Repository.
 
 ## Anleitung
 
