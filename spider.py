@@ -14,13 +14,15 @@ import random
 import re
 import requests
 import shutil
+import statistics
 import sys
 import yaml
+
 
 # configuration
 
 # number of parallel processes to use for crawling
-concurrency = 4
+concurrency = 3
 
 # connection timeout for website checks (seconds)
 connect_timeout = 5
@@ -31,7 +33,7 @@ read_timeout = 10
 # Git repo for our data
 green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 # folder in that repo that holds the data
-green_direcory_data_path = 'data'
+green_direcory_data_path = 'data/countries/de'
 green_directory_local_path = './cache/green-directory'
 
 result_path = './webapp/dist/data'
@@ -153,11 +155,11 @@ def check_content(r):
 
     # icon
     result['icon'] = None
-    link = soup.find('link', rel='icon')
+    link = soup.find('link', rel=lambda x: x and x.lower()=='icon')
     if link:
         result['icon'] = urljoin(r.url, link.get('href'))
     else:
-        link = soup.find('link', rel='shortcut icon')
+        link = soup.find('link', rel=lambda x: x and x.lower()=='shortcut icon')
         if link:
             result['icon'] = urljoin(r.url, link.get('href'))
 
@@ -192,7 +194,20 @@ def check_content(r):
     return result
 
 
-def check_site(url):
+def collect_ipv4_addresses(hostname_dict):
+    """
+    Return list of unique IPv4 addresses
+    """
+    ips = set()
+    for item in hostname_dict.values():
+        if 'ip_addresses' not in item:
+            continue
+        for ip in item['ip_addresses']:
+            ips.add(ip)
+    return sorted(list(ips))
+
+
+def check_site(entry):
     """
     Performs our site check and returns results as a dict.
 
@@ -205,49 +220,88 @@ def check_site(url):
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 green-spider/0.1'
     }
 
+    # all the info we'll return for the site
     result = {
-        'input_url': url,
-        'hostnames': [],
-        'resolvable_urls': [],
-        'canonical_urls': [],
-        'urlchecks': [],
+        # input_url: The URL we derived all checks from
+        'input_url': entry['url'],
+        # Meta: Regional and type metadata for the site
+        'meta': {
+            'level': entry['level'],
+            'state': entry['state'],
+            'district': entry['district'],
+            'city': entry['city'],
+        },
+        # Details: All details we collected about the site (which aren't directly related to the report criteria)
+        'details': {
+            'hostnames': {},
+            'ipv4_addresses': [],
+            'resolvable_urls': [],
+            'canonical_urls': [],
+            'urlchecks': [],
+            'icons': [],
+            'feeds': [],
+        },
+        # The actual report criteria
+        'result': {
+            'DNS_RESOLVABLE_IPV4': {'type': 'boolean', 'value': False, 'score': 0},
+            'SITE_REACHABLE': {'type': 'boolean', 'value': False, 'score': 0},
+            'HTTPS': {'type': 'boolean', 'value': False, 'score': 0},
+            'WWW_OPTIONAL': {'type': 'boolean', 'value': False, 'score': 0},
+            'CANONICAL_URL': {'type': 'boolean', 'value': False, 'score': 0},
+            'FAVICON': {'type': 'boolean', 'value': False, 'score': 0},
+            'FEEDS': {'type': 'boolean', 'value': False, 'score': 0},
+            'HTTP_RESPONSE_DURATION': {'type': 'number', 'value': None, 'score': 0},
+        },
+        'score': 0.0,
     }
 
-    # derive hostnames to test
-    parsed = urlparse(url)
+    # derive hostnames to test (with/without www.)
+    parsed = urlparse(entry['url'])
     hostnames = derive_test_hostnames(parsed.hostname)
 
-
-    processed_hostnames = []
+    # try to resolve hostnames
+    processed_hostnames = {}
     for hn in hostnames:
 
-        record  = {
-            'input_hostname': hn,
+        processed_hostnames[hn] = {
             'resolvable': False,
         }
 
         try:
             hostname, aliases, ip_addresses = gethostbyname_ex(hn)
-            record['resolvable'] = True
-            record['resolved_hostname'] = hostname
-            record['aliases'] = aliases
-            record['ip_addresses'] = ip_addresses
+            processed_hostnames[hn]['resolvable'] = True
+            processed_hostnames[hn]['resolved_hostname'] = hostname
+            processed_hostnames[hn]['aliases'] = aliases
+            processed_hostnames[hn]['ip_addresses'] = ip_addresses
         except:
             pass
 
-        processed_hostnames.append(record)
+    result['details']['hostnames'] = processed_hostnames
 
-    result['hostnames'] = sorted(processed_hostnames, key=lambda hn: hn['input_hostname'])
+    result['details']['ipv4_addresses'] = collect_ipv4_addresses(processed_hostnames)
 
+    # check basic HTTP(S) reachability
     checked_urls = []
-    for item in processed_hostnames:
+    checked_urls_set = set()
+
+    for hn in processed_hostnames.keys():
+
+        item = processed_hostnames[hn]
+
         if not item['resolvable']:
             continue
 
         for scheme in ('http', 'https'):
 
+            url = scheme + '://' + item['resolved_hostname'] + '/'
+
+            if url in checked_urls_set:
+                continue
+
+            checked_urls_set.add(url)
+
             record = {
-                'url': scheme + '://' + item['resolved_hostname'] + '/',
+                'url': url,
                 'error': None,
                 'redirects_to': None,
             }
@@ -255,7 +309,7 @@ def check_site(url):
             try:
                 r = requests.head(record['url'], headers=headers, allow_redirects=True)
                 if r.url == url:
-                    logging.info("URL: %s - status %s - no redirect" % (record['url'], r.status_code))
+                    logging.info("URL: %s - status %s" % (record['url'], r.status_code))
                 else:
                     logging.info("URL: %s - status %s - redirects to %s" % (record['url'], r.status_code, r.url))
                     record['redirects_to'] = r.url
@@ -268,13 +322,13 @@ def check_site(url):
 
             checked_urls.append(record)
 
-    result['resolvable_urls'] = sorted(checked_urls, key=lambda url: url['url'])
-    result['canonical_urls'] = sorted(reduce_urls(checked_urls))
+    result['details']['resolvable_urls'] = sorted(checked_urls, key=lambda url: url['url'])
+    result['details']['canonical_urls'] = sorted(reduce_urls(checked_urls))
 
     # Deeper test for the remaining (canonical) URL(s)
-    for check_url in result['canonical_urls']:
+    for check_url in result['details']['canonical_urls']:
 
-        logging.info("Checking URL %s" % check_url)
+        logging.info("Downloading URL %s" % check_url)
 
         check = {
             'url': check_url,
@@ -306,27 +360,125 @@ def check_site(url):
             logging.error(str(e) + " " + check_url)
             check['error'] = "unknown"
 
-        result['urlchecks'].append(check)
+        result['details']['urlchecks'].append(check)
 
 
-    result['urlchecks'] = sorted(result['urlchecks'], key=lambda url: url['url'])
+    result['details']['urlchecks'] = sorted(result['details']['urlchecks'], key=lambda url: url['url'])
+
+    # collect icons
+    icons = set()
+    for c in result['details']['urlchecks']:
+        if 'content' not in c:
+            continue
+        if c['content'] is None:
+            logging.warning("No content for %s" % entry['url'])
+            continue
+        if c['content']['icon'] is not None:
+            icons.add(c['content']['icon'])
+    result['details']['icons'] = sorted(list(icons))
+
+    # collect feeds
+    feeds = set()
+    for c in result['details']['urlchecks']:
+        if c['content'] is None:
+            logging.warning("No content for %s" % entry['url'])
+            continue
+        if 'feeds' in c['content'] and len(c['content']['feeds']):
+            for feed in c['content']['feeds']:
+                feeds.add(feed)
+    result['details']['feeds'] = sorted(list(feeds))
+
+
+    ### Derive criteria
+
+    # DNS_RESOLVABLE_IPV4
+    if len(result['details']['ipv4_addresses']):
+        result['result']['DNS_RESOLVABLE_IPV4'] = {'value': True, 'score': 1}
+
+    # SITE_REACHABLE
+    for item in result['details']['resolvable_urls']:
+        if item['error'] is None:
+            result['result']['SITE_REACHABLE'] = {'value': True, 'score': 1}
+            break
+
+    # HTTPS
+    for item in result['details']['urlchecks']:
+        if item['error'] is None and item['url'].startswith('https://'):
+            result['result']['HTTPS'] = {'value': True, 'score': 1}
+            break
+
+    # WWW_OPTIONAL
+    num_hostnames = 0
+    for hn in result['details']['hostnames'].keys():
+        item = result['details']['hostnames'][hn]
+        if not item['resolvable']:
+            continue
+        num_hostnames += 1
+    if num_hostnames > 1:
+        result['result']['WWW_OPTIONAL'] = {'value': True, 'score': 1}
+
+    # CANONICAL_URL
+    # - either there is only one canonical URL (through redirects)
+    # - or several pages have identical rel=canonical links
+    if len(result['details']['canonical_urls']) == 1:
+        result['result']['CANONICAL_URL'] = {'value': True, 'score': 1}
+    else:
+        links = set()
+        if result['details']['urlchecks'] is None:
+            logging.warning("No urlchecks for %s" % entry['url'])
+        else:
+            for item in result['details']['urlchecks']:
+                if item['content']['canonical_link'] is not None:
+                    links.add(item['content']['canonical_link'])
+        if len(links) == 1:
+            result['result']['CANONICAL_URL'] = {'value': True, 'score': 1}
+
+    # FAVICON
+    if len(result['details']['icons']):
+        result['result']['FAVICON'] = {'value': True, 'score': 1}
+
+    # FEEDS
+    if len(result['details']['feeds']):
+        result['result']['FEEDS'] = {'value': True, 'score': 1}
+
+    # HTTP_RESPONSE_DURATION
+    durations = []
+    for item in result['details']['urlchecks']:
+        if item['error'] is None:
+            durations.append(item['duration'])
+    val = round(statistics.mean(durations))
+    result['result']['HTTP_RESPONSE_DURATION']['value'] = val
+    if val < 100:
+        result['result']['HTTP_RESPONSE_DURATION']['score'] = 1
+    elif val < 1000:
+        result['result']['HTTP_RESPONSE_DURATION']['score'] = 0.5
+
+    # Overall score
+    for item in result['result'].keys():
+        result['score'] += result['result'][item]['score']
 
     return result
 
 
 def main():
+    """
+    Bringing it all together
+    """
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 
+    # refresh our local clone of the green directory
     get_green_directory()
 
-    urls = []
+    # build the list of website URLs to run checks for
+    logging.info("Processing green-directory")
+    input_entries = []
+
     for entry in dir_entries():
 
         if 'type' not in entry:
             logging.error("Entry without type")
             continue
-
         if 'urls' not in entry:
             logging.debug("Entry %s does not have any URLs." % repr_entry(entry))
             continue
@@ -339,36 +491,55 @@ def main():
             except NameError as ne:
                 logging.error("Error in %s: 'url' key missing (%s)" % (repr_entry(entry), entry['urls'][n]))
         if website_url:
-            urls.append(website_url)
+            input_entries.append({
+                "url": website_url,
+                "level": entry.get("level"),
+                "state": entry.get("state"),
+                "district": entry.get("district"),
+                "city": entry.get("city"),
+            })
 
+
+    # randomize order, to distribute requests over servers
+    logging.info("Shuffling input URLs")
     random.seed()
-    random.shuffle(urls)
+    random.shuffle(input_entries)
 
+    # run checks
+    logging.info("Starting checks")
     results = {}
 
-    if concurrency > 1:
-        pool = Pool(concurrency)
-        for url in urls:
-            results[url] = pool.apply_async(check_site, kwds={"url": url})
-        pool.close()
-        pool.join()
-    else:
-        for url in urls:
-            results[url] = check_site(url)
+    pool = Pool(concurrency)
+    for ientry in input_entries:
+        logging.info("Submitting %s to job pool" % ientry['url'])
+        results[ientry['url']] = pool.apply_async(check_site, kwds={'entry': ientry})
+    pool.close()
+    pool.join()
 
-    results2 = []
+    logging.info("Checks are finished")
+
+    # Restructure result from dict of ApplyResult
+    # to list of dicts and sort in stable way
+    json_result = []
     done = set()
+
+    logging.info("Restructuring results")
 
     # convert results from ApplyResult to dict
     for url in sorted(results.keys()):
         if url not in done:
-            results2.append(results[url].get())
+            logging.info("Getting result for %s" % url)
+            try:
+                resultsitem = results[url].get()
+                json_result.append(resultsitem)
+            except Exception as e:
+                logging.error("Error ehn getting result for '%s': %s" % (url, e))
         done.add(url)
 
     # Write result as JSON
     output_filename = os.path.join(result_path, "spider_result.json")
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
-        json.dump(results2, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
+        json.dump(json_result, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
 
 
 if __name__ == "__main__":
