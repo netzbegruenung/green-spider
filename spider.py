@@ -22,7 +22,7 @@ import yaml
 # configuration
 
 # number of parallel processes to use for crawling
-concurrency = 4
+concurrency = 3
 
 # connection timeout for website checks (seconds)
 connect_timeout = 5
@@ -366,19 +366,27 @@ def check_site(entry):
     result['details']['urlchecks'] = sorted(result['details']['urlchecks'], key=lambda url: url['url'])
 
     # collect icons
+    icons = set()
     for c in result['details']['urlchecks']:
-        if 'icon' in c['content'] and c['content']['icon']:
-            if c['content']['icon'] in result['details']['icons']:
-                continue
-            result['details']['icons'].append(c['content']['icon'])
+        if 'content' not in c:
+            continue
+        if c['content'] is None:
+            logging.warning("No content for %s" % entry['url'])
+            continue
+        if c['content']['icon'] is not None:
+            icons.add(c['content']['icon'])
+    result['details']['icons'] = sorted(list(icons))
 
     # collect feeds
+    feeds = set()
     for c in result['details']['urlchecks']:
+        if c['content'] is None:
+            logging.warning("No content for %s" % entry['url'])
+            continue
         if 'feeds' in c['content'] and len(c['content']['feeds']):
             for feed in c['content']['feeds']:
-                if feed in result['details']['feeds']:
-                    continue
-                result['details']['feeds'].append(feed)
+                feeds.add(feed)
+    result['details']['feeds'] = sorted(list(feeds))
 
 
     ### Derive criteria
@@ -416,9 +424,12 @@ def check_site(entry):
         result['result']['CANONICAL_URL'] = {'value': True, 'score': 1}
     else:
         links = set()
-        for item in result['details']['urlchecks']:
-            if item['content']['canonical_link'] is not None:
-                links.add(item['content']['canonical_link'])
+        if result['details']['urlchecks'] is None:
+            logging.warning("No urlchecks for %s" % entry['url'])
+        else:
+            for item in result['details']['urlchecks']:
+                if item['content']['canonical_link'] is not None:
+                    links.add(item['content']['canonical_link'])
         if len(links) == 1:
             result['result']['CANONICAL_URL'] = {'value': True, 'score': 1}
 
@@ -435,10 +446,12 @@ def check_site(entry):
     for item in result['details']['urlchecks']:
         if item['error'] is None:
             durations.append(item['duration'])
-    result['result']['HTTP_RESPONSE_DURATION'] = {
-        'value': round(statistics.mean(durations)),
-        'score': 1.0/statistics.mean(durations) * 500
-    }
+    val = round(statistics.mean(durations))
+    result['result']['HTTP_RESPONSE_DURATION']['value'] = val
+    if val < 100:
+        result['result']['HTTP_RESPONSE_DURATION']['score'] = 1
+    elif val < 1000:
+        result['result']['HTTP_RESPONSE_DURATION']['score'] = 0.5
 
     # Overall score
     for item in result['result'].keys():
@@ -458,6 +471,7 @@ def main():
     get_green_directory()
 
     # build the list of website URLs to run checks for
+    logging.info("Processing green-directory")
     input_entries = []
 
     for entry in dir_entries():
@@ -485,34 +499,47 @@ def main():
                 "city": entry.get("city"),
             })
 
+
     # randomize order, to distribute requests over servers
+    logging.info("Shuffling input URLs")
     random.seed()
     random.shuffle(input_entries)
 
     # run checks
+    logging.info("Starting checks")
     results = {}
 
     pool = Pool(concurrency)
-    for entry in input_entries:
-        results[entry['url']] = pool.apply_async(check_site, kwds={'entry': entry})
+    for ientry in input_entries:
+        logging.info("Submitting %s to job pool" % ientry['url'])
+        results[ientry['url']] = pool.apply_async(check_site, kwds={'entry': ientry})
     pool.close()
     pool.join()
 
+    logging.info("Checks are finished")
+
     # Restructure result from dict of ApplyResult
     # to list of dicts and sort in stable way
-    results2 = []
+    json_result = []
     done = set()
+
+    logging.info("Restructuring results")
 
     # convert results from ApplyResult to dict
     for url in sorted(results.keys()):
         if url not in done:
-            results2.append(results[url].get())
+            logging.info("Getting result for %s" % url)
+            try:
+                resultsitem = results[url].get()
+                json_result.append(resultsitem)
+            except Exception as e:
+                logging.error("Error ehn getting result for '%s': %s" % (url, e))
         done.add(url)
 
     # Write result as JSON
     output_filename = os.path.join(result_path, "spider_result.json")
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
-        json.dump(results2, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
+        json.dump(json_result, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
 
 
 if __name__ == "__main__":
