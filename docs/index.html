@@ -17,9 +17,17 @@
     background-color: #ffdbdb;
     font-size: 1rem;
   }
+  .medium {
+    background-color: #fce7ac;
+    font-size: 1rem;
+  }
   .good {
     background-color: #cfeaa8;
     font-size: 1rem;
+  }
+
+  td.text {
+    font-size: 0.85rem;
   }
 
   .icon {
@@ -38,7 +46,7 @@
 
 <div class="container-fluid">
 
-  <p>Erläuterungen der Testkriterien am <a href="#docs">Ende der Seite</a>. Gehe zum <a href="https://github.com/netzbegruenung/green-spider/">green-spider GitHub repository</a> um mehr zu erfahren.</p>
+  <p>Weitere Information: <a href="https://github.com/netzbegruenung/green-spider/">green-spider GitHub repository</a> - <a href="https://github.com/netzbegruenung/green-spider/blob/master/KRITERIEN.md">Kriterien</a></p>
 
   <table class="table">
     <thead>
@@ -51,6 +59,7 @@
         <th scope="col">Score</th>
         <th scope="col">IP-Adresse</th>
         <th scope="col">Erreichbar</th>
+        <th scope="col">Antwortzeit</th>
         <th scope="col">Icon</th>
         <th scope="col"><abbr title="Site ist sowohl mit www. als auch ohne www. in URL erreichbar">www. optional</abbr></th>
         <th scope="col"><abbr title="URL-Varianten leiten auf eine einzige Startseiten-URL weiter">Kanonische URL</abbr></th>
@@ -62,22 +71,6 @@
     <tbody>
     </tbody>
   </table>
-
-  <hr>
-
-  <h3 id="docs">Testkriterien</h3>
-
-  <h4>www. optional</h4>
-
-  <p>Die Site sollte sowohl mit &quot;www.&quot; als auch ohne &quot;www.&quot; am Anfang der URL erreichbar sein.</p>
-
-  <h4>Kanonische URL</h4>
-
-  <p>Verschiedene URLs zum Aufruf der Site (mit/ohne &quot;www.&quot; Präfix, mit/ohne HTTPS) sollten alle per HTTP Redirect auf eine einzige &quot;kanonische&quot; URL weiter leiten.</p>
-
-  <h4>HTTPS</h4>
-
-  <p>Die Site ist per verschlüsselter HTTP-Verbindung (HTTPS-Protokoll) erreichbar.</p>
 
 </div>
 
