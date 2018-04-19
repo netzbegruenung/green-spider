@@ -53,7 +53,7 @@ $(function(){
 
         // IPs
         var ips = _.join(item.details.ipv4_addresses, ', ');
-        row.append('<td class="'+ (ips === '' ? 'bad' : 'good') +' text-center">' + (ips === '' ? '❌' : ips) + '</td>');
+        row.append('<td class="text '+ (ips === '' ? 'bad' : 'good') +' text-center">' + (ips === '' ? '❌' : ips) + '</td>');
 
         // SITE_REACHABLE
         row.append('<td class="'+ (item.result.SITE_REACHABLE.value ? 'good' : 'bad') +' text-center">' + (item.result.SITE_REACHABLE.value ? '✅' : '❌') + '</td>');
