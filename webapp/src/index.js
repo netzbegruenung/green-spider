@@ -51,6 +51,12 @@ $(function(){
         // SITE_REACHABLE
         row.append('<td class="'+ (item.result.SITE_REACHABLE.value ? 'good' : 'bad') +' text-center">' + (item.result.SITE_REACHABLE.value ? '✅' : '❌') + '</td>');
 
+        // HTTP_RESPONSE_DURATION
+        var durationClass = 'bad';
+        if (item.result.HTTP_RESPONSE_DURATION.score > 0) { durationClass = 'medium'; }
+        if (item.result.HTTP_RESPONSE_DURATION.score > 0.5) { durationClass = 'good'; }
+        row.append('<td class="text '+ durationClass +' text-center" data-order="' + item.result.HTTP_RESPONSE_DURATION.value + '">' + item.result.HTTP_RESPONSE_DURATION.value + ' ms</td>');
+
         // FAVICON
         var icon = item.result.FAVICON.value;
         row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center">' + (icon ? ('<img src="' + item.details.icons[0] + '" class="icon">') : '❌') + '</td>');
