@@ -8,6 +8,13 @@ import LazyLoad from 'vanilla-lazyload';
 
 $(function(){
 
+  var trunc = function(s, length) {
+    if (s.length > length) {
+      s = s.substring(0, length) + '…';
+    }
+    return s;
+  };
+
   var table = null;
 
   $.getJSON('data/screenshots.json', function(screenshots){
@@ -39,7 +46,7 @@ $(function(){
         row.append('<td>' + (item.meta.city === null ? '' : item.meta.city) + '</td>');
 
         // input URL
-        row.append('<td><a href="' + item.input_url + '">' + punycode.toUnicode(item.input_url) + '</a></td>');
+        row.append('<td><a href="' + item.input_url + '">' + trunc(punycode.toUnicode(item.input_url), 60) + '</a></td>');
 
         // score
         row.append('<td>' + item.score.toFixed(1) + '</td>');
