@@ -38,6 +38,9 @@ green_directory_local_path = './cache/green-directory'
 
 result_path = './webapp/dist/data'
 
+# IP address of the newthinking GCMS server
+gcms_ip = "91.102.13.20"
+
 # end configuration
 
 
@@ -141,6 +144,8 @@ def check_content(r):
     result['encoding'] = r.encoding
     soup = BeautifulSoup(r.text, 'html.parser')
 
+    result['html'] = r.text
+
     # page title
     result['title'] = None
     title = soup.find('head').find('title')
@@ -207,6 +212,21 @@ def collect_ipv4_addresses(hostname_dict):
     return sorted(list(ips))
 
 
+def parse_generator(generator):
+    """
+    Return well known CMS names from generator
+    """
+    generator = generator.lower()
+    if 'typo3' in generator:
+        return "typo3"
+    elif 'wordpress' in generator:
+        return "wordpress"
+    elif 'drupal' in generator:
+        return "drupal"
+    elif 'joomla' in generator:
+        return "joomla"
+    return generator
+
 def check_site(entry):
     """
     Performs our site check and returns results as a dict.
@@ -240,6 +260,7 @@ def check_site(entry):
             'urlchecks': [],
             'icons': [],
             'feeds': [],
+            'cms': None,
         },
         # The actual report criteria
         'result': {
@@ -388,6 +409,35 @@ def check_site(entry):
                 feeds.add(feed)
     result['details']['feeds'] = sorted(list(feeds))
 
+    # detect CMS
+    for c in result['details']['urlchecks']:
+        if c['content'] is None:
+            continue
+        if 'generator' not in c['content']:
+            continue
+        if c['content']['generator'] != "" and c['content']['generator'] is not None:
+
+            result['details']['cms'] = parse_generator(c['content']['generator'])
+            # Qualify certain CMS flavours in more detail
+            if result['details']['cms'] == "typo3":
+                if gcms_ip in result['details']['ipv4_addresses']:
+                    result['details']['cms'] = "typo3-gcms"
+                elif 'typo3-gruene.de' in c['content']['html']:
+                    result['details']['cms'] = "typo3-gruene"
+            elif result['details']['cms'] == "wordpress":
+                if 'Urwahl3000' in c['content']['html']:
+                    result['details']['cms'] = "wordpress-urwahl"
+
+        else:
+            # No generator Tag. Use HTML content.
+            if 'Urwahl3000' in c['content']['html']:
+                result['details']['cms'] = "wordpress-urwahl"
+            elif 'wordpress' in c['content']['html']:
+                result['details']['cms'] = "wordpress"
+
+        # we can stop here
+        break
+
 
     ### Derive criteria
 
@@ -456,6 +506,13 @@ def check_site(entry):
     # Overall score
     for item in result['result'].keys():
         result['score'] += result['result'][item]['score']
+
+    # clean up - remove full HTML
+    for item in result['details']['urlchecks']:
+        try:
+            del item['content']['html']
+        except:
+            pass
 
     return result
 
@@ -533,7 +590,7 @@ def main():
                 resultsitem = results[url].get()
                 json_result.append(resultsitem)
             except Exception as e:
-                logging.error("Error ehn getting result for '%s': %s" % (url, e))
+                logging.error("Error getting result for '%s': %s" % (url, e))
         done.add(url)
 
     # Write result as JSON
