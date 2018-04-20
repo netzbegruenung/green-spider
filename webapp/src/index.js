@@ -96,6 +96,9 @@ $(function(){
         }
         row.append('<td class="'+ (screenshot ? 'good' : 'bad') +' text-center">' + (screenshot ? screenshot : '❌') + '</td>');
 
+        // cms
+        row.append('<td class="text text-center">' + (item.details.cms ? item.details.cms : '') + '</td>');
+
         tbody.append(row);
       });
 
