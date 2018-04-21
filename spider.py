@@ -454,7 +454,7 @@ def check_site(entry):
     # HTTPS
     for item in result['details']['urlchecks']:
         if item['error'] is None and item['url'].startswith('https://'):
-            result['result']['HTTPS'] = {'value': True, 'score': 1}
+            result['result']['HTTPS'] = {'value': True, 'score': 2}
             break
 
     # WWW_OPTIONAL
