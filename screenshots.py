@@ -31,7 +31,7 @@ def main():
     with open(json_file, 'r', encoding="utf8") as jsonfile:
         data = json.load(jsonfile)
     for entry in data:
-        urls = entry.get('canonical_urls')
+        urls = entry['details'].get('canonical_urls')
         if urls is None or len(urls) == 0:
             continue
         url = urls[0]
