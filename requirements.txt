@@ -6,5 +6,6 @@ GitPython==2.1.9
 idna==2.6
 PyYAML==3.12
 requests==2.18.4
+selenium==3.11.0
 smmap2==2.0.3
 urllib3==1.22

@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 from git import Repo
 from multiprocessing import Pool
+from selenium import webdriver
 from socket import gethostbyname_ex
 from urllib.parse import urljoin
 from urllib.parse import urlparse
@@ -131,6 +132,45 @@ def normalize_title(s):
     s = s.replace('  ', ' ')
     s = s.strip()
     return s
+
+def check_responsiveness(url):
+    """
+    Checks
+    - whether a page adapts to different viewport sizes
+    - whether a viewport meta tag exists
+    and returns details
+    """
+    details = {
+        'document_width': {},
+        'viewport_meta_tag': None,
+    }
+
+    # sizes we check for (width, height)
+    sizes = (
+        (320,480), # old smartphone
+        (768,1024), # older tablet or newer smartphone
+        (1024,768), # older desktop or horiz. tablet
+        (1920, 1080), # Full HD horizontal
+    )
+
+    # Our selenium user agent using PhantomJS/Webkit as an engine
+    driver = webdriver.PhantomJS()
+    driver.set_window_size(sizes[0][0], sizes[0][1])
+    driver.get(url)
+
+    for (width, height) in sizes:
+        driver.set_window_size(width, height)
+        key = "%sx%s" % (width, height)
+        width = driver.execute_script("return document.body.scrollWidth")
+        details['document_width'][key] = int(width)
+
+    try:
+        element = driver.find_element_by_xpath("//meta[@name='viewport']")
+        details['viewport_meta_tag'] = element.get_attribute('content')
+    except:
+        pass
+
+    return details
 
 def check_content(r):
     """
@@ -261,6 +301,7 @@ def check_site(entry):
             'icons': [],
             'feeds': [],
             'cms': None,
+            'responsive': None,
         },
         # The actual report criteria
         'result': {
@@ -272,6 +313,7 @@ def check_site(entry):
             'FAVICON': {'type': 'boolean', 'value': False, 'score': 0},
             'FEEDS': {'type': 'boolean', 'value': False, 'score': 0},
             'HTTP_RESPONSE_DURATION': {'type': 'number', 'value': None, 'score': 0},
+            'RESPONSIVE': {'type': 'boolean', 'value': False, 'score': 0},
         },
         'score': 0.0,
     }
@@ -357,6 +399,7 @@ def check_site(entry):
             'duration': None,
             'error': None,
             'content': None,
+            'responsive': None,
         }
 
         try:
@@ -367,6 +410,12 @@ def check_site(entry):
             # Content checks
             if r.status_code < 300:
                 check['content'] = check_content(r)
+
+            # Responsiveness check
+            try:
+                check['responsive'] = check_responsiveness(check_url)
+            except Exception as e:
+                logging.error("Error when checking responsiveness for '%s': %s" % (check_url, e))
 
         except requests.exceptions.ConnectionError as e:
             logging.error(str(e) + " " + check_url)
@@ -408,6 +457,22 @@ def check_site(entry):
             for feed in c['content']['feeds']:
                 feeds.add(feed)
     result['details']['feeds'] = sorted(list(feeds))
+
+    # detect responsive
+    viewports = set()
+    min_width = 2000
+    for c in result['details']['urlchecks']:
+        if c['responsive'] is None:
+            continue
+        if c['responsive']['viewport_meta_tag'] is not None:
+            viewports.add(c['responsive']['viewport_meta_tag'])
+        widths = c['responsive']['document_width'].values()
+        if min(widths) < min_width:
+            min_width = min(widths)
+    result['details']['responsive'] = {
+        'viewport_meta_tag': list(viewports),
+        'min_width': min_width,
+    }
 
     # detect CMS
     for c in result['details']['urlchecks']:
@@ -502,6 +567,13 @@ def check_site(entry):
         result['result']['HTTP_RESPONSE_DURATION']['score'] = 1
     elif val < 1000:
         result['result']['HTTP_RESPONSE_DURATION']['score'] = 0.5
+
+    # RESPONSIVE
+    if result['details']['responsive'] is not None:
+        if (result['details']['responsive']['min_width'] < 500 and
+            len(result['details']['responsive']['viewport_meta_tag']) > 0):
+            result['result']['RESPONSIVE']['value'] = True
+            result['result']['RESPONSIVE']['score'] = 1
 
     # Overall score
     for item in result['result'].keys():

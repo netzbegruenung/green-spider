@@ -17,3 +17,5 @@ Wir prüfen Sites nach den folgenden Kriterien:
 - `FEEDS`: Die Site verweist auf RSS oder Atom Feeds via `rel=alternate` Link Tag.
 
 - `HTTP_RESPONSE_DURATION`: Zeit, die vom Absenden des HTTP-Request bis zum Empfang der Response-Header vergangen ist.
+
+- `RESPONSIVE`: Die Seite besitzt ein `viewport` Meta-Tag und die Breite der Inhalte passt sich an verschiedene Fenster- bzw. Gerätegrößen an.
