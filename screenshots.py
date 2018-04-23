@@ -66,9 +66,13 @@ def make_screenshots(url):
         ]
         subprocess.run(command)
         blob = bucket.blob('%s/%s' % (subfolder, filename))
-        with open('./temp/%s/%s' % (subfolder, filename), 'rb') as my_file:
-            blob.upload_from_file(my_file, content_type="image/png")
-        blob.make_public()
+        local_path = './temp/%s/%s' % (subfolder, filename)
+        if os.path.exists(local_path):
+            with open(local_path, 'rb') as my_file:
+                blob.upload_from_file(my_file, content_type="image/png")
+                blob.make_public()
+        else:
+            print("Error: No screenshot created: size=%s, url='%s'" % (size, url))
     return filename
 
 if __name__ == "__main__":
