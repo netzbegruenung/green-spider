@@ -68,6 +68,10 @@ $(function(){
         var icon = item.result.FAVICON.value;
         row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center">' + (icon ? ('<img src="' + item.details.icons[0] + '" class="icon">') : '❌') + '</td>');
 
+        // HTTPS
+        var hasHTTPS = item.result.HTTPS.value;
+        row.append('<td class="'+ (hasHTTPS ? 'good' : 'bad') +' text-center">' + (hasHTTPS ? '✅' : '❌') + '</td>');
+
         // WWW_OPTIONAL
         var wwwOptional = item.result.WWW_OPTIONAL.value;
         row.append('<td class="'+ (wwwOptional ? 'good' : 'bad') +' text-center">' + (wwwOptional ? '✅' : '❌') + '</td>');
@@ -76,9 +80,8 @@ $(function(){
         var canonical = item.result.CANONICAL_URL.value;
         row.append('<td class="'+ (canonical ? 'good' : 'bad') +' text-center">' + (canonical ? '✅' : '❌') + '</td>');
 
-        // https
-        var hasHTTPS = item.result.HTTPS.value;
-        row.append('<td class="'+ (hasHTTPS ? 'good' : 'bad') +' text-center">' + (hasHTTPS ? '✅' : '❌') + '</td>');
+        var responsive = item.result.RESPONSIVE.value;
+        row.append('<td class="'+ (responsive ? 'good' : 'bad') +' text-center">' + (responsive ? '✅' : '❌') + '</td>');
 
         // feeds
         var feeds = item.result.FEEDS.value;
