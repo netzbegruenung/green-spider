@@ -1,10 +1,10 @@
-language: python
+sudo: required
+
+services:
+  - docker
 
 notifications:
   email: false
-
-install:
-  - make venv
 
 script:
   - make test
