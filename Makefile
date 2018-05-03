@@ -6,7 +6,7 @@
 spider:
 	docker pull python:3.6-alpine3.7
 	docker build -t spider .
-	docker run --rm -ti -v $(PWD):/out spider
+	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
 
 screenshots: venv
 	docker pull netzbegruenung/green-spider-screenshotter:latest
