@@ -12,14 +12,11 @@ RUN apt-get update \
   && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb \
     && rm google-chrome-stable_current_amd64.deb \
-  && pip3 install GitPython idna PyYAML requests==2.18.4 selenium==3.11.0 smmap2==2.0.3 urllib3==1.22 certifi==2018.1.18 \
+  && pip3 install GitPython idna PyYAML beautifulsoup4==4.6.0 requests==2.18.4 responses==0.9.0 selenium==3.11.0 smmap2==2.0.3 urllib3==1.22 certifi==2018.1.18 \
   && wget https://chromedriver.storage.googleapis.com/2.38/chromedriver_linux64.zip \
     && unzip chromedriver_linux64.zip \
     && rm chromedriver_linux64.zip \
   && apt-get clean
-
-# TODO: move this into the above
-RUN pip3 install beautifulsoup4==4.6.0
 
 RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
     && tar xjf phantomjs-2.1.1-linux-x86_64.tar.bz2 \
