@@ -2,13 +2,11 @@
 
 .PHONY: webapp
 
-# Python venv for running the spider locally
-venv:
-	virtualenv -p python3 venv
-	venv/bin/pip3 install -r requirements.txt
-
-spider: venv
-	venv/bin/python ./spider.py
+# Build docker image and run spider in Docker container
+spider:
+	docker pull python:3.6-alpine3.7
+	docker build -t spider .
+	docker run --rm -ti -v $(PWD):/out spider
 
 screenshots: venv
 	docker pull netzbegruenung/green-spider-screenshotter:latest
