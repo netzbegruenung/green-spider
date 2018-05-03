@@ -121,7 +121,7 @@ def reduce_urls(urllist):
             targets.add(u['redirects_to'])
         else:
             targets.add(u['url'])
-    return list(targets)
+    return sorted(list(targets))
 
 
 def normalize_title(s):
