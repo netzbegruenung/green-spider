@@ -1,0 +1,10 @@
+language: python
+
+notifications:
+  email: false
+
+install:
+  - make venv
+
+script:
+  - make test

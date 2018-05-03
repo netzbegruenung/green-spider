@@ -23,3 +23,6 @@ webapp: webapp/node_modules
 
 serve-webapp:
 	cd docs && ../venv/bin/python -m http.server
+
+test: venv
+	venv/bin/python ./test.py

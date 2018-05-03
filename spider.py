@@ -105,7 +105,7 @@ def derive_test_hostnames(hostname):
     else:
         hostnames.add('www.' + hostname)
 
-    return list(hostnames)
+    return sorted(list(hostnames))
 
 
 def reduce_urls(urllist):
