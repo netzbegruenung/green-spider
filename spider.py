@@ -67,7 +67,7 @@ def dir_entries():
             if not filepath.endswith(".yaml"):
                 continue
 
-            with open(filepath, 'r') as yamlfile:
+            with open(filepath, 'r', encoding='utf8') as yamlfile:
                 for doc in yaml.load_all(yamlfile):
                     yield doc
 
