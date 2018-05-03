@@ -37,7 +37,7 @@ green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 green_direcory_data_path = 'data/countries/de'
 green_directory_local_path = './cache/green-directory'
 
-result_path = './webapp/dist/data'
+result_path = '/out'
 
 # IP address of the newthinking GCMS server
 gcms_ip = "91.102.13.20"
@@ -67,7 +67,7 @@ def dir_entries():
             if not filepath.endswith(".yaml"):
                 continue
 
-            with open(filepath, 'r') as yamlfile:
+            with open(filepath, 'r', encoding='utf8') as yamlfile:
                 for doc in yaml.load_all(yamlfile):
                     yield doc
 
