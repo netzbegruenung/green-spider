@@ -1,12 +1,18 @@
 
 
-.PHONY: webapp
+.PHONY: webapp dockerimage
 
-# Build docker image and run spider in Docker container
-spider:
+# Build docker image
+dockerimage:
 	docker pull debian:stretch-slim
 	docker build -t spider .
+
+# Run spider in docker image
+spider: dockerimage
 	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
+
+test: dockerimage
+	docker run --rm -ti spider /test.py
 
 screenshots: venv
 	docker pull netzbegruenung/green-spider-screenshotter:latest
@@ -23,6 +29,3 @@ webapp: webapp/node_modules
 
 serve-webapp:
 	cd docs && ../venv/bin/python -m http.server
-
-test: venv
-	venv/bin/python ./test.py
