@@ -4,7 +4,7 @@
 
 # Build docker image and run spider in Docker container
 spider:
-	docker pull python:3.6-alpine3.7
+	docker pull debian:stretch-slim
 	docker build -t spider .
 	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
 
