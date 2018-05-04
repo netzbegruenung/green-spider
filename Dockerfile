@@ -24,7 +24,7 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x
     && rm -rf phantomjs-2.1.1-linux-x86_64
 
 ADD spider.py /
-ADD test.py /
+ADD spider_test.py /
 
 ENTRYPOINT ["python3"]
 CMD ["/spider.py"]
