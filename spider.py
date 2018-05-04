@@ -121,7 +121,7 @@ def reduce_urls(urllist):
             targets.add(u['redirects_to'])
         else:
             targets.add(u['url'])
-    return list(targets)
+    return sorted(list(targets))
 
 
 def normalize_title(s):
@@ -181,14 +181,17 @@ def check_content(r):
     """
     result = {}
 
-    result['encoding'] = r.encoding
+    result['encoding'] = r.encoding.lower()
     soup = BeautifulSoup(r.text, 'html.parser')
 
     result['html'] = r.text
 
     # page title
     result['title'] = None
-    title = soup.find('head').find('title')
+    title = None
+    head = soup.find('head')
+    if head is not None:
+        title = head.find('title')
     if title is not None:
         result['title'] = normalize_title(title.get_text())
 
@@ -222,19 +225,21 @@ def check_content(r):
 
     # generator meta tag
     result['generator'] = None
-    generator = soup.head.select('[name=generator]')
-    if len(generator):
-        result['generator'] = generator[0].get('content')
+    if head is not None:
+        generator = head.select('[name=generator]')
+        if len(generator):
+            result['generator'] = generator[0].get('content')
 
     # opengraph meta tags
     result['opengraph'] = None
     og = set()
-    for item in soup.head.find_all(property=re.compile('^og:')):
-        og.add(item.get('property'))
-    for item in soup.head.find_all(itemprop=re.compile('^og:')):
-        og.add(item.get('itemprop'))
-    if len(og):
-        result['opengraph'] = list(og)
+    if head is not None:
+        for item in head.find_all(property=re.compile('^og:')):
+            og.add(item.get('property'))
+        for item in head.find_all(itemprop=re.compile('^og:')):
+            og.add(item.get('itemprop'))
+        if len(og):
+            result['opengraph'] = sorted(list(og))
 
     return result
 

@@ -12,7 +12,7 @@ spider: dockerimage
 	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
 
 test: dockerimage
-	docker run --rm -ti spider /test.py
+	docker run --rm -ti spider /spider_test.py
 
 screenshots: venv
 	docker pull netzbegruenung/green-spider-screenshotter:latest
