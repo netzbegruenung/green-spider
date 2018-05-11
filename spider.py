@@ -622,16 +622,16 @@ def main():
             try:
                 if entry['urls'][n]['type'] == "WEBSITE":
                     website_url = entry['urls'][n]['url']
+                    if website_url:
+                        input_entries.append({
+                            "url": website_url,
+                            "level": entry.get("level"),
+                            "state": entry.get("state"),
+                            "district": entry.get("district"),
+                            "city": entry.get("city"),
+                        })
             except NameError as ne:
                 logging.error("Error in %s: 'url' key missing (%s)" % (repr_entry(entry), entry['urls'][n]))
-        if website_url:
-            input_entries.append({
-                "url": website_url,
-                "level": entry.get("level"),
-                "state": entry.get("state"),
-                "district": entry.get("district"),
-                "city": entry.get("city"),
-            })
 
 
     # randomize order, to distribute requests over servers
