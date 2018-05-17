@@ -6,7 +6,7 @@ Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts v
 
 - Spider: Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
 
-- Webapp: Darstellung der Spider-Ergebnisse unter [green-spider.netzbegruenung.de](http://green-spider.netzbegruenung.de/)
+- Webapp: Darstellung der Spider-Ergebnisse unter [green-spider.netzbegruenung.de](https://green-spider.netzbegruenung.de/)
 
 ## Aktivitäten
 
