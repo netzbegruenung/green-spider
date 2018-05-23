@@ -93,8 +93,8 @@ $(function(){
           if (typeof screenshots[item.details.canonical_urls[0]] !== 'undefined') {
             var surl = 'http://green-spider-screenshots.sendung.de/320x640/'+screenshots[item.details.canonical_urls[0]];
             var lurl = 'http://green-spider-screenshots.sendung.de/1500x1500/'+screenshots[item.details.canonical_urls[0]];
-            screenshot = '<a class="screenshot" href="'+ surl +'" target="_blank" title="Mobile">M</a>';
-            screenshot += '<a class="screenshot" href="'+ lurl +'" target="_blank" title="Desktop">D</a>';
+            screenshot = '<a class="screenshot" href="'+ surl +'" target="_blank" title="Mobile"><i class="icon ion-md-phone-portrait"></i></a>';
+            screenshot += '<a class="screenshot" href="'+ lurl +'" target="_blank" title="Desktop"><i class="icon ion-md-desktop"></i></a>';
           }
         }
         row.append('<td class="'+ (screenshot ? 'good' : 'bad') +' text-center">' + (screenshot ? screenshot : '❌') + '</td>');
