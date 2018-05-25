@@ -68,8 +68,8 @@ $(function(){
         row.append('<td class="text '+ durationClass +' text-center" data-order="' + item.result.HTTP_RESPONSE_DURATION.value + '">' + item.result.HTTP_RESPONSE_DURATION.value + ' ms</td>');
 
         // FAVICON
-        var icon = item.result.FAVICON.value;
-        var iconFile = (icon ? item.details.icons[0] : '');
+        var icon = item.result.FAVICON.value && (item.details.icons[0] != null);
+        var iconFile = (icon && (item.details.icons[0] != null) ? item.details.icons[0] : '');
         row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center" data-order="'+ iconFile +'">' + (icon ? ('<img src="/siteicons/' + iconFile + '" class="siteicon" title="'+ iconFile +'">') : no) + '</td>');
 
         // HTTPS
