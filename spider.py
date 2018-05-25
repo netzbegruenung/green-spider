@@ -35,7 +35,7 @@ read_timeout = 10
 # Git repo for our data
 green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 # folder in that repo that holds the data
-green_direcory_data_path = 'data/countries/de/bb'
+green_direcory_data_path = 'data/countries/de'
 green_directory_local_path = './cache/green-directory'
 
 result_path = '/out'
