@@ -27,7 +27,6 @@ webapp/node_modules:
 # Build webapp
 webapp: webapp/node_modules
 	cd webapp && npx webpack --config webpack.config.js
-	rm -rf ./docs/*
 	cp -r webapp/dist/* ./docs/
 
 serve-webapp:
