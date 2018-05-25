@@ -8,6 +8,7 @@ from socket import gethostbyname_ex
 from urllib.parse import urljoin
 from urllib.parse import urlparse
 import certifi
+import hashlib
 import json
 import logging
 import os
@@ -34,7 +35,7 @@ read_timeout = 10
 # Git repo for our data
 green_directory_repo = 'https://github.com/netzbegruenung/green-directory.git'
 # folder in that repo that holds the data
-green_direcory_data_path = 'data/countries/de'
+green_direcory_data_path = 'data/countries/de/bb'
 green_directory_local_path = './cache/green-directory'
 
 result_path = '/out'
@@ -62,7 +63,7 @@ def dir_entries():
     Iterator over all data files in the cloned green directory
     """
     path = os.path.join(green_directory_local_path, green_direcory_data_path)
-    for root, dirs, files in os.walk(path):
+    for root, _, files in os.walk(path):
         for fname in files:
 
             filepath = os.path.join(root, fname)
@@ -134,6 +135,49 @@ def normalize_title(s):
     s = s.replace('  ', ' ')
     s = s.strip()
     return s
+
+def download_icon(icon_url):
+    """
+    Download an icon from the given URL and store it with
+    a file name of <hash>.<ending>
+    """
+
+    default_endings = {
+        "image/x-icon": "ico",
+        "image/vnd.microsoft.icon": "ico",
+        "image/png": "png",
+        "image/jpeg": "jpg",
+    }
+
+    # Download the icon
+    r = requests.get(icon_url)
+    r.raise_for_status()
+
+    content_hash = hashlib.md5(r.content).hexdigest()
+    extension = ""
+
+    file_name = os.path.basename(icon_url)[-1]
+    if file_name != "" and "." in file_name:
+        ext = file_name.split(".")[-1]
+        if ext != "":
+            extension = ext
+    
+    if extension == "":
+        # derive from content type
+        t = r.headers.get('content-type')
+        try:
+            extension = default_endings[t]
+        except KeyError:
+            logging.error("No file ending defined for icon type '%s'" % t)
+            return None
+    
+    filename = content_hash + "." + extension.lower()
+
+    path = siteicons_path + os.path.sep + filename
+    with open(path, 'wb') as iconfile:
+        iconfile.write(r.content)
+
+    return filename
 
 def check_responsiveness(url):
     """
@@ -427,12 +471,12 @@ def check_site(entry):
         except requests.exceptions.ConnectionError as e:
             logging.error(str(e) + " " + check_url)
             check['error'] = "connection"
-        except requests.exceptions.Timeout as e:
-            logging.error(str(e) + " " + check_url)
-            check['error'] = "connection_timeout"
         except requests.exceptions.ReadTimeout as e:
             logging.error(str(e) + " " + check_url)
             check['error'] = "read_timeout"
+        except requests.exceptions.Timeout as e:
+            logging.error(str(e) + " " + check_url)
+            check['error'] = "connection_timeout"
         except Exception as e:
             logging.error(str(e) + " " + check_url)
             check['error'] = "unknown"
@@ -452,7 +496,14 @@ def check_site(entry):
             continue
         if c['content']['icon'] is not None:
             icons.add(c['content']['icon'])
-    result['details']['icons'] = sorted(list(icons))
+    downloaded_icons = set()
+    for icon_url in icons:
+        logging.info("Getting icon %s" % icon_url)
+        try:
+            downloaded_icons.add(download_icon(icon_url))
+        except Exception as e:
+            logging.error("Could not download icon: %s" % e)
+    result['details']['icons'] = sorted(list(downloaded_icons))
 
     # collect feeds
     feeds = set()
@@ -632,7 +683,7 @@ def main():
                             "district": entry.get("district"),
                             "city": entry.get("city"),
                         })
-            except NameError as ne:
+            except NameError:
                 logging.error("Error in %s: 'url' key missing (%s)" % (repr_entry(entry), entry['urls'][n]))
 
 
