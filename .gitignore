@@ -5,3 +5,4 @@ secrets
 temp
 __pycache__
 .vscode/settings.json
+webapp/dist/bundle.js

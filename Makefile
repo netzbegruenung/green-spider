@@ -28,6 +28,7 @@ webapp/node_modules:
 webapp: webapp/node_modules
 	cd webapp && npx webpack --config webpack.config.js
 	cp -r webapp/dist/* ./docs/
+	rm webapp/dist/bundle.js
 
 serve-webapp:
 	cd docs && ../venv/bin/python -m http.server
