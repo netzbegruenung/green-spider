@@ -39,6 +39,8 @@ green_directory_local_path = './cache/green-directory'
 
 result_path = '/out'
 
+siteicons_path = '/icons'
+
 # IP address of the newthinking GCMS server
 gcms_ip = "91.102.13.20"
 

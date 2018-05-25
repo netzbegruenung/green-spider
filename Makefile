@@ -9,7 +9,10 @@ dockerimage:
 
 # Run spider in docker image
 spider: dockerimage
-	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
+	docker run --rm -ti \
+		-v $(PWD)/webapp/dist/data:/out \
+		-v $(PWD)/docs/siteicons:/icons \
+		spider
 
 test: dockerimage
 	docker run --rm -ti spider /spider_test.py
