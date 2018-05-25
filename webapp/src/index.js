@@ -66,7 +66,8 @@ $(function(){
 
         // FAVICON
         var icon = item.result.FAVICON.value;
-        row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center">' + (icon ? ('<img src="' + item.details.icons[0] + '" class="icon">') : '❌') + '</td>');
+        var iconFile = (icon ? item.details.icons[0] : '');
+        row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center" data-order="'+ iconFile +'">' + (icon ? ('<img src="/siteicons/' + iconFile + '" class="icon" title="'+ iconFile +'">') : '❌') + '</td>');
 
         // HTTPS
         var hasHTTPS = item.result.HTTPS.value;

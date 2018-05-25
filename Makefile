@@ -9,7 +9,10 @@ dockerimage:
 
 # Run spider in docker image
 spider: dockerimage
-	docker run --rm -ti -v $(PWD)/webapp/dist/data:/out spider
+	docker run --rm -ti \
+		-v $(PWD)/webapp/dist/data:/out \
+		-v $(PWD)/docs/siteicons:/icons \
+		spider
 
 test: dockerimage
 	docker run --rm -ti spider /spider_test.py
@@ -24,7 +27,6 @@ webapp/node_modules:
 # Build webapp
 webapp: webapp/node_modules
 	cd webapp && npx webpack --config webpack.config.js
-	rm -rf ./docs/*
 	cp -r webapp/dist/* ./docs/
 
 serve-webapp:
