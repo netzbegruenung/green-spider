@@ -24,7 +24,7 @@ import yaml
 # configuration
 
 # number of parallel processes to use for crawling
-concurrency = 3
+concurrency = 1
 
 # connection timeout for website checks (seconds)
 connect_timeout = 5
