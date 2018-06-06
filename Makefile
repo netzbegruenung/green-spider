@@ -28,6 +28,7 @@ webapp/node_modules:
 webapp: webapp/node_modules
 	cd webapp && npx webpack --config webpack.config.js
 	cp -r webapp/dist/* ./docs/
+	cp webapp/node_modules/tooltipster/dist/css/tooltipster.bundle.min.css ./docs/css/
 	rm webapp/dist/bundle.js
 
 serve-webapp:
