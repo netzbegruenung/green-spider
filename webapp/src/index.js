@@ -132,7 +132,8 @@ $(function(){
 
       // activate tooltips
       $('.tt').tooltipster({
-        animationDuration: 100
+        animationDuration: 100,
+        theme: 'tooltipster-borderless'
       });
 
     });
