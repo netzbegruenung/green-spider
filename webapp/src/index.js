@@ -98,7 +98,7 @@ $(function(){
 
         // feeds
         var feeds = item.result.FEEDS.value;
-        var feedsContent = (feeds ? '<span class="tt" title="Die Site verweit auf mind. einen RSS-/Atom-Feed.">' + yes + '</span>' : '<span class="tt" title="Kein Link rel=alternate auf einen RSS-/Atom-Feed gefunden.">' + no + '</span>');
+        var feedsContent = (feeds ? '<span class="tt" title="Die Site verweist auf mind. einen RSS-/Atom-Feed.">' + yes + '</span>' : '<span class="tt" title="Kein Link rel=alternate auf einen RSS-/Atom-Feed gefunden.">' + no + '</span>');
         row.append('<td class="'+ (feeds ? 'good' : 'bad') +' text-center" data-order="'+ (feeds ? '1' : '0') +'">' + feedsContent + '</td>');
 
         // screenshots
