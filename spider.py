@@ -555,7 +555,7 @@ def check_site(entry):
             # No generator Tag. Use HTML content.
             if 'Urwahl3000' in c['content']['html']:
                 result['details']['cms'] = "wordpress-urwahl"
-            elif 'josephknowsbest' in c['content']['html']:
+            elif 'josephknowsbest' in c['content']['html'] or 'Joseph-knows-best' in c['content']['html']:
                 result['details']['cms'] = "wordpress-josephknowsbest"
             elif 'wordpress' in c['content']['html']:
                 result['details']['cms'] = "wordpress"
