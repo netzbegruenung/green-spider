@@ -19,7 +19,7 @@ test: dockerimage
 
 screenshots: venv
 	docker pull netzbegruenung/green-spider-screenshotter:latest
-	venv/bin/python ./screenshots.py
+	venv/bin/python ./screenshots.py secrets/screenshot-reader.json
 
 webapp/node_modules:
 	cd webapp && npm install
