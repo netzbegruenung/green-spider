@@ -18,14 +18,13 @@ test: dockerimage
 	docker run --rm -ti spider /spider_test.py
 
 screenshots: venv
-	docker pull netzbegruenung/green-spider-screenshotter:latest
 	venv/bin/python ./screenshots.py secrets/screenshot-reader.json
 
 webapp/node_modules:
 	cd webapp && npm install
 
 # Build webapp
-webapp: webapp/node_modules
+webapp: webapp/node_modules screenshots
 	cd webapp && npx webpack --config webpack.config.js
 	cp -r webapp/dist/* ./docs/
 	cp webapp/node_modules/tooltipster/dist/css/tooltipster.bundle.min.css ./docs/css/
