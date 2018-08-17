@@ -40,20 +40,7 @@ Das Ergebnis ist die Datei `webapp/dist/data/spider_result.json`. Wenn Du die ne
 
 ### Screenshots erstellen
 
-Achtung: Dieser Vorgang kann viele Stunden dauern.
-
-Voraussetzungen:
-
-- Docker
-- Zugangsdaten für den Google Cloud Storage bucket (derzeit über [marians](https://github.com/marians))
-
-Befehl:
-
-```
-make screenshots
-```
-
-Damit werden neue Screenshots für alle Sites (jeweils die erste kanonische URL einer Site) erstellt und die Datei `webapp/dist/data/screenshots.json` aktualisiert. Screenshots werden vorübergehend in `./temp` abgelegt, wo sie jedoch danach gelöscht werden können.
+Siehe [green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter)
 
 ### Webapp aktualisieren
 
@@ -62,6 +49,7 @@ Die unter https://netzbegruenung.github.io/green-spider/ veröffentlichte Webapp
 Voraussetzungen:
 
 - npm
+- Service-Account JSON-Datei für den Lesezugriff auf Screenshot-Daten
 
 Um den Inhalt des docs-Verzeichnisses zu aktualisieren, gibt es im Makefile dieses Kommando:
 
@@ -69,4 +57,4 @@ Um den Inhalt des docs-Verzeichnisses zu aktualisieren, gibt es im Makefile dies
 make webapp
 ```
 
-Das Ergebniss sollte als Pull Request beigesteuert werden.
+Das Ergebniss sollte in einen neuen Branch gepusht und als Pull Request hinzugefügt werden.
