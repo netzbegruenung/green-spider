@@ -64,10 +64,13 @@ def chunks(the_list, size):
         yield the_list[i:i + size]
 
 
-def create_jobs():
+def create_jobs(url=None):
     """
     Read all URLs from green directory and fill a job database
-    with one job per URL
+    with one job per URL.
+
+    Alternatively, if the url argument is given, only the given URL
+    will be added as a spider job.
     """
 
     # refresh our local clone of the green directory
@@ -77,6 +80,8 @@ def create_jobs():
     # build the list of website URLs to run checks for
     logging.info("Processing green-directory")
     input_entries = []
+
+    count = 0
 
     for entry in dir_entries():
 
@@ -93,6 +98,8 @@ def create_jobs():
                 if entry['urls'][index]['type'] == "WEBSITE":
                     website_url = entry['urls'][index]['url']
                     if website_url:
+                        if url is not None and website_url != url:
+                            continue
                         input_entries.append({
                             "url": website_url,
                             "level": entry.get("level"),
@@ -100,9 +107,22 @@ def create_jobs():
                             "district": entry.get("district"),
                             "city": entry.get("city"),
                         })
+                        count += 1
             except NameError:
                 logging.error("Error in %s: 'url' key missing (%s)",
                               repr_entry(entry), entry['urls'][index])
+
+    # ensure the passed URL argument is really there, even if not part
+    # of the directory.
+    if url and count == 0:
+        logging.info("Adding job for URL %s which is not part of green-directory", url)
+        input_entries.append({
+            "url": url,
+            "level": None,
+            "state": None,
+            "district": None,
+            "city": None,
+        })
 
     # randomize order, to distribute requests over servers
     logging.debug("Shuffling input URLs")
@@ -831,6 +851,6 @@ if __name__ == "__main__":
     logging.debug("Called command %s", args.command)
 
     if args.command == 'jobs':
-        create_jobs()
+        create_jobs(args.url)
     else:
         work_of_queue()
