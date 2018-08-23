@@ -26,8 +26,11 @@ spider: dockerimage
 test: dockerimage
 	docker run --rm -ti spider /spider_test.py
 
-screenshots: venv
-	venv/bin/python ./screenshots.py secrets/screenshot-reader.json
+export:
+	docker run --rm -ti \
+		-v $(PWD)/webapp/dist/data:/out \
+		-v $(PWD)/secrets:/secrets \
+		spider data_export.py /secrets/datastore-reader.json
 
 webapp/node_modules:
 	cd webapp && npm install
