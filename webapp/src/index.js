@@ -55,7 +55,7 @@ $(function(){
 
         // IPs
         var ips = _.join(item.details.ipv4_addresses, ', ');
-        row.append('<td class="text '+ (ips === '' ? 'bad' : 'good') +' text-center" data-order="' + (ips === '' ? no : ips) + '"><span class="tt" title="IPv4-Adresse(n) des Servers bzw. der Server">' + (ips === '' ? no : ips) + '</span></td>');
+        row.append('<td class="text '+ (ips === '' ? 'bad' : 'good') +' text-center" data-order="' + ips + '"><span class="tt" title="IPv4-Adresse(n) des Servers bzw. der Server">' + (ips === '' ? no : ips) + '</span></td>');
  
         // SITE_REACHABLE
         var reachable = '<span class="tt" title="Die Site war beim Check erreichbar.">' + yes + '</span>';
@@ -65,10 +65,14 @@ $(function(){
         row.append('<td class="'+ (item.result.SITE_REACHABLE.value ? 'good' : 'bad') +' text-center" data-order="'+ (item.result.SITE_REACHABLE.value ? '1' : '0') +'">' + reachable + '</td>');
 
         // HTTP_RESPONSE_DURATION
-        var durationClass = 'bad';
-        if (item.result.HTTP_RESPONSE_DURATION.score > 0) { durationClass = 'medium'; }
-        if (item.result.HTTP_RESPONSE_DURATION.score > 0.5) { durationClass = 'good'; }
-        row.append('<td class="text '+ durationClass +' text-center" data-order="' + item.result.HTTP_RESPONSE_DURATION.value + '"><span class="tt" title="Dauer, bis der Server die Seitenanfrage beantwortet. Unter 100 ms ist sehr gut. Unter 1 Sekunde ist okay.">' + item.result.HTTP_RESPONSE_DURATION.value + ' ms</span></td>');
+        if (!item.result.SITE_REACHABLE.value || item.result.HTTP_RESPONSE_DURATION.value === null) {
+          row.append('<td class="text bad text-center" data-order="99999999"><span class="tt" title="Nicht anwendbar">' + no + '</span></td>');
+        } else {
+          var durationClass = 'bad';
+          if (item.result.HTTP_RESPONSE_DURATION.score > 0) { durationClass = 'medium'; }
+          if (item.result.HTTP_RESPONSE_DURATION.score > 0.5) { durationClass = 'good'; }
+          row.append('<td class="text '+ durationClass +' text-center" data-order="' + item.result.HTTP_RESPONSE_DURATION.value + '"><span class="tt" title="Dauer, bis der Server die Seitenanfrage beantwortet. Unter 100 ms ist sehr gut. Unter 1 Sekunde ist okay.">' + item.result.HTTP_RESPONSE_DURATION.value + ' ms</span></td>');
+        }
 
         // FAVICON
         var icon = item.result.FAVICON.value && (item.details.icons[0] != null);
@@ -103,7 +107,7 @@ $(function(){
 
         // screenshots
         var screenshot = false;
-        if (item.details.canonical_urls.length > 0) {
+        if (item.details.canonical_urls && item.details.canonical_urls.length > 0) {
           if (typeof screenshots[item.details.canonical_urls[0]] !== 'undefined') {
             var surl = 'http://green-spider-screenshots.sendung.de/320x640/'+screenshots[item.details.canonical_urls[0]];
             var lurl = 'http://green-spider-screenshots.sendung.de/1500x1500/'+screenshots[item.details.canonical_urls[0]];
