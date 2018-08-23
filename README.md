@@ -1,10 +1,14 @@
 # Green Spider
 
-Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts von Bündnis 90/Die Grünen im Web
+Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts von Bündnis 90/Die Grünen im Web.
+
+Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.netzbegruenung.de/)
 
 ## Tools
 
 - Spider: Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
+
+- Screenshotter: Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
 
 - Webapp: Darstellung der Spider-Ergebnisse unter [green-spider.netzbegruenung.de](https://green-spider.netzbegruenung.de/)
 
@@ -22,21 +26,28 @@ Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbeg
 
 ### Spider ausführen
 
-Damit werden alle bekannten WWW-Adressen aus [netzbegruenung/green-directory](https://github.com/netzbegruenung/green-directory) geprüft und Daten dazu gesammelt.
-
 Voraussetzungen:
 
-- GNU make
-- Python 3
-- virtualenv
+- Docker
+- Schlüssel mit Schreibrecht für die Ergebnis-Datenbank
 
-Starte den Vorgang mit diesem Befehl:
+Um alle Sites aus aus [netzbegruenung/green-directory](https://github.com/netzbegruenung/green-directory) zu spidern:
 
 ```nohighlight
+make spiderjobs
 make spider
 ```
 
-Das Ergebnis ist die Datei `webapp/dist/data/spider_result.json`. Wenn Du die neuen Daten ins Repository einspielen möchtest, erstelle bitte einen Pull Request.
+Alternativ kann wie im nachfolgenden Beispiel gezeogt das Spidern einer einzelnen URL angestoßen werden. Diese muss nicht zwingend Teil des `green-directory` sein.
+
+```nohighlight
+docker run --rm -ti \
+  -v $PWD/secrets:/secrets spider \
+  spider.py --credentials-path /secrets/datastore-writer.json \
+  jobs --url https://www.trittin.de/
+
+make spider
+```
 
 ### Screenshots erstellen
 
@@ -44,16 +55,17 @@ Siehe [green-spider-screenshotter](https://github.com/netzbegruenung/green-spide
 
 ### Webapp aktualisieren
 
-Die unter https://netzbegruenung.github.io/green-spider/ veröffentlichte Webapp zeigt den Inhalt des [docs](https://github.com/netzbegruenung/green-spider/tree/master/docs) Verzeichnisses für den `master` Branch dieses repositories an. Dieser kann automatisch neu erzeugt werden.
-
 Voraussetzungen:
 
 - npm
-- Service-Account JSON-Datei für den Lesezugriff auf Screenshot-Daten
+- Docker
+- Schlüssel mit Leserecht für Screenshot- und Ergebnis-Datenbank
 
-Um den Inhalt des docs-Verzeichnisses zu aktualisieren, gibt es im Makefile dieses Kommando:
+Die beiden nachfolgenden Kommandos erzeugen die JSON-Exporte der Spider-Ergebnisse
+und Screenshots und aktualisieren die Webapp.
 
 ```nohighlight
+make export
 make webapp
 ```
 
