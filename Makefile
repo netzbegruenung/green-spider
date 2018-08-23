@@ -21,6 +21,10 @@ spider: dockerimage
 	docker run --rm -ti \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/docs/siteicons:/icons \
+		-v $(PWD)/secrets:/secrets \
+		spider spider.py \
+		--credentials-path /secrets/datastore-writer.json \
+		--loglevel debug \
 		spider
 
 test: dockerimage
@@ -36,7 +40,7 @@ webapp/node_modules:
 	cd webapp && npm install
 
 # Build webapp
-webapp: webapp/node_modules screenshots
+webapp: webapp/node_modules
 	cd webapp && npx webpack --config webpack.config.js
 	cp -r webapp/dist/* ./docs/
 	cp webapp/node_modules/tooltipster/dist/css/tooltipster.bundle.min.css ./docs/css/
