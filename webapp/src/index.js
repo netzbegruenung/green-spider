@@ -75,8 +75,8 @@ $(function(){
         }
 
         // FAVICON
-        var icon = item.result.FAVICON.value && (item.details.icons[0] != null);
-        var iconFile = (icon && (item.details.icons[0] != null) ? item.details.icons[0] : '');
+        var icon = item.result.FAVICON.value && (Object.keys(item.details.icons).length > 0);
+        var iconFile = icon ? Object.values(item.details.icons)[0] : '';
         var noicon = '<span class="tt" title="Diese Site hat kein Icon.">'+ no +'</span>'
         var icontag = (icon ? ('<img src="/siteicons/' + iconFile + '" class="siteicon tt" title="Die Site verweist auf das gezeigte Icon.">') : noicon);
         row.append('<td class="' + (icon ? 'good' : 'bad') + ' text-center" data-order="'+ iconFile +'">' + icontag + '</td>');
