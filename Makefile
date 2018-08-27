@@ -20,7 +20,6 @@ spiderjobs: dockerimage
 spider: dockerimage
 	docker run --rm -ti \
 		-v $(PWD)/webapp/dist/data:/out \
-		-v $(PWD)/docs/siteicons:/icons \
 		-v $(PWD)/secrets:/secrets \
 		spider spider.py \
 		--credentials-path /secrets/datastore-writer.json \
@@ -32,10 +31,11 @@ test: dockerimage
 	docker run --rm -ti spider /spider_test.py
 
 # export JSON data for the webapp
-export:
+export: dockerimage
 	docker run --rm -ti \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
+		-v $(PWD)/docs/siteicons:/icons \
 		spider data_export.py /secrets/datastore-reader.json
 
 # NodeJS modules for the webapp creation
