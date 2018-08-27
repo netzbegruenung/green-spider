@@ -3,7 +3,6 @@ Provides the spider functionality (website checks).
 """
 
 import argparse
-import hashlib
 import json
 import logging
 import os
