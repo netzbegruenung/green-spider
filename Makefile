@@ -27,15 +27,18 @@ spider: dockerimage
 		--loglevel debug \
 		spider
 
+# run spider tests
 test: dockerimage
 	docker run --rm -ti spider /spider_test.py
 
+# export JSON data for the webapp
 export:
 	docker run --rm -ti \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
 		spider data_export.py /secrets/datastore-reader.json
 
+# NodeJS modules for the webapp creation
 webapp/node_modules:
 	cd webapp && npm install
 
@@ -46,5 +49,6 @@ webapp: webapp/node_modules
 	cp webapp/node_modules/tooltipster/dist/css/tooltipster.bundle.min.css ./docs/css/
 	rm webapp/dist/bundle.js
 
+# Run a dev server for the webapp
 serve-webapp:
 	cd docs && ../venv/bin/python -m http.server
