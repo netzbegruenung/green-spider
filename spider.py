@@ -42,8 +42,6 @@ GREEN_DIRECTORY_LOCAL_PATH = './cache/green-directory'
 
 RESULT_PATH = '/out'
 
-SITEICONS_PATH = '/icons'
-
 # IP address of the newthinking GCMS server
 GCMS_IP = "91.102.13.20"
 
@@ -242,50 +240,6 @@ def normalize_title(title):
     title = title.replace('  ', ' ')
     title = title.strip()
     return title
-
-
-def download_icon(icon_url):
-    """
-    Download an icon from the given URL and store it with
-    a file name of <hash>.<ending>
-    """
-
-    default_endings = {
-        "image/x-icon": "ico",
-        "image/vnd.microsoft.icon": "ico",
-        "image/png": "png",
-        "image/jpeg": "jpg",
-    }
-
-    # Download the icon
-    req = requests.get(icon_url)
-    req.raise_for_status()
-
-    content_hash = hashlib.md5(req.content).hexdigest()
-    extension = ""
-
-    file_name = os.path.basename(icon_url)[-1]
-    if file_name != "" and "." in file_name:
-        ext = file_name.split(".")[-1]
-        if ext != "":
-            extension = ext
-
-    if extension == "":
-        # derive from content type
-        ctype = req.headers.get('content-type')
-        try:
-            extension = default_endings[ctype]
-        except KeyError:
-            logging.error("No file ending defined for icon type '%s'", ctype)
-            return None
-
-    filename = content_hash + "." + extension.lower()
-
-    path = SITEICONS_PATH + os.path.sep + filename
-    with open(path, 'wb') as iconfile:
-        iconfile.write(req.content)
-
-    return filename
 
 
 def check_responsiveness(url):
@@ -611,14 +565,7 @@ def check_site(entry):
             continue
         if c['content']['icon'] is not None:
             icons.add(c['content']['icon'])
-    downloaded_icons = set()
-    for icon_url in icons:
-        logging.info("Getting icon %s", icon_url)
-        try:
-            downloaded_icons.add(download_icon(icon_url))
-        except Exception as e:
-            logging.error("Could not download icon: %s", e)
-    result['details']['icons'] = sorted(list(downloaded_icons))
+    result['details']['icons'] = sorted(list(icons))
 
     # collect feeds
     feeds = set()
