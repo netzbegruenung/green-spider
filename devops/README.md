@@ -23,11 +23,11 @@ Die Scripte werden aus dem Root-Verzeichnis des Repositories ausgeführt.
 
 ```
 # Spidern
-devops/run-spider.sh
+devops/run-job.sh spider
 
 
 # Screenshots erzeugen
-devops/run-screenshotter.sh
+devops/run-job.sh screenshotter
 ```
 
 Der Terminal muss bis zum Ende der Ausführung geöffnet bleiben.
