@@ -12,7 +12,7 @@ RUN apt-get update \
   && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb \
     && rm google-chrome-stable_current_amd64.deb \
-  && pip3 install GitPython idna PyYAML beautifulsoup4==4.6.0 requests==2.18.4 responses==0.9.0 selenium==3.11.0 smmap2==2.0.3 urllib3==1.22 google-cloud-datastore==1.7.0 \
+  && pip3 install GitPython idna PyYAML beautifulsoup4==4.6.0 requests==2.18.4 responses==0.9.0 selenium==3.11.0 smmap2==2.0.3 urllib3==1.22 google-cloud-datastore==1.7.0 tenacity==5.0.2 \
   && wget https://chromedriver.storage.googleapis.com/2.38/chromedriver_linux64.zip \
     && unzip chromedriver_linux64.zip \
     && rm chromedriver_linux64.zip \

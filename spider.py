@@ -18,11 +18,13 @@ from urllib.parse import urlparse
 
 import requests
 import yaml
+import tenacity
 
 from bs4 import BeautifulSoup
 from git import Repo
 from selenium import webdriver
 from google.cloud import datastore
+from google.api_core.exceptions import Aborted
 from google.api_core.exceptions import InvalidArgument
 
 
@@ -713,6 +715,8 @@ def check_site(entry):
     return result
 
 
+@tenacity.retry(wait=tenacity.wait_exponential(),
+                retry=tenacity.retry_if_exception_type(Aborted))
 def get_job_from_queue():
     """
     Returns a URL from the queue
