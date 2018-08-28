@@ -10,7 +10,7 @@ Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.n
 
 - Screenshotter: Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
 
-- Webapp: Darstellung der Spider-Ergebnisse unter [green-spider.netzbegruenung.de](https://green-spider.netzbegruenung.de/)
+- Webapp: Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/)
 
 ## Aktivitäten
 
