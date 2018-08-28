@@ -128,5 +128,5 @@ if __name__ == "__main__":
     key_path = sys.argv[1]
     client = datastore.Client.from_service_account_json(key_path)
     
-    #export_screenshots()
+    export_screenshots()
     export_results()
