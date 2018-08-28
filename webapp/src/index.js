@@ -33,10 +33,14 @@ $(function(){
           level = 'OV';
         } else if (item.meta.level === 'DE:KREISVERBAND') {
           level = 'KV';
+        } else if (item.meta.level === 'DE:REGIONALVERBAND') {
+          level = 'RV';
+        } else if (item.meta.level === 'DE:BEZIRKSVERBAND') {
+          level = 'BV';
         } else if (item.meta.level === 'DE:LANDESVERBAND') {
           level = 'LV';
         }
-        row.append('<td data-order="'+ (level === null ? '' : level) +'"><span class="tt" title="Art der Gliederung: LV = Landesverband, KV = Kreisverband, OV = Ortsverband">' + (level === null ? '' : level) + '</span></td>');
+        row.append('<td data-order="'+ (level === null ? '' : level) +'"><span class="tt" title="Art der Gliederung: LV = Landesverband, BV = Bezirksverband, RV = Regionalverband, KV = Kreisverband, OV = Ortsverband">' + (level === null ? '' : level) + '</span></td>');
 
         // land
         row.append('<td>' + (item.meta.state === null ? '' : item.meta.state) + '</td>');
