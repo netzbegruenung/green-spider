@@ -26,7 +26,9 @@ Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbeg
 
 ### Spider ausführen
 
-Voraussetzungen:
+Zum Ausführen des Spider auf einem Server siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
+
+Voraussetzungen zum lokalen Ausführen:
 
 - Docker
 - Schlüssel mit Schreibrecht für die Ergebnis-Datenbank
@@ -51,22 +53,8 @@ make spider
 
 ### Screenshots erstellen
 
-Siehe [green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter)
+Siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
 
 ### Webapp aktualisieren
 
-Voraussetzungen:
-
-- npm
-- Docker
-- Schlüssel mit Leserecht für Screenshot- und Ergebnis-Datenbank
-
-Die beiden nachfolgenden Kommandos erzeugen die JSON-Exporte der Spider-Ergebnisse
-und Screenshots und aktualisieren die Webapp.
-
-```nohighlight
-make export
-make webapp
-```
-
-Das Ergebniss sollte in einen neuen Branch gepusht und als Pull Request hinzugefügt werden.
+Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp)
