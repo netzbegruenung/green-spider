@@ -9,7 +9,7 @@ RUN apt-get update \
     libxrandr2 libxrender1 libxss1 libxtst6 lsb-release xdg-utils \
     python3 python3-pip unzip chromium-driver \
   && apt-get clean \
-  && pip3 install GitPython idna PyYAML beautifulsoup4==4.6.0 requests==2.18.4 responses==0.9.0 selenium==3.11.0 smmap2==2.0.3 urllib3==1.22 google-cloud-datastore==1.7.0 tenacity==5.0.2 \
+  && pip3 install GitPython idna PyYAML beautifulsoup4==4.6.0 requests==2.18.4 responses==0.9.0 selenium==3.14.0 smmap2==2.0.3 urllib3==1.22 google-cloud-datastore==1.7.0 tenacity==5.0.2 \
   && apt-get clean
 
 ADD spider.py /
