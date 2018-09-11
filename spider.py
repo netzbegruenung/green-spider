@@ -10,6 +10,7 @@ import random
 import re
 import shutil
 import statistics
+import time
 from datetime import datetime
 from socket import gethostbyname_ex
 from urllib.parse import urljoin
@@ -266,13 +267,14 @@ def check_responsiveness(url):
     # Our selenium user agent using Chrome headless as an engine
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-extensions')
     driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.set_page_load_timeout(60)
     driver.set_window_size(sizes[0][0], sizes[0][1])
     driver.get(url)
+    time.sleep(1)
 
     for (width, height) in sizes:
         driver.set_window_size(width, height)
