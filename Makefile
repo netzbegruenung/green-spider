@@ -4,7 +4,6 @@
 
 # Build docker image
 dockerimage:
-	docker pull debian:stretch-slim
 	docker build -t spider .
 
 # Create spider job queue
@@ -19,11 +18,12 @@ spiderjobs: dockerimage
 # Run spider in docker image
 spider: dockerimage
 	docker run --rm -ti \
+	  -v $(PWD)/dev-shm:/dev/shm \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
 		spider spider.py \
 		--credentials-path /secrets/datastore-writer.json \
-		--loglevel debug \
+		--loglevel info \
 		spider
 
 # run spider tests
