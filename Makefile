@@ -4,13 +4,13 @@
 
 # Build docker image
 dockerimage:
-	docker build -t spider .
+	docker build -t quay.io/netzbegruenung/green-spider:latest .
 
 # Create spider job queue
 spiderjobs: dockerimage
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
-		spider spider.py \
+		quay.io/netzbegruenung/green-spider:latest spider.py \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
 		jobs
@@ -21,11 +21,11 @@ spider: dockerimage
 	  -v $(PWD)/dev-shm:/dev/shm \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
-		spider spider.py \
+		quay.io/netzbegruenung/green-spider:latest spider.py \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel info \
 		spider
 
 # run spider tests
 test: dockerimage
-	docker run --rm -ti spider /spider_test.py
+	docker run --rm -ti quay.io/netzbegruenung/green-spider:latest /spider_test.py
