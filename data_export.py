@@ -57,8 +57,12 @@ def export_screenshots():
 
     query = client.query(kind='webscreenshot')
     for item in query.fetch():
-        logging.debug(item['url'], os.path.basename(item['screenshot_url']))
-        out[item['url']] = os.path.basename(item['screenshot_url'])
+        if 'screenshot_url' not in item:
+            logging.error("Export failed. No 'screenshot_url' attribute set in dataset. %s\n" % item)
+            return
+        logging.debug("url: %s, screenshot_url: %s" % (item['url'], item['screenshot_url']))
+        filename = os.path.basename(item['screenshot_url'])
+        out[item['url']] = filename
     
     output_filename = "/out/screenshots.json"
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
