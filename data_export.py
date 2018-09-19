@@ -25,7 +25,9 @@ def export_results():
     query = client.query(kind='spider-results')
     for entity in query.fetch():
         logging.debug(entity.key.name)
-        out.append(dict(entity)["results"])
+        record = dict(entity)
+        record["results"]["created"] = record["created"].isoformat()
+        out.append(record["results"])
     
     # load icons, reformat icons details
     for index in range(len(out)):
