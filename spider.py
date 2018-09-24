@@ -21,29 +21,10 @@ from google.cloud import datastore
 
 import jobs
 import config
+import checks
 
 DATASTORE_CLIENT = None
 
-
-def derive_test_hostnames(hostname):
-    """
-    Derives the hostnames variants to test for a given host name.
-    From 'gruene-x.de' or 'www.gruene-x.de' it makes
-
-      ['gruene-x.de', 'www.gruene-x.de']
-
-    which are both plausible web URLs to be used for a domain.
-    """
-
-    hostnames = set()
-
-    hostnames.add(hostname)
-    if hostname.startswith('www.'):
-        hostnames.add(hostname[4:])
-    else:
-        hostnames.add('www.' + hostname)
-
-    return sorted(list(hostnames))
 
 
 def reduce_urls(urllist):
@@ -191,16 +172,15 @@ def check_content(req):
     return result
 
 
-def collect_ipv4_addresses(hostname_dict):
+def collect_ipv4_addresses(hostname_results):
     """
     Return list of unique IPv4 addresses
     """
     ips = set()
-    for item in hostname_dict.values():
-        if 'ip_addresses' not in item:
+    for item in hostname_results:
+        if 'ipv4_addresses' not in item:
             continue
-        for ip_addr in item['ip_addresses']:
-            ips.add(ip_addr)
+        ips = ips | set(item['ipv4_addresses'])  # union
     return sorted(list(ips))
 
 
@@ -218,6 +198,7 @@ def parse_generator(generator):
     if 'joomla' in generator:
         return "joomla"
     return generator
+
 
 def check_site(entry):
     """
@@ -273,45 +254,29 @@ def check_site(entry):
         'score': 0.0,
     }
 
-    # derive hostnames to test (with/without www.)
-    parsed = urlparse(entry['url'])
-    hostnames = derive_test_hostnames(parsed.hostname)
+    # Results from our next generation checkers
+    nextgen_results = checks.perform_checks(entry['url'])
 
-    # try to resolve hostnames
-    processed_hostnames = {}
-    for hostname in hostnames:
+    result['details']['hostnames'] = nextgen_results['subdomain_variations']
+    logging.debug("result[details][hostnames]: %r" % result['details']['hostnames'])
 
-        processed_hostnames[hostname] = {
-            'resolvable': False,
-        }
+    result['details']['ipv4_addresses'] = collect_ipv4_addresses(nextgen_results['subdomain_variations'])
+    logging.debug("result[details][ipv4_addresses]: %r" % result['details']['ipv4_addresses'])
 
-        try:
-            hostname, aliases, ip_addresses = gethostbyname_ex(hostname)
-            processed_hostnames[hostname]['resolvable'] = True
-            processed_hostnames[hostname]['resolved_hostname'] = hostname
-            processed_hostnames[hostname]['aliases'] = aliases
-            processed_hostnames[hostname]['ip_addresses'] = ip_addresses
-        except:
-            pass
-
-    result['details']['hostnames'] = processed_hostnames
-
-    result['details']['ipv4_addresses'] = collect_ipv4_addresses(processed_hostnames)
+    time.sleep(5)
 
     # check basic HTTP(S) reachability
     checked_urls = []
     checked_urls_set = set()
 
-    for hostname in processed_hostnames.keys():
-
-        item = processed_hostnames[hostname]
+    for item in result['details']['hostnames']:
 
         if not item['resolvable']:
             continue
 
         for scheme in ('http', 'https'):
 
-            url = scheme + '://' + item['resolved_hostname'] + '/'
+            url = scheme + '://' + item['hostname'] + '/'
 
             if url in checked_urls_set:
                 continue
@@ -484,8 +449,7 @@ def check_site(entry):
 
     # WWW_OPTIONAL
     num_hostnames = 0
-    for hostname in result['details']['hostnames'].keys():
-        item = result['details']['hostnames'][hostname]
+    for item in result['details']['hostnames']:
         if not item['resolvable']:
             continue
         num_hostnames += 1
@@ -562,7 +526,7 @@ def work_of_queue():
 
         logging.info("Starting job %s", job["url"])
         result = check_site(entry=job)
-        #logging.debug(result)
+
         logging.info("Job %s finished checks", job["url"])
         logging.info("Job %s writing to DB", job["url"])
 
