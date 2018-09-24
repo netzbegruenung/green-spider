@@ -12,6 +12,8 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.7/main" >> /etc/apk/repositories
 ADD spider.py /
 ADD spider_test.py /
 ADD data_export.py /
+ADD config /config
+ADD jobs /jobs
 
 ENTRYPOINT ["python3"]
 CMD ["/spider.py"]
