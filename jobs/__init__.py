@@ -1,3 +1,7 @@
+"""
+The jobs module allows to create jobs for the queue and take jobs off the queue
+"""
+
 from datetime import datetime
 import logging
 import os
@@ -37,6 +41,7 @@ def directory_entries():
             with open(filepath, 'r', encoding='utf8') as yamlfile:
                 for doc in yaml.load_all(yamlfile):
                     yield doc
+
 
 def chunks(the_list, size):
     """
