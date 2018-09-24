@@ -28,29 +28,10 @@ from google.api_core.exceptions import Aborted
 from google.api_core.exceptions import InvalidArgument
 
 
-# configuration
 
-# connection timeout for website checks (seconds)
-CONNECT_TIMEOUT = 5
-
-# response timeout for website checks
-READ_TIMEOUT = 10
-
-# Git repo for our data
-GREEN_DIRECTORY_REPO = 'https://github.com/netzbegruenung/green-directory.git'
-# folder in that repo that holds the data
-GREEN_DIRECTORY_DATA_PATH = 'data/countries/de'
-GREEN_DIRECTORY_LOCAL_PATH = './cache/green-directory'
-
-RESULT_PATH = '/out'
-
-# IP address of the newthinking GCMS server
-GCMS_IP = "91.102.13.20"
-
-JOB_DATASTORE_KIND = 'spider-jobs'
-RESULTS_DATASTORE_KIND = 'spider-results'
 
 # end configuration
+import config
 
 DATASTORE_CLIENT = None
 
