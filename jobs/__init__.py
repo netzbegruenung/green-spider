@@ -5,6 +5,7 @@ The jobs module allows to create jobs for the queue and take jobs off the queue
 from datetime import datetime
 import logging
 import os
+import random
 import shutil
 
 from git import Repo
@@ -71,6 +72,8 @@ def create_jobs(datastore_client, url=None):
 
     count = 0
 
+    random.seed()
+
     for entry in directory_entries():
 
         if 'type' not in entry:
@@ -110,6 +113,7 @@ def create_jobs(datastore_client, url=None):
             "state": None,
             "district": None,
             "city": None,
+            "index": int(random.uniform(1000000, 9999999)),
         })
 
     count = 0
@@ -126,6 +130,7 @@ def create_jobs(datastore_client, url=None):
             "state": entry["state"],
             "district": entry["district"],
             "city": entry["city"],
+            "index": int(random.uniform(1000000, 9999999)),
         })
         entities.append(entity)
 
