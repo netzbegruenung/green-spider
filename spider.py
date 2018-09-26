@@ -8,6 +8,7 @@ import re
 import statistics
 import time
 from datetime import datetime
+from pprint import pprint
 from socket import gethostbyname_ex
 from urllib.parse import urljoin
 from urllib.parse import urlparse
@@ -24,23 +25,6 @@ import config
 import checks
 
 DATASTORE_CLIENT = None
-
-
-
-def reduce_urls(urllist):
-    """
-    Reduce a list of urls with metadata by eliminating those
-    that either don't work or lead somewhere else
-    """
-    targets = set()
-    for url in urllist:
-        if url['error'] is not None:
-            continue
-        if url['redirects_to'] is not None:
-            targets.add(url['redirects_to'])
-        else:
-            targets.add(url['url'])
-    return sorted(list(targets))
 
 
 def normalize_title(title):
@@ -177,7 +161,7 @@ def collect_ipv4_addresses(hostname_results):
     Return list of unique IPv4 addresses
     """
     ips = set()
-    for item in hostname_results:
+    for item in hostname_results.items():
         if 'ipv4_addresses' not in item:
             continue
         ips = ips | set(item['ipv4_addresses'])  # union
@@ -257,57 +241,25 @@ def check_site(entry):
     # Results from our next generation checkers
     nextgen_results = checks.perform_checks(entry['url'])
 
-    result['details']['hostnames'] = nextgen_results['subdomain_variations']
-    logging.debug("result[details][hostnames]: %r" % result['details']['hostnames'])
+    pprint(nextgen_results['dns_resolution'])
+    pprint(nextgen_results['charset'])
+    pprint(nextgen_results['html_head'])
 
-    result['details']['ipv4_addresses'] = collect_ipv4_addresses(nextgen_results['subdomain_variations'])
-    logging.debug("result[details][ipv4_addresses]: %r" % result['details']['ipv4_addresses'])
+    result['details']['hostnames'] = nextgen_results['domain_variations'].items()
+    #logging.debug("result[details][hostnames]: %r" % result['details']['hostnames'])
 
-    time.sleep(5)
+    result['details']['ipv4_addresses'] = collect_ipv4_addresses(nextgen_results['domain_variations'])
+    #logging.debug("result[details][ipv4_addresses]: %r" % result['details']['ipv4_addresses'])
 
-    # check basic HTTP(S) reachability
-    checked_urls = []
-    checked_urls_set = set()
+    result['details']['resolvable_urls'] = sorted(nextgen_results['url_reachability'].items(), key=lambda url: url['url'])
 
-    for item in result['details']['hostnames']:
+    result['details']['canonical_urls'] = sorted(nextgen_results['url_canonicalization'].items())
 
-        if not item['resolvable']:
-            continue
+    
 
-        for scheme in ('http', 'https'):
-
-            url = scheme + '://' + item['hostname'] + '/'
-
-            if url in checked_urls_set:
-                continue
-
-            checked_urls_set.add(url)
-
-            record = {
-                'url': url,
-                'error': None,
-                'redirects_to': None,
-            }
-
-            try:
-                req = requests.head(record['url'], headers=headers, allow_redirects=True)
-                if req.url == url:
-                    logging.info("URL: %s - status %s", record['url'], req.status_code)
-                else:
-                    logging.info("URL: %s - status %s - redirects to %s", record['url'],
-                                 req.status_code, req.url)
-                    record['redirects_to'] = req.url
-            except Exception as exc:
-                record['error'] = {
-                    'type': str(type(exc)),
-                    'message': str(exc),
-                }
-                logging.info("URL %s: %s %s", url, str(type(exc)), exc)
-
-            checked_urls.append(record)
-
-    result['details']['resolvable_urls'] = sorted(checked_urls, key=lambda url: url['url'])
-    result['details']['canonical_urls'] = sorted(reduce_urls(checked_urls))
+    # TODO: continue with content checks
+    logging.info("Waiting 10 seconds...")
+    time.sleep(60)
 
     # Deeper test for the remaining (canonical) URL(s)
     for check_url in result['details']['canonical_urls']:
@@ -437,7 +389,7 @@ def check_site(entry):
 
     # SITE_REACHABLE
     for item in result['details']['resolvable_urls']:
-        if item['error'] is None:
+        if item['exception'] is None:
             result['result']['SITE_REACHABLE'] = {'value': True, 'score': 1}
             break
 

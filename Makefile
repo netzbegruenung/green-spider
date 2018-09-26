@@ -12,7 +12,7 @@ spiderjobs: dockerimage
 		-v $(PWD)/secrets:/secrets \
 		quay.io/netzbegruenung/green-spider:latest spider.py \
 		--credentials-path /secrets/datastore-writer.json \
-		--loglevel debug \
+		--loglevel info \
 		jobs
 
 # Run spider in docker image
@@ -23,8 +23,16 @@ spider: dockerimage
 		-v $(PWD)/secrets:/secrets \
 		quay.io/netzbegruenung/green-spider:latest spider.py \
 		--credentials-path /secrets/datastore-writer.json \
-		--loglevel info \
+		--loglevel debug \
 		spider
+
+export: dockerimage
+	docker run --rm -ti \
+		-v $(PWD)/export-json:/out \
+		-v $(PWD)/secrets:/secrets \
+		-v $(PWD)/export-siteicons:/icons \
+		quay.io/netzbegruenung/green-spider:latest \
+		data_export.py /secrets/datastore-reader.json
 
 # run spider tests
 test: dockerimage
