@@ -49,7 +49,6 @@ class Checker(AbstractChecker):
             if 'joomla' in generator:
                 generator = 'joomla'
         
-        # check content
         # Qualify certain CMS flavours in more detail
         if generator == "typo3":
             # Typo3-Gruene advertises in the page content
@@ -63,12 +62,14 @@ class Checker(AbstractChecker):
                 for addr in dns_resolution[url]['ipv4_addresses']:
                     if addr == self.gcms_ip:
                         generator = "typo3-gcms"
+
         elif 'Urwahl3000' in page_content['content']:
             generator = "wordpress-urwahl"
-        # No generator Tag. Use HTML content.
+
         elif ('josephknowsbest' in page_content['content'] or
             'Joseph-knows-best' in page_content['content']):
             generator = "wordpress-josephknowsbest"
+
         elif 'wordpress' in page_content['content']:
             generator = "wordpress"
         
