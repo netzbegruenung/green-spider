@@ -15,7 +15,6 @@ from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
 
 from google.api_core.exceptions import InvalidArgument
 from google.cloud import datastore
@@ -35,53 +34,6 @@ def normalize_title(title):
     title = title.replace('  ', ' ')
     title = title.strip()
     return title
-
-
-def check_responsiveness(url):
-    """
-    Checks
-    - whether a page adapts to different viewport sizes
-    - whether a viewport meta tag exists
-    and returns details
-    """
-    details = {
-        'document_width': {},
-        'viewport_meta_tag': None,
-    }
-
-    # sizes we check for (width, height)
-    sizes = (
-        (320, 480), # old smartphone
-        (768, 1024), # older tablet or newer smartphone
-        (1024, 768), # older desktop or horiz. tablet
-        (1920, 1080), # Full HD horizontal
-    )
-
-    # Our selenium user agent using Chrome headless as an engine
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-extensions')
-    driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.set_page_load_timeout(60)
-    driver.set_window_size(sizes[0][0], sizes[0][1])
-    driver.get(url)
-    time.sleep(1)
-
-    for (width, height) in sizes:
-        driver.set_window_size(width, height)
-        key = "%sx%s" % (width, height)
-        width = driver.execute_script("return document.body.scrollWidth")
-        details['document_width'][key] = int(width)
-
-    try:
-        element = driver.find_element_by_xpath("//meta[@name='viewport']")
-        details['viewport_meta_tag'] = element.get_attribute('content')
-    except:
-        pass
-
-    return details
 
 
 def check_content(req):
@@ -242,20 +194,21 @@ def check_site(entry):
     nextgen_results = checks.perform_checks(entry['url'])
 
     pprint(nextgen_results['dns_resolution'])
+    pprint(nextgen_results['url_reachability'])
     pprint(nextgen_results['charset'])
     pprint(nextgen_results['html_head'])
+    pprint(nextgen_results['generator'])
 
-    result['details']['hostnames'] = nextgen_results['domain_variations'].items()
+    result['details']['hostnames'] = nextgen_results['dns_resolution'].values()
     #logging.debug("result[details][hostnames]: %r" % result['details']['hostnames'])
 
-    result['details']['ipv4_addresses'] = collect_ipv4_addresses(nextgen_results['domain_variations'])
+    result['details']['ipv4_addresses'] = collect_ipv4_addresses(nextgen_results['dns_resolution'])
     #logging.debug("result[details][ipv4_addresses]: %r" % result['details']['ipv4_addresses'])
 
-    result['details']['resolvable_urls'] = sorted(nextgen_results['url_reachability'].items(), key=lambda url: url['url'])
+    result['details']['resolvable_urls'] = sorted(nextgen_results['url_reachability'].values(), key=lambda url: url['url'])
 
-    result['details']['canonical_urls'] = sorted(nextgen_results['url_canonicalization'].items())
+    result['details']['canonical_urls'] = sorted(nextgen_results['url_canonicalization'])
 
-    
 
     # TODO: continue with content checks
     logging.info("Waiting 10 seconds...")
@@ -283,12 +236,6 @@ def check_site(entry):
             # Content checks
             if req.status_code < 300:
                 check['content'] = check_content(req)
-
-            # Responsiveness check
-            try:
-                check['responsive'] = check_responsiveness(check_url)
-            except Exception as exc:
-                logging.error("Error when checking responsiveness for '%s': %s", check_url, exc)
 
         except requests.exceptions.ConnectionError as exc:
             logging.error(str(exc) + " " + check_url)

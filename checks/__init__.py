@@ -1,5 +1,6 @@
 """
-The checks module contains the individual checks we perform with a page
+The checks module contains the functionality to get information and test certain
+functionality of a site or individual pages.
 """
 
 import logging
@@ -12,6 +13,7 @@ from checks import generator
 from checks import html_head
 from checks import http_and_https
 from checks import page_content
+from checks import responsive_layout
 from checks import url_reachability
 from checks import url_canonicalization
 
@@ -37,6 +39,7 @@ def perform_checks(input_url):
         ('charset', charset),
         ('html_head', html_head),
         ('generator', generator),
+        ('responsive_layout', responsive_layout),
     ]
 
     results = {}
