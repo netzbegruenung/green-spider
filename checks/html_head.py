@@ -32,7 +32,6 @@ class Checker(AbstractChecker):
         page_content = self.previous_results['page_content'][url]
         assert 'content' in page_content
         assert 'response_headers' in page_content
-        logging.debug("%r", page_content['response_headers'])
         assert 'content-type' in page_content['response_headers']
 
         if page_content['content'] is None:
@@ -47,7 +46,8 @@ class Checker(AbstractChecker):
             'link_rss_atom': self.get_link_rss_atom(head, url),
             'link_icon': self.get_link_icon(head, url),
             'generator': self.get_generator(head),
-            'get_opengraph': self.get_opengraph(head),
+            'opengraph': self.get_opengraph(head),
+            'viewport': self.get_viewport(head),
         }
 
         return result
@@ -142,3 +142,11 @@ class Checker(AbstractChecker):
         opengraph = sorted(list(opengraph))
         if opengraph != []:
             return opengraph
+    
+
+    def get_viewport(self, head):
+        if head is None:
+            return
+        tags = head.select('[name=viewport]')
+        if tags:
+            return tags[0].get('content')
