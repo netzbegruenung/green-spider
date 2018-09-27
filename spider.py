@@ -198,6 +198,7 @@ def check_site(entry):
     pprint(nextgen_results['charset'])
     pprint(nextgen_results['html_head'])
     pprint(nextgen_results['generator'])
+    pprint(nextgen_results['responsive_layout'])
 
     result['details']['hostnames'] = nextgen_results['dns_resolution'].values()
     #logging.debug("result[details][hostnames]: %r" % result['details']['hostnames'])

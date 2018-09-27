@@ -18,8 +18,7 @@ class Checker(AbstractChecker):
 
     # sizes we check for (width, height)
     sizes = (
-        (320, 480), # old smartphone
-        (360, 640), # slightly newer smartphone
+        (360, 640), # rather old smartphone
         (768, 1024), # older tablet or newer smartphone
         (1024, 768), # older desktop or horiz. tablet
         (1920, 1080), # Full HD horizontal
@@ -40,7 +39,11 @@ class Checker(AbstractChecker):
 
         results = {}
         for url in self.config.urls:
-            results[url] = self.check_responsiveness(url)
+            sizes = self.check_responsiveness(url)
+            results[url] = {
+                'sizes': sizes,
+                'min_document_width': min([s['document_width'] for s in sizes]),
+            }
         return results
 
 
