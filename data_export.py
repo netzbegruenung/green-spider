@@ -14,6 +14,8 @@ import requests
 
 SITEICONS_PATH = "/icons"
 
+SPIDER_RESULTS_ENTITY_KIND = 'spider-results-dev'
+
 client = None
 
 def export_results():
@@ -22,29 +24,39 @@ def export_results():
     """
     out = []
 
-    query = client.query(kind='spider-results')
+    # Load data from database
+    query = client.query(kind=SPIDER_RESULTS_ENTITY_KIND)
     for entity in query.fetch():
         logging.debug(entity.key.name)
-        record = dict(entity)
-        record["results"]["created"] = record["created"].isoformat()
-        out.append(record["results"])
+        out.append({
+            'input_url': entity.key.name,
+            'resulting_urls': entity.get('checks').get('url_canonicalization'),
+            'created': entity.get('created').isoformat(),
+            'meta': entity.get('meta'),
+            'checks': entity.get('checks'),
+            'rating': entity.get('rating'),
+            'score': entity.get('score'),
+            'icons': [],
+        })
     
     # load icons, reformat icons details
     for index in range(len(out)):
-        if "details" not in out[index]:
-            continue
-        if "icons" not in out[index]["details"]:
-            continue
-        urls = out[index]["details"]["icons"]
-        out[index]["details"]["icons"] = {}
-        for url in urls:
-            if not (url.startswith("http://") or url.startswith("https://")):
-                logging.debug("Skipping icon %s", url)
-                continue
-            logging.debug("Dowloading icon %s", url)
-            filename = download_icon(url)
+        assert "checks" in out[index]
+        assert "html_head" in out[index]["checks"]
+        
+        # collect icons urls
+        icons = set()
+        for url in out[index]['checks']['html_head']:
+            assert 'link_icon' in out[index]['checks']['html_head'][url]
+            if out[index]['checks']['html_head'][url]['link_icon'] is not None:
+                icons.add(out[index]['checks']['html_head'][url]['link_icon'])
+        
+        out[index]["icons"] = {}
+        for iconurl in list(icons):
+            logging.debug("Dowloading icon %s", iconurl)
+            filename = download_icon(iconurl)
             if filename:
-                out[index]["details"]["icons"][url] = filename
+                out[index]["icons"][url] = filename
 
     output_filename = "/out/spider_result.json"
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
@@ -133,6 +145,7 @@ if __name__ == "__main__":
 
     key_path = sys.argv[1]
     client = datastore.Client.from_service_account_json(key_path)
-    
-    export_screenshots()
+
+    # TODO: Re-enable
+    #export_screenshots()
     export_results()
