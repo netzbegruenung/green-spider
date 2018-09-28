@@ -1,13 +1,19 @@
 """
 Check for responsive layout.
 
-This relies on 
+This loads any input URL once in Chrome and checks whether the document width
+adapts well to viewports as little as 360 pixels wide.
+
+In addition, the check captures javascript errors and warnings from
+missing resources
 """
 
 import logging
 import time
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+import tenacity
 
 from checks.abstract_checker import AbstractChecker
 
@@ -39,14 +45,24 @@ class Checker(AbstractChecker):
 
         results = {}
         for url in self.config.urls:
-            sizes = self.check_responsiveness(url)
-            results[url] = {
-                'sizes': sizes,
-                'min_document_width': min([s['document_width'] for s in sizes]),
-            }
+            try:
+                sizes = self.check_responsiveness(url)
+                results[url] = {
+                    'sizes': sizes,
+                    'min_document_width': min([s['document_width'] for s in sizes]),
+                    'logs': self.capture_log(),
+                }
+            except TimeoutException as e:
+                logging.warn("TimeoutException when checking responsiveness for %s sizes %r: %s" % (url, sizes, e))
+                pass
+        
+        self.driver.quit()
+
         return results
 
 
+    @tenacity.retry(stop=tenacity.stop_after_attempt(3),
+                    retry=tenacity.retry_if_exception_type(TimeoutException))
     def check_responsiveness(self, url):
         result = []
 
@@ -70,3 +86,13 @@ class Checker(AbstractChecker):
             })
 
         return result
+    
+    def capture_log(self):
+        """
+        Returns log elements with level "SEVERE"
+        """
+        entries = []
+        for entry in self.driver.get_log('browser'):
+            if entry['level'] in ('WARNING', 'SEVERE'):
+                entries.append(entry)
+        return entries
