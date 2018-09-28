@@ -19,7 +19,7 @@ class Rater(AbstractRater):
         value = self.default_value
         score = 0
 
-        if len(self.check_results['url_reachability']) == 1:
+        if len(self.check_results['url_canonicalization']) == 1:
             value = True
             score = self.max_score
 
