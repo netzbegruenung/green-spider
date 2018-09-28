@@ -15,6 +15,7 @@ ADD data_export.py /
 ADD config /config
 ADD jobs /jobs
 ADD checks /checks
+ADD rating /rating
 
 ENTRYPOINT ["python3"]
 CMD ["/spider.py"]
