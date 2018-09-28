@@ -93,6 +93,7 @@ def create_jobs(datastore_client, url=None):
                             continue
                         input_entries.append({
                             "url": website_url,
+                            "type": entry.get("type"),
                             "level": entry.get("level"),
                             "state": entry.get("state"),
                             "district": entry.get("district"),
@@ -109,6 +110,7 @@ def create_jobs(datastore_client, url=None):
         logging.info("Adding job for URL %s which is not part of green-directory", url)
         input_entries.append({
             "url": url,
+            "type": None,
             "level": None,
             "state": None,
             "district": None,
@@ -126,6 +128,7 @@ def create_jobs(datastore_client, url=None):
         entity = datastore.Entity(key=key)
         entity.update({
             "created": datetime.utcnow(),
+            "type": entry["type"],
             "level": entry["level"],
             "state": entry["state"],
             "district": entry["district"],
