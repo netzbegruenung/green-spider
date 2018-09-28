@@ -19,10 +19,13 @@ class Rater(AbstractRater):
         score = 0
 
         for url in self.check_results['html_head']:
-            if self.check_results['html_head'][url]['link_rss_atom'] is not None:
-                value = True
-                score = self.max_score
-                break
+            if self.check_results['html_head'][url]['link_rss_atom'] is None:
+                continue
+            if self.check_results['html_head'][url]['link_rss_atom'] == []:
+                continue
+            value = True
+            score = self.max_score
+            break
 
         return {
             'type': self.rating_type,
