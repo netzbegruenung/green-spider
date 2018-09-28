@@ -46,6 +46,8 @@ class Checker(AbstractChecker):
         result = {
             'url': url,
             'content': None,
+            'content_type': None,
+            'content_length': None,
             'status_code': None,
             'response_headers': None,
             'duration': None,
@@ -57,10 +59,15 @@ class Checker(AbstractChecker):
                              headers=self.headers,
                              timeout=(self.CONNECT_TIMEOUT, self.READ_TIMEOUT))
             
+            result['url'] = r.url
             result['status_code'] = r.status_code
             result['content'] = r.text
-            result['response_headers'] = r.headers
+            result['content_length'] = len(r.text)
+            result['response_headers'] = self.get_headers(r.headers)
             result['duration'] = round(r.elapsed.total_seconds() * 1000)
+
+            if r.headers.get("content-type") is not None:
+                result['content_type'] = r.headers.get("content-type").split(";")[0].strip()
 
         except requests.exceptions.ConnectionError as exc:
             logging.error(str(exc) + " " + url)
@@ -76,3 +83,12 @@ class Checker(AbstractChecker):
             result['exception'] = "%s %s" % (str(type(exc)), exc)
         
         return result
+    
+    def get_headers(self, headers):
+        """
+        Transforms CaseInsensitiveDict into dict with lowercase keys
+        """
+        out = {}
+        for key in headers:
+            out[key.lower()] = headers[key]
+        return out
