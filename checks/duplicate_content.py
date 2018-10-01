@@ -44,6 +44,8 @@ class Checker(AbstractChecker):
 
         # remove duplicates
         for key in pairs:
+            if pairs[key]['similarity'] is None:
+                continue
             if pairs[key]['similarity'] > self.similarity_threshold:
                 # this pair is a duplicate.
                 # Decide which one to keep
@@ -69,12 +71,19 @@ class Checker(AbstractChecker):
                 if pair_key in pairs:
                     continue
 
-                s = html_similarity.similarity(content[url1], content[url2])
-                logging.debug("Comparing pages for URLs %s and %s: similarity=%s", url1, url2, s)
-
-                pairs[pair_key] = {
-                    'similarity': s,
-                }
+                try:
+                    s = html_similarity.similarity(content[url1], content[url2])
+                    logging.debug("Comparing pages for URLs %s and %s: similarity=%s", url1, url2, s)
+                    pairs[pair_key] = {
+                        'similarity': s,
+                        'exception': None,
+                    }
+                except (AttributeError, ValueError) as e:
+                    logging.error("html_similarity.similarity thre exception for URL pair %s and %s: %s", url1, url2, e)
+                    pairs[pair_key] = {
+                        'similarity': None,
+                        'exception': str(e),
+                    }
         
         return pairs
 
