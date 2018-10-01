@@ -104,7 +104,7 @@ def work_of_queue():
             DATASTORE_CLIENT.put(entity)
         except InvalidArgument as ex:
             logging.error("Could not write result: %s", ex)
-        except ex:
+        except Exception as ex:
             logging.error("Could not write result: %s", ex)
 
 
