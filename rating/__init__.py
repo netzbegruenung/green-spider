@@ -9,6 +9,8 @@ from rating import canonical_url
 from rating import favicon
 from rating import feeds
 from rating import https
+from rating import no_network_errors
+from rating import no_script_errors
 from rating import reachable
 from rating import resolvable
 from rating import response_duration
@@ -24,27 +26,26 @@ def calculate_rating(results):
     results - Results dictionary from checks
     """
 
-    # The sequence of checks to run. Order is important!
-    # Checks which expand the URLs list must come first.
-    # After that, dependencies (encoded in the checks) have to be fulfilled.
-    rating_modules = [
-        ('DNS_RESOLVABLE_IPV4', resolvable),
-        ('SITE_REACHABLE', reachable),
-        ('HTTPS', https),
-        ('WWW_OPTIONAL', www_optional),
-        ('CANONICAL_URL', canonical_url),
-        ('HTTP_RESPONSE_DURATION', response_duration),
-        ('FAVICON', favicon),
-        ('FEEDS', feeds),
-        ('RESPONSIVE', responsive_layout),
-    ]
+    # The raters to execute.
+    rating_modules = {
+        'CANONICAL_URL': canonical_url,
+        'DNS_RESOLVABLE_IPV4': resolvable,
+        'FAVICON': favicon,
+        'FEEDS': feeds,
+        'HTTPS': https,
+        'HTTP_RESPONSE_DURATION': response_duration,
+        'NO_NETWORK_ERRORS': no_network_errors,
+        'NO_SCRIPT_ERRORS': no_script_errors,
+        'RESPONSIVE': responsive_layout,
+        'SITE_REACHABLE': reachable,
+        'WWW_OPTIONAL': www_optional,
+    }
 
     output = {}
 
-    for name, mod in rating_modules:
+    for name in rating_modules:
 
-        rater = mod.Rater(results)
+        rater = rating_modules[name].Rater(results)
         output[name] = rater.rate()
 
-    
     return output
