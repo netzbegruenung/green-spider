@@ -1,11 +1,10 @@
 """
-Check for responsive layout.
+Collects information by loading pages in a browser.
 
-This loads any input URL once in Chrome and checks whether the document width
-adapts well to viewports as little as 360 pixels wide.
+Information includes:
 
-In addition, the check captures javascript errors and warnings from
-missing resources
+- whether the document width adapts well to viewports as little as 360 pixels wide
+- whether javascript errors or errors from missing resources occur
 """
 
 import logging
@@ -33,7 +32,6 @@ class Checker(AbstractChecker):
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
 
-    def run(self):
         # Our selenium user agent using Chrome headless as an engine
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
@@ -43,8 +41,11 @@ class Checker(AbstractChecker):
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.set_page_load_timeout(self.page_load_timeout)
 
+    def run(self):
+
         results = {}
         for url in self.config.urls:
+            # responsive check
             try:
                 sizes = self.check_responsiveness(url)
                 results[url] = {
@@ -58,7 +59,7 @@ class Checker(AbstractChecker):
             except tenacity.RetryError as re:
                 logging.warn("RetryError when checking responsiveness for %s: %s" % (url, re))
                 pass
-        
+            
         self.driver.quit()
 
         return results

@@ -9,7 +9,7 @@ class Rater(AbstractRater):
 
     rating_type = 'boolean'
     default_value = False
-    depends_on_checks = ['responsive_layout']
+    depends_on_checks = ['load_in_browser']
     max_score = 1
 
     def __init__(self, check_results):
@@ -19,9 +19,9 @@ class Rater(AbstractRater):
         value = self.default_value
         score = 0
 
-        for url in self.check_results['responsive_layout']:
-            if (self.check_results['responsive_layout'][url]['min_document_width'] <=
-                self.check_results['responsive_layout'][url]['sizes'][0]['viewport_width']):
+        for url in self.check_results['load_in_browser']:
+            if (self.check_results['load_in_browser'][url]['min_document_width'] <=
+                self.check_results['load_in_browser'][url]['sizes'][0]['viewport_width']):
                 value = True
                 score = self.max_score
                 # we use the first URL found here

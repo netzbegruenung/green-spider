@@ -8,7 +8,7 @@ class Rater(AbstractRater):
 
     rating_type = 'boolean'
     default_value = False
-    depends_on_checks = ['responsive_layout']
+    depends_on_checks = ['load_in_browser']
     max_score = 1
 
     def __init__(self, check_results):
@@ -20,13 +20,13 @@ class Rater(AbstractRater):
 
         found_pageloads = 0
         found_errors = 0
-        for url in self.check_results['responsive_layout']:
-            if self.check_results['responsive_layout'][url]['logs'] == []:
+        for url in self.check_results['load_in_browser']:
+            if self.check_results['load_in_browser'][url]['logs'] == []:
                 found_pageloads += 1
                 continue
             
             # scan log entries for script errors
-            for entry in self.check_results['responsive_layout'][url]['logs']:
+            for entry in self.check_results['load_in_browser'][url]['logs']:
                 if entry['source'] == 'javascript':
                     found_errors += 1
 
