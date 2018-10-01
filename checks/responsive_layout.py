@@ -53,7 +53,10 @@ class Checker(AbstractChecker):
                     'logs': self.capture_log(),
                 }
             except TimeoutException as e:
-                logging.warn("TimeoutException when checking responsiveness for %s sizes %r: %s" % (url, sizes, e))
+                logging.warn("TimeoutException when checking responsiveness for %s: %s" % (url, e))
+                pass
+            except tenacity.RetryError as re:
+                logging.warn("RetryError when checking responsiveness for %s: %s" % (url, re))
                 pass
         
         self.driver.quit()
@@ -71,7 +74,7 @@ class Checker(AbstractChecker):
         self.driver.get(url)
 
         # give the page some time to load
-        time.sleep(2)
+        time.sleep(10)
 
         for (width, height) in self.sizes:
             self.driver.set_window_size(width, height)
