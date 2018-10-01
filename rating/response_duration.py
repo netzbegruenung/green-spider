@@ -29,13 +29,14 @@ class Rater(AbstractRater):
             duration_sum += self.check_results['page_content'][url]['duration']
             duration_count += 1
         
-        value = round(duration_sum / duration_count)
+        if duration_count > 0:
+            value = round(duration_sum / duration_count)
         
-        # value is duration in milliseconds
-        if value < 100:
-            score = self.max_score
-        elif value < 1000:
-            score = self.max_score * 0.5
+            # value is duration in milliseconds
+            if value < 100:
+                score = self.max_score
+            elif value < 1000:
+                score = self.max_score * 0.5
 
         return {
             'type': self.rating_type,
