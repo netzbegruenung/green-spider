@@ -1,5 +1,8 @@
 """
 Checks which character set a page has.
+
+TODO: Check for http-equiv meta tags like
+      <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 """
 
 import logging
@@ -39,6 +42,7 @@ class Checker(AbstractChecker):
             'content_type_header_charset': None,
             'charset': 'iso-8859-1', # ISO-8859-1 is the default according to https://www.w3.org/International/articles/http-charset/index
             'valid': None,
+            'exception': None,
         }
 
         soup = BeautifulSoup(page_content['content'], 'html.parser')
@@ -62,8 +66,9 @@ class Checker(AbstractChecker):
         if result['charset'] in ('iso-8859-1', 'utf-8'):
             try:
                 _ = page_content['content'].encode(result['charset'])
-            except UnicodeDecodeError:
+            except UnicodeEncodeError as e:
                 result['valid'] = False
+                result['exception'] = str(e)
             else:
                 result['valid'] = True
 
