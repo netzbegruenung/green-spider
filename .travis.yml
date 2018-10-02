@@ -6,7 +6,12 @@ services:
 notifications:
   email: false
 
+language: python
+python:
+  - "3.6"
+
 script:
-  - make test
+  - pip install --upgrade pip
   - pip install --upgrade codecov
+  - make test
   - codecov
