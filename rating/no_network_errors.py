@@ -21,9 +21,11 @@ class Rater(AbstractRater):
         found_pageloads = 0
         found_errors = 0
         for url in self.check_results['load_in_browser']:
-            if self.check_results['load_in_browser'][url]['logs'] == []:
-                found_pageloads += 1
+            if (self.check_results['load_in_browser'][url]['logs'] == [] or
+                self.check_results['load_in_browser'][url]['logs'] is None):
                 continue
+            
+            found_pageloads += 1
             
             # scan log entries for script errors
             for entry in self.check_results['load_in_browser'][url]['logs']:
