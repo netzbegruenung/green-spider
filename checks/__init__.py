@@ -6,6 +6,7 @@ functionality of a site or individual pages.
 import logging
 
 from checks import charset
+from checks import certificate
 from checks import dns_resolution
 from checks import duplicate_content
 from checks import domain_variations
@@ -33,6 +34,7 @@ def perform_checks(input_url):
         ('http_and_https', http_and_https),
         ('dns_resolution', dns_resolution),
         ('url_reachability', url_reachability),
+        ('certificate', certificate),
         ('url_canonicalization', url_canonicalization),
         ('page_content', page_content),
         ('duplicate_content', duplicate_content),
