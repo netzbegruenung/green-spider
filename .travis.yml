@@ -8,3 +8,5 @@ notifications:
 
 script:
   - make test
+  - pip3 install --upgrade codecov
+  - codecov
