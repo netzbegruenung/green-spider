@@ -1,5 +1,7 @@
 IMAGE := quay.io/netzbegruenung/green-spider:latest
 
+DB_ENTITY := spider-results
+
 .PHONY: dockerimage
 
 # Build docker image
@@ -24,7 +26,7 @@ spider: dockerimage
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
-		spider --kind spider-results-dev
+		spider --kind $(DB_ENTITY)
 
 export: dockerimage
 	docker run --rm -ti \
@@ -34,7 +36,7 @@ export: dockerimage
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-reader.json \
 		--loglevel debug \
-		export --kind spider-results-dev
+		export --kind $(DB_ENTITY)
 
 # run spider tests
 # FIXME
