@@ -1,16 +1,16 @@
-
+IMAGE := quay.io/netzbegruenung/green-spider:latest
 
 .PHONY: dockerimage
 
 # Build docker image
 dockerimage:
-	docker build -t quay.io/netzbegruenung/green-spider:dev .
+	docker build -t $(IMAGE) .
 
 # Create spider job queue
 spiderjobs: dockerimage
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
-		quay.io/netzbegruenung/green-spider:dev \
+		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel info \
 		jobs
@@ -21,7 +21,7 @@ spider: dockerimage
 	  -v $(PWD)/dev-shm:/dev/shm \
 		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
-		quay.io/netzbegruenung/green-spider:dev \
+		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
 		spider --kind spider-results-dev
@@ -31,7 +31,7 @@ export: dockerimage
 		-v $(PWD)/export-json:/out \
 		-v $(PWD)/secrets:/secrets \
 		-v $(PWD)/export-siteicons:/icons \
-		quay.io/netzbegruenung/green-spider:dev \
+		$(IMAGE) \
 		--credentials-path /secrets/datastore-reader.json \
 		--loglevel debug \
 		export --kind spider-results-dev
