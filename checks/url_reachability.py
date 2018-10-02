@@ -60,6 +60,10 @@ class Checker(AbstractChecker):
                     # remove source URL, add target URL to config.urls
                     self.config.remove_url(url)
                     self.config.add_url(r.url)
+                
+                # remove 404 etc
+                if r.status_code > 400:
+                    self.config.remove_url(url)
 
             except Exception as exc:
                 logging.info("Exception for URL %s: %s %s", url, str(type(exc)), exc)
