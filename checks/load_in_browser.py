@@ -5,12 +5,14 @@ Information includes:
 
 - whether the document width adapts well to viewports as little as 360 pixels wide
 - whether javascript errors or errors from missing resources occur
+- collects CSS font-family properties in use
 """
 
 import logging
 import time
 
 from selenium import webdriver
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 import tenacity
 
@@ -45,6 +47,14 @@ class Checker(AbstractChecker):
 
         results = {}
         for url in self.config.urls:
+
+            results[url] = {
+                'sizes': None,
+                'min_document_width': None,
+                'logs': None,
+                'font_families': None,
+            }
+
             # responsive check
             try:
                 sizes = self.check_responsiveness(url)
@@ -60,6 +70,28 @@ class Checker(AbstractChecker):
                 logging.warn("RetryError when checking responsiveness for %s: %s" % (url, re))
                 pass
             
+            # CSS collection
+            font_families = None
+
+            try:
+                elements = self.driver.find_elements_by_xpath("//*")
+                font_families = set()
+                for element in elements:
+                    try:
+                        font_family = element.value_of_css_property('font-family')
+                        if font_family is None:
+                            continue
+                        font_families.add(font_family.lower())
+                    except StaleElementReferenceException as e:
+                        logging.warn("StaleElementReferenceException when collecting CSS properties for %s: %s" % (url, e))
+                        continue
+
+                results[url]['font_families'] = sorted(list(font_families))
+            
+            except TimeoutException as e:
+                logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
+                pass
+
         self.driver.quit()
 
         return results
