@@ -33,24 +33,6 @@ class Checker(AbstractChecker):
 
         return results
 
-
-    def expand_hostname(self, hostname):
-        """
-        Create variations of subdomains
-        """
-        hostnames = set()
-
-        hostnames.add(hostname)
-        if hostname.startswith('www.'):
-            # remove 'www.' prefix
-            hostnames.add(hostname[4:])
-        else:
-            # add 'www.' prefix
-            hostnames.add('www.' + hostname)
-
-        return sorted(list(hostnames))
-    
-
     def resolve_hostname(self, hostname):
         """
         Resolve one to IPv4 address(es)
