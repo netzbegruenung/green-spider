@@ -3,10 +3,9 @@ class Config(object):
     Our configuration to be passed to checks
     """
 
-    def __init__(self, urls, user_agent=None):
+    def __init__(self, urls, user_agent='green-spider/1.0'):
         self._urls = set(urls)
-        if user_agent:
-            self._user_agent = user_agent
+        self._user_agent = user_agent
     
     def __repr__(self):
       return "Config(urls=%r)" % self._urls
