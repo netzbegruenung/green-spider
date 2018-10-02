@@ -3,9 +3,10 @@ class Config(object):
     Our configuration to be passed to checks
     """
 
-    def __init__(self, urls, user_agent):
+    def __init__(self, urls, user_agent=None):
         self._urls = set(urls)
-        self._user_agent = user_agent
+        if user_agent:
+            self._user_agent = user_agent
     
     def __repr__(self):
       return "Config(urls=%r)" % self._urls

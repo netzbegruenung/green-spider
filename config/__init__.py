@@ -21,6 +21,3 @@ GCMS_IP = "91.102.13.20"
 # kind name of the spider job key datastore entities
 JOB_DATASTORE_KIND = 'spider-jobs'
 
-# kind name of the spider results datastore entities
-# TODO: change back to 'spider-results'
-RESULTS_DATASTORE_KIND = 'spider-results-dev'

@@ -1,7 +1,7 @@
 import unittest
 import requests
 import responses
-import spider
+from spider import spider
 
 
 class TestDeriveHostnames(unittest.TestCase):

@@ -15,6 +15,7 @@ from rating import reachable
 from rating import resolvable
 from rating import response_duration
 from rating import responsive_layout
+from rating import use_specific_fonts
 from rating import www_optional
 
 
@@ -38,6 +39,7 @@ def calculate_rating(results):
         'NO_SCRIPT_ERRORS': no_script_errors,
         'RESPONSIVE': responsive_layout,
         'SITE_REACHABLE': reachable,
+        'USE_SPECIFIC_FONTS': use_specific_fonts,
         'WWW_OPTIONAL': www_optional,
     }
 

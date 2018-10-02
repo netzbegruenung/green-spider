@@ -19,9 +19,6 @@ import config
 import jobs
 import rating
 
-DATASTORE_CLIENT = None
-
-
 def check_and_rate_site(entry):
     """
     Performs our site check and returns results as a dict.
@@ -72,12 +69,12 @@ def check_and_rate_site(entry):
     return result
 
 
-def work_of_queue():
+def work_of_queue(datastore_client, entity_kind):
     """
     Take job from queue and finish it until there are no more jobs
     """
     while True:
-        job = jobs.get_job_from_queue(DATASTORE_CLIENT)
+        job = jobs.get_job_from_queue(datastore_client)
         if job is None:
             logging.info("No more jobs. Exiting.")
             break
@@ -90,7 +87,7 @@ def work_of_queue():
         logging.info("Job %s finished checks", job["url"])
         logging.info("Job %s writing to DB", job["url"])
 
-        key = DATASTORE_CLIENT.key(config.RESULTS_DATASTORE_KIND, job["url"])
+        key = datastore_client.key(entity_kind, job["url"])
         entity = datastore.Entity(key=key, exclude_from_indexes=['results'])
         record = {
             'created': datetime.utcnow(),
@@ -101,51 +98,9 @@ def work_of_queue():
         }
         entity.update(record)
         try:
-            DATASTORE_CLIENT.put(entity)
+            datastore_client.put(entity)
         except InvalidArgument as ex:
             logging.error("Could not write result: %s", ex)
         except Exception as ex:
             logging.error("Could not write result: %s", ex)
 
-
-if __name__ == "__main__":
-    """
-    Bringing it all together
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--credentials-path', dest='credentials_path',
-                        help='Path to the service account credentials JSON file',
-                        default='/secrets/service-account.json')
-    parser.add_argument('--loglevel', help="error, warn, info, or debug (default: info)",
-                        default='info')
-
-    subparsers = parser.add_subparsers(help='sub-command help', dest='command')
-
-    subparsers.add_parser('spider', help='Take jobs off the queue and spider')
-
-    jobs_parser = subparsers.add_parser('jobs', help='Create jobs for the queue')
-
-    jobs_parser.add_argument('--url', help='Add a job to spider a URL')
-    args = parser.parse_args()
-
-    loglevel = args.loglevel.lower()
-    if loglevel == 'error':
-        logging.basicConfig(level=logging.ERROR)
-    elif loglevel == 'warn':
-        logging.basicConfig(level=logging.WARN)
-    elif loglevel == 'debug':
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
-        loglevel = 'info'
-
-    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-
-    DATASTORE_CLIENT = datastore.Client.from_service_account_json(args.credentials_path)
-
-    logging.debug("Called command %s", args.command)
-
-    if args.command == 'jobs':
-        jobs.create_jobs(DATASTORE_CLIENT, args.url)
-    else:
-        work_of_queue()
