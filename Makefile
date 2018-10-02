@@ -39,4 +39,8 @@ export: dockerimage
 # run spider tests
 # FIXME
 test: dockerimage
-	docker run --rm -ti quay.io/netzbegruenung/green-spider:latest /spider_test.py
+	docker run --rm -ti \
+		--entrypoint "python3" \
+		$(IMAGE) \
+		-m unittest discover -p '*_test.py'
+
