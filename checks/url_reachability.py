@@ -5,11 +5,15 @@ are also recorded and returned as results.
 
 Non-accessible URLs are removed from config.urls.
 
+A redirect to facebook.com is not considered reachable, as that
+leads to a different website in the sense of this system.
+
 TODO: Parallelize the work done in this test
 """
 
 import logging
 
+from urllib.parse import urlparse
 import requests
 
 from checks.abstract_checker import AbstractChecker
@@ -32,7 +36,7 @@ class Checker(AbstractChecker):
 
             result = {
                 "url": url,
-                "redirect_history": None,
+                "redirect_history": [],
                 "status": None,
                 "exception": None,
                 "duration": None,
@@ -66,6 +70,17 @@ class Checker(AbstractChecker):
                 
                 # remove URL to prevent further checks on unreachable URL
                 self.config.remove_url(url)
+            
+            # if redirects end in www.facebook.com or www.denic.de, remove this URL again
+            # remove if redirect target is facebook
+            if result['exception'] is not None and result['redirect_history'] is not None and len(result['redirect_history']) > 0:
+                parsed = urlparse(result['redirect_history'][-1]['redirect_to'])
+                if parsed.hostname in ('www.facebook.com', 'www.denic.de', 'sedo.com'):
+                    result[url]['exception'] = {
+                        'type': 'Bad target domain',
+                        'message': 'The URL redirects to %s, which is unsupported by green-spider as it doesn\'t qualify as an owned website' % parsed.hostname,
+                    }
+                    self.config.remove_url(url)
 
             results[url] = result
         
