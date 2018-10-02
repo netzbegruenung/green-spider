@@ -16,6 +16,8 @@ class Checker(AbstractChecker):
         super().__init__(config, previous_results)
     
     def run(self):
+        assert 'page_content' in self.previous_results
+        
         results = {}
 
         for url in self.config.urls:
@@ -27,7 +29,6 @@ class Checker(AbstractChecker):
         """
         Expects page_content_dict['content'] to carry the HTML content
         """
-
         page_content = self.previous_results['page_content'][url]
         assert 'content' in page_content
         assert 'response_headers' in page_content
