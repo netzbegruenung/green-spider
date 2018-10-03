@@ -9,7 +9,7 @@ from checks.config import Config
 @httprettified
 class TestDuplicateContent(unittest.TestCase):
 
-    def test_similar(self):
+    def test_identical(self):
         page_body = """
             <html>
                 <head>
