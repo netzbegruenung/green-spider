@@ -4,6 +4,7 @@ Gathers information on the TLS/SSL certificate used by a server
 
 from urllib.parse import urlparse
 import logging
+import socket
 import ssl
 from datetime import datetime
 from datetime import timezone
@@ -36,21 +37,40 @@ class Checker(AbstractChecker):
         }
 
         parsed = urlparse(url)
+        port = 443
+        if parsed.port is not None:
+            port = parsed.port
+
         try:
-            cert = ssl.get_server_certificate((parsed.hostname, 443))
-            x509 = crypto.load_certificate(crypto.FILETYPE_PEM, cert)
-            result['serial_number'] = str(x509.get_serial_number())
+            #cert = ssl.get_server_certificate((parsed.hostname, port))
 
-            nb = x509.get_notBefore().decode('utf-8')
-            na = x509.get_notAfter().decode('utf-8')
-            
-            # parse '2018 06 27 00 00 00Z'
-            result['not_before'] = datetime(int(nb[0:4]), int(nb[4:6]), int(nb[6:8]), int(nb[8:10]), int(nb[10:12]), int(nb[12:14]), tzinfo=timezone.utc).isoformat()
-            result['not_after']  = datetime(int(na[0:4]), int(na[4:6]), int(na[6:8]), int(na[8:10]), int(na[10:12]), int(na[12:14]), tzinfo=timezone.utc).isoformat()
+            context = ssl.create_default_context()
 
-            # decode and convert from bytes to unicode
-            result['subject'] = dict([tuple(map(lambda x: x.decode('utf-8'), tup)) for tup in x509.get_subject().get_components()])
-            result['issuer']  = dict([tuple(map(lambda x: x.decode('utf-8'), tup)) for tup in x509.get_issuer().get_components()])
+            # get certificate with SNI
+            with socket.create_connection((parsed.hostname, port)) as sock:
+                with context.wrap_socket(sock, server_hostname=parsed.hostname) as sslsock:
+                    der_cert = sslsock.getpeercert(True)
+                    cert = ssl.DER_cert_to_PEM_cert(der_cert)
+
+            try:
+                x509 = crypto.load_certificate(crypto.FILETYPE_PEM, cert)
+                result['serial_number'] = str(x509.get_serial_number())
+
+                nb = x509.get_notBefore().decode('utf-8')
+                na = x509.get_notAfter().decode('utf-8')
+                
+                # parse '2018 06 27 00 00 00Z'
+                result['not_before'] = datetime(int(nb[0:4]), int(nb[4:6]), int(nb[6:8]), int(nb[8:10]), int(nb[10:12]), int(nb[12:14]), tzinfo=timezone.utc).isoformat()
+                result['not_after']  = datetime(int(na[0:4]), int(na[4:6]), int(na[6:8]), int(na[8:10]), int(na[10:12]), int(na[12:14]), tzinfo=timezone.utc).isoformat()
+
+                # decode and convert from bytes to unicode
+                result['subject'] = dict([tuple(map(lambda x: x.decode('utf-8'), tup)) for tup in x509.get_subject().get_components()])
+                result['issuer']  = dict([tuple(map(lambda x: x.decode('utf-8'), tup)) for tup in x509.get_issuer().get_components()])
+            except Exception as e:
+                result['exception'] = {
+                    'type': str(type(e)),
+                    'message': str(e),
+                }
             
         except Exception as e:
             result['exception'] = {
