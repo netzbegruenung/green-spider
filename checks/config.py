@@ -12,7 +12,7 @@ class Config(object):
 
     @property
     def urls(self):
-        return list(self._urls)
+        return sorted(list(self._urls))
 
     def add_url(self, url):
         self._urls.add(url)
