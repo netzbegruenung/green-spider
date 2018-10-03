@@ -18,6 +18,7 @@ class Checker(AbstractChecker):
     def run(self):
         assert 'page_content' in self.previous_results
         assert 'html_head' in self.previous_results
+        assert 'dns_resolution' in self.previous_results
 
         results = {}
 
@@ -31,7 +32,6 @@ class Checker(AbstractChecker):
         page_content = self.previous_results['page_content'][url]
         assert 'content' in page_content
 
-        assert 'dns_resolution' in self.previous_results
         dns_resolution = self.previous_results['dns_resolution']
 
         head = self.previous_results['html_head'][url]
