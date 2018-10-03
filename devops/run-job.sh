@@ -19,6 +19,8 @@
 #   secrets/datastore-writer.json
 
 
+DOCKERIMAGE="quay.io/netzbegruenung/green-spider:dev"
+
 API_TOKEN_SECRET="secrets/hetzner-api-token.sh"
 test -f $API_TOKEN_SECRET || { echo >&2 "File $API_TOKEN_SECRET does not exist."; exit 1; }
 source $API_TOKEN_SECRET
@@ -29,10 +31,14 @@ if [[ "$1" == "" ]]; then
   exit 1
 fi
 
+SERVERNAME="$1-$(date | md5 | cut -c1-3)"
+
+# possible values: cx11 (1 core 2 GB), cx21 (2 cores, 4 GB), cx31 (2 cores, 8 GB)
+SERVERTYPE="cx21"
 
 function create_server()
 {
-  echo "Creating server $1"
+  echo "Creating server $SERVERNAME"
 
   # server_type 'cx11' is the smallest, cheapest category.
   # location 'nbg1' is Nürnberg/Nuremberg, Germany.
@@ -44,8 +50,8 @@ function create_server()
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $API_TOKEN" \
     -d "{
-      \"name\": \"$1\",
-      \"server_type\": \"cx11\",
+      \"name\": \"$SERVERNAME\",
+      \"server_type\": \"$SERVERTYPE\",
       \"location\": \"nbg1\",
       \"start_after_create\": true,
       \"image\": \"debian-9\",
@@ -61,7 +67,7 @@ function create_server()
   # Get IP:
   SERVER_IP=$(echo $CREATE_RESPONSE | jq -r .server.public_net.ipv4.ip)
 
-  echo "Created server with ID $SERVER_ID and IP $SERVER_IP"
+  echo "Created server $SERVERNAME with ID $SERVER_ID and IP $SERVER_IP"
 }
 
 
@@ -142,22 +148,25 @@ else
 
   # Run docker job
   echo "Starting Docker Job"
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-    -v /root/secrets:/secrets \
-    quay.io/netzbegruenung/green-spider spider.py \
-    --credentials-path /secrets/datastore-writer.json \
-    jobs
+  #ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
+  #  -v /root/secrets:/secrets \
+  #  quay.io/netzbegruenung/green-spider spider.py \
+  #  --credentials-path /secrets/datastore-writer.json \
+  #  jobs
 
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP mkdir -p /dev-shm
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
+    -v /dev-shm:/dev/shm \
     -v /root/secrets:/secrets \
-    quay.io/netzbegruenung/green-spider spider.py \
+    $DOCKERIMAGE \
     --credentials-path /secrets/datastore-writer.json \
-    spider
+    --loglevel info \
+    spider --kind spider-results-dev
 
 fi
 
 # Delete the box
-echo "Deleting server $SERVER_ID"
+echo "Deleting server $SERVERNAME with ID $SERVER_ID"
 curl -s -X DELETE -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   https://api.hetzner.cloud/v1/servers/$SERVER_ID
