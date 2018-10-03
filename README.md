@@ -44,8 +44,9 @@ Alternativ kann wie im nachfolgenden Beispiel gezeogt das Spidern einer einzelne
 
 ```nohighlight
 docker run --rm -ti \
-  -v $PWD/secrets:/secrets spider \
-  spider.py --credentials-path /secrets/datastore-writer.json \
+  -v $PWD/secrets:/secrets
+  quay.io/netzbegruenung/green-spider:latest \
+  --credentials-path /secrets/datastore-writer.json \
   jobs --url https://www.trittin.de/
 
 make spider
