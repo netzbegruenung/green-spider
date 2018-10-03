@@ -44,5 +44,5 @@ test: dockerimage
 	docker run --rm -ti \
 		--entrypoint "python3" \
 		$(IMAGE) \
-		-m unittest discover -p '*_test.py'
+		-m unittest discover -p '*_test.py' -v
 
