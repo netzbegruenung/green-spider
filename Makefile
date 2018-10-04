@@ -21,7 +21,6 @@ spiderjobs: dockerimage
 spider: dockerimage
 	docker run --rm -ti \
 	  -v $(PWD)/dev-shm:/dev/shm \
-		-v $(PWD)/webapp/dist/data:/out \
 		-v $(PWD)/secrets:/secrets \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
