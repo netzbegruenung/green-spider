@@ -49,6 +49,7 @@ class Checker(AbstractChecker):
         for url in self.config.urls:
 
             results[url] = {
+                'cookies': None,
                 'sizes': None,
                 'min_document_width': None,
                 'logs': None,
@@ -90,7 +91,13 @@ class Checker(AbstractChecker):
             
             except TimeoutException as e:
                 logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
-                pass
+            
+            # get cookies
+            try:
+                cookies = self.driver.get_cookies()
+                results[url]['cookies'] = cookies
+            except TimeoutException as e:
+                logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
 
         self.driver.quit()
 
