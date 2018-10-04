@@ -49,6 +49,7 @@ class Checker(AbstractChecker):
         for url in self.config.urls:
 
             results[url] = {
+                'cookies': None,
                 'sizes': None,
                 'min_document_width': None,
                 'logs': None,
@@ -90,7 +91,13 @@ class Checker(AbstractChecker):
             
             except TimeoutException as e:
                 logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
-                pass
+            
+            # get cookies
+            try:
+                cookies = self.driver.get_cookies()
+                results[url]['cookies'] = cookies
+            except TimeoutException as e:
+                logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
 
         self.driver.quit()
 
@@ -105,9 +112,6 @@ class Checker(AbstractChecker):
         # set window to the first size initially
         self.driver.set_window_size(self.sizes[0][0], self.sizes[0][1])
         self.driver.get(url)
-
-        # give the page some time to load
-        time.sleep(10)
 
         for (width, height) in self.sizes:
             self.driver.set_window_size(width, height)
