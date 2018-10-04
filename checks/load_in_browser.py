@@ -113,9 +113,6 @@ class Checker(AbstractChecker):
         self.driver.set_window_size(self.sizes[0][0], self.sizes[0][1])
         self.driver.get(url)
 
-        # give the page some time to load
-        time.sleep(10)
-
         for (width, height) in self.sizes:
             self.driver.set_window_size(width, height)
             
