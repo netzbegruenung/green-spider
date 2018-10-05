@@ -19,7 +19,9 @@
 #   secrets/datastore-writer.json
 
 
-DOCKERIMAGE="quay.io/netzbegruenung/green-spider:dev"
+DOCKERIMAGE="quay.io/netzbegruenung/green-spider:latest"
+
+RESULTS_ENTITY_KIND="spider-results"
 
 API_TOKEN_SECRET="secrets/hetzner-api-token.sh"
 test -f $API_TOKEN_SECRET || { echo >&2 "File $API_TOKEN_SECRET does not exist."; exit 1; }
@@ -161,7 +163,7 @@ else
     $DOCKERIMAGE \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel info \
-    spider --kind spider-results-dev
+    spider --kind $RESULTS_ENTITY_KIND
 
 fi
 
