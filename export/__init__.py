@@ -122,7 +122,7 @@ def download_icon(icon_url):
     try:
         file_name = os.path.basename(icon_url)[-1]
     except IndexError as exc:
-        logging.error("Error in URL %s: %s", icon_url, exc)
+        logging.error("Could not get file name from URL %s. Not downloading. Details: %s", icon_url, exc)
         return None
 
     if file_name != "" and "." in file_name:
@@ -139,7 +139,7 @@ def download_icon(icon_url):
         try:
             extension = default_endings[ctype]
         except KeyError:
-            logging.error("No file ending defined for icon type '%s'", ctype)
+            logging.error("No file ending defined for icon type %s. Not downloading.", ctype)
             return None
 
     filename = content_hash + "." + extension.lower()
