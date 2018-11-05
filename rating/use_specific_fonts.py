@@ -26,7 +26,7 @@ class Rater(AbstractRater):
                 continue
             
             fonts = " ".join(self.check_results['load_in_browser'][url]['font_families'])
-            if 'arvo' in fonts:
+            if 'arvo' in fonts or 'titillium' in fonts:
                 urls_with_font += 1
         
         if urls_with_font > 0 and urls_without_font == 0:
