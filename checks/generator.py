@@ -63,16 +63,19 @@ class Checker(AbstractChecker):
             elif url in dns_resolution:
                 for addr in dns_resolution[url]['ipv4_addresses']:
                     if addr == self.gcms_ip:
-                        generator = "typo3-gcms"
+                        generator = 'typo3-gcms'
 
         elif 'Urwahl3000' in page_content['content']:
-            generator = "wordpress-urwahl"
+            generator = 'wordpress-urwahl'
 
         elif ('josephknowsbest' in page_content['content'] or
             'Joseph-knows-best' in page_content['content']):
-            generator = "wordpress-josephknowsbest"
+            generator = 'wordpress-josephknowsbest'
 
         elif 'wordpress' in page_content['content']:
-            generator = "wordpress"
-        
+            generator = 'wordpress'
+
+        elif 'jimdo' in page_content['content']:
+            generator = 'jimdo'
+
         return generator
