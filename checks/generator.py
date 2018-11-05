@@ -48,6 +48,8 @@ class Checker(AbstractChecker):
                 generator = 'drupal'
             if 'joomla' in generator:
                 generator = 'joomla'
+            if 'drupal' in generator:
+                generator = 'drupal'
         
         # Qualify certain CMS flavours in more detail
         if generator == "typo3":
