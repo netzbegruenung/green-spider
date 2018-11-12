@@ -1,6 +1,6 @@
 # DevOps
 
-Die Scripte in diesem Verzeichnis erlauben das weitgehend automatisierte
+Die Skripte in diesem Verzeichnis erlauben das weitgehend automatisierte
 Provisionieren eines Servers, Ausführen von Jobs wie Spider und Screenshotter
 und Entfernen des Servers.
 
@@ -17,17 +17,25 @@ Server unbedingt manuell entfernt werden, um unnötige Kosten zu vermeiden.
 - jq (https://stedolan.github.io/jq/)
 - ssh
 
-## Ausführung
+## Generelles
 
-Die Scripte werden aus dem Root-Verzeichnis des Repositories ausgeführt.
+- Die Skripte müssen aus dem root-Verzeichnis des git repositories ausgeführt werden
+- Der Terminal muss bis zum Ende der Ausführung geöffnet bleiben.
 
-```
-# Spidern
+## Spider starten
+
+```nohighlight
 devops/run-job.sh spider
+```
 
+## Screenshots erstellen
 
-# Screenshots erzeugen
+```nohighlight
 devops/run-job.sh screenshotter
 ```
 
-Der Terminal muss bis zum Ende der Ausführung geöffnet bleiben.
+## Webapp deployen
+
+```nohighlight
+devops/deploy-webapp.sh
+```
