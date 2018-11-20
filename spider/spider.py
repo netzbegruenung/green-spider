@@ -21,12 +21,8 @@ import rating
 
 def check_and_rate_site(entry):
     """
-    Performs our site check and returns results as a dict.
-
-    1. Normalize the input URL and derive the URLs to check for
-    2. HEAD the check urls
-    3. Determine the canonical URL
-    4. Run full check on canonical URL
+    Performs our site checks, calculates the score
+    and returns results as a dict.
     """
 
     # all the info we'll return for the site
