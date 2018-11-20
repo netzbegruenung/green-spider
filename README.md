@@ -56,6 +56,6 @@ make spider
 
 Siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
 
-### Webapp aktualisieren
+### Webapp deployen
 
-Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp)
+Siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).

@@ -28,7 +28,7 @@ test -f $API_TOKEN_SECRET || { echo >&2 "File $API_TOKEN_SECRET does not exist."
 source $API_TOKEN_SECRET
 
 
-if [[ "$1" == "" ]]; then
+if [[ "$1" = "" ]]; then
   echo "No argument given. Please use 'screenshotter' or 'spider' as arguments."
   exit 1
 fi
@@ -68,6 +68,12 @@ function create_server()
 
   # Get IP:
   SERVER_IP=$(echo $CREATE_RESPONSE | jq -r .server.public_net.ipv4.ip)
+
+  if [ "$SERVER_ID" = "null" ]; then
+    echo "No server created."
+    echo $CREATE_RESPONSE | jq .
+    exit 1
+  fi
 
   echo "Created server $SERVERNAME with ID $SERVER_ID and IP $SERVER_IP"
 }

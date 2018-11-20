@@ -88,7 +88,7 @@ def work_of_queue(datastore_client, entity_kind):
         logging.info("Job %s writing to DB", job["url"])
 
         key = datastore_client.key(entity_kind, job["url"])
-        entity = datastore.Entity(key=key, exclude_from_indexes=['results'])
+        entity = datastore.Entity(key=key)
         record = {
             'created': datetime.utcnow(),
             'meta': result['meta'],

@@ -2,23 +2,23 @@ IMAGE := quay.io/netzbegruenung/green-spider:latest
 
 DB_ENTITY := spider-results
 
-.PHONY: dockerimage
+.PHONY: dockerimage spider export
 
 # Build docker image
 dockerimage:
 	docker build -t $(IMAGE) .
 
 # Create spider job queue
-spiderjobs: dockerimage
+spiderjobs:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
-		--loglevel info \
+		--loglevel debug \
 		jobs
 
 # Run spider in docker image
-spider: dockerimage
+spider:
 	docker run --rm -ti \
 	  -v $(PWD)/dev-shm:/dev/shm \
 		-v $(PWD)/secrets:/secrets \
@@ -27,7 +27,7 @@ spider: dockerimage
 		--loglevel debug \
 		spider --kind $(DB_ENTITY)
 
-export: dockerimage
+export:
 	docker run --rm -ti \
 		-v $(PWD)/export-json:/out \
 		-v $(PWD)/secrets:/secrets \
@@ -39,7 +39,7 @@ export: dockerimage
 
 # run spider tests
 # FIXME
-test: dockerimage
+test:
 	docker run --rm -ti \
 		--entrypoint "python3" \
 		$(IMAGE) \
