@@ -22,6 +22,11 @@ class Rater(AbstractRater):
         for url in self.check_results['url_reachability']:
             if self.check_results['url_reachability'][url]['exception'] is not None:
                 continue
+            
+            # only count status 2** or 3** as reachable
+            if self.check_results['url_reachability'][url]['status'] >= 400:
+                continue
+
             count += 1
         
         if count > 0:
