@@ -1,0 +1,9 @@
+# Google cloud datastore index config
+indexes:
+
+- kind: spider-results
+  properties:
+  - name: created
+    direction: desc
+  - name: meta
+  - name: score
