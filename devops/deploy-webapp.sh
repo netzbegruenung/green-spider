@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# Creates a server, installs Docker, runs the screenshots job, tears down the server.
+# This is a Work-In-Progress deployment script for the webapp on Hetzner Cloud.
+# it is not yet expected to work.
 #
-# This will take several hours. For a complete, clean run it is required to leave the
-# terminal running the script open. Otherwise the server won't be deleted properly
-# which will result in extra cost.
-#
-# When stopping the script at any point (Ctrl+C), please make sure that the server
-# gets deleted afterwards.
+# The general mechanics should be:
+# - Detect which server is running the webapp
+# - Create a new server
+# - Deploy the webapp on the new server
+# - Test the new server
+# - If okay, bind the public IP to the new server
 #
 # Requirements:
 #
@@ -18,8 +19,6 @@
 # - Service account with write permission for Storage and Datastore in 
 #   secrets/datastore-writer.json
 
-
-DOCKERIMAGE="quay.io/netzbegruenung/green-spider-webapp:latest"
 
 API_TOKEN_SECRET="secrets/hetzner-api-token.sh"
 test -f $API_TOKEN_SECRET || { echo >&2 "File $API_TOKEN_SECRET does not exist."; exit 1; }
@@ -41,6 +40,8 @@ function get_ip()
   IP_IP=$(echo $RESPONSE | jq '.floating_ips[] | select(.description == "webapp") | .ip')
 }
 
+# find_webapp_server checks which server is currently running the webapp,
+# using the "purpose=webapp" label.
 function find_webapp_server()
 {
   RESPONSE=$(curl -s "https://api.hetzner.cloud/v1/servers?label_selector=purpose=webapp" \
@@ -48,15 +49,17 @@ function find_webapp_server()
     -H "Authorization: Bearer $API_TOKEN")
 
   CURRENT_SERVER_ID=$(echo $RESPONSE | jq '.servers[0] | .id')
+  CURRENT_SERVER_IP=$(echo $RESPONSE | jq '.servers[0] | .ip')
   
   if [ "$CURRENT_SERVER_ID" = "null" ]; then
     echo "Currently there is no server"
   else
-    echo "Current server has ID $CURRENT_SERVER_ID"
+    echo "Current server has ID $CURRENT_SERVER_ID and IP $CURRENT_SERVER_IP"
   fi
   
 }
 
+# create_server creates a new server to deploy the webapp.
 function create_server()
 {
   SERVERNAME=webapp-$(date -u '+%FT%H-%M')
@@ -93,6 +96,8 @@ function create_server()
   echo "Created server with ID $SERVER_ID and IP $SERVER_IP"
 }
 
+# assign_ip assigns the public IP address for 'green-spider.netzbegruenung.de'
+# to the server.
 function assign_ip()
 {
   curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $API_TOKEN" \
@@ -100,6 +105,7 @@ function assign_ip()
     -d "{\"server\": ${SERVER_ID}}"
 }
 
+# wait_for_server waits until the new server is reachable via SSH
 function wait_for_server()
 {
   echo -n "Waiting for the server to be reachable via SSH "
@@ -153,20 +159,40 @@ ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
 
   echo ""
   echo "Install docker"
-  apt-get install -y docker-ce
+  apt-get install -y docker-ce python-pip
+
+  pip install setuptools
+  pip install docker-compose
+  docker-compose version
+
+  mkdir /root/etc-letsencrypt
+
+  curl -s https://raw.githubusercontent.com/netzbegruenung/green-spider-webapp/proxy-api-requests/docker-compose-prod.yaml > docker-compose.yaml
+  docker-compose pull
+
+  curl -s https://raw.githubusercontent.com/netzbegruenung/green-spider-webapp/proxy-api-requests/config/nginx/nginx_prod.conf > nginx.conf
 EOF
 
 echo "Done with remote setup."
 
+# Copy TLS certificate files from old to new server
+scp -3 -o StrictHostKeyChecking=no -r root@$CURRENT_SERVER_IP:/letsencrypt root@$SERVER_IP:/letsencrypt
+
+# Upload secret for database access
+scp -o StrictHostKeyChecking=no secrets/green-spider-api.json root@$SERVER_IP:/root/
+
+exit
+
+# TODO:
+# - docker-compose up
+
 echo "Launching server"
 
-ssh -o StrictHostKeyChecking=no root@$SERVER_IP \
-    docker pull $DOCKERIMAGE
 
 ssh -o StrictHostKeyChecking=no root@$SERVER_IP \
     docker run --name webapp -d \
       -p 443:443 -p 80:8000 \
-      -v /letsencrypt/etc:/etc/letsencrypt \
+      -v /root/etc-letsencrypt:/etc/letsencrypt \
       $DOCKERIMAGE
 
 # Assign the IP to the new server
