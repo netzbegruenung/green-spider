@@ -75,7 +75,6 @@ if __name__ == "__main__":
     elif args.command == 'export':
 
         import export
-        export.export_screenshots(datastore_client)
         export.export_results(datastore_client, args.kind)
 
     else:

@@ -29,7 +29,7 @@ spider:
 
 export:
 	docker run --rm -ti \
-		-v $(PWD)/export-json:/out \
+		-w $(PWD)/export-json \
 		-v $(PWD)/secrets:/secrets \
 		-v $(PWD)/export-siteicons:/icons \
 		$(IMAGE) \
