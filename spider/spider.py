@@ -21,12 +21,8 @@ import rating
 
 def check_and_rate_site(entry):
     """
-    Performs our site check and returns results as a dict.
-
-    1. Normalize the input URL and derive the URLs to check for
-    2. HEAD the check urls
-    3. Determine the canonical URL
-    4. Run full check on canonical URL
+    Performs our site checks, calculates the score
+    and returns results as a dict.
     """
 
     # all the info we'll return for the site
@@ -58,11 +54,11 @@ def check_and_rate_site(entry):
     for key in result['rating']:
         result['score'] += result['rating'][key]['score']
 
-    # remove full HTML page content,
-    # as it's no longer needed
+    # remove full HTML page content and hyperlinks to safe some storage
     try:
         for url in result['checks']['page_content']:
             del result['checks']['page_content'][url]['content']
+        del result['checks']['hyperlinks']
     except:
         pass
 

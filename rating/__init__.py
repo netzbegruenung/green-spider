@@ -6,6 +6,7 @@ criteria based on information gather by checks before.
 import logging
 
 from rating import canonical_url
+from rating import contact_link
 from rating import favicon
 from rating import feeds
 from rating import https
@@ -15,6 +16,7 @@ from rating import reachable
 from rating import resolvable
 from rating import response_duration
 from rating import responsive_layout
+from rating import social_media_links
 from rating import use_specific_fonts
 from rating import www_optional
 
@@ -30,6 +32,7 @@ def calculate_rating(results):
     # The raters to execute.
     rating_modules = {
         'CANONICAL_URL': canonical_url,
+        'CONTACT_LINK': contact_link,
         'DNS_RESOLVABLE_IPV4': resolvable,
         'FAVICON': favicon,
         'FEEDS': feeds,
@@ -39,6 +42,7 @@ def calculate_rating(results):
         'NO_SCRIPT_ERRORS': no_script_errors,
         'RESPONSIVE': responsive_layout,
         'SITE_REACHABLE': reachable,
+        'SOCIAL_MEDIA_LINKS': social_media_links,
         'USE_SPECIFIC_FONTS': use_specific_fonts,
         'WWW_OPTIONAL': www_optional,
     }
