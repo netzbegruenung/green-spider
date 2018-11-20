@@ -54,11 +54,11 @@ def check_and_rate_site(entry):
     for key in result['rating']:
         result['score'] += result['rating'][key]['score']
 
-    # remove full HTML page content,
-    # as it's no longer needed
+    # remove full HTML page content and hyperlinks to safe some storage
     try:
         for url in result['checks']['page_content']:
             del result['checks']['page_content'][url]['content']
+        del result['checks']['hyperlinks']
     except:
         pass
 
