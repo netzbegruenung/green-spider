@@ -154,14 +154,13 @@ def get_job_from_queue(datastore_client):
     """
     out = None
 
-    with datastore_client.transaction():
-        query = datastore_client.query(kind=config.JOB_DATASTORE_KIND,
-                                       order=['index'])
-        for entity in query.fetch(limit=1):
-            logging.debug("Got job: %s", entity)
-            out = dict(entity)
-            out["url"] = entity.key.name
-            datastore_client.delete(entity.key)
+    query = datastore_client.query(kind=config.JOB_DATASTORE_KIND,
+                                   order=['index'])
+    for entity in query.fetch(limit=1):
+        logging.debug("Got job: %s", entity)
+        out = dict(entity)
+        out["url"] = entity.key.name
+        datastore_client.delete(entity.key)
 
     return out
 
