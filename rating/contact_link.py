@@ -28,6 +28,8 @@ class Rater(AbstractRater):
             for link in self.check_results['hyperlinks'][url]['links']:
                 if link['text'].lower() == 'kontakt':
                     urls_with_contact_link += 1
+                    # make sure we only count 1 for this url
+                    break
 
         if urls_with_contact_link == urls:
             score = self.max_score

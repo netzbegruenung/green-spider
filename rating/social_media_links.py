@@ -37,6 +37,11 @@ class Rater(AbstractRater):
                     continue
                 
                 parsed = urlparse(link['href'])
+                if parsed is None:
+                    continue
+                if parsed.hostname is None:
+                    continue
+
                 if ("facebook.com" in parsed.hostname or
                     "twitter.com" in parsed.hostname or
                     "instagram.com" in parsed.hostname or
