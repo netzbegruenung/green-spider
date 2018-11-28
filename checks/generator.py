@@ -65,6 +65,12 @@ class Checker(AbstractChecker):
                     if addr == self.gcms_ip:
                         generator = 'typo3-gcms'
 
+        elif 'blum-o-matic' in page_content['content']:
+            generator = 'wordpress-blumomatic'
+
+        elif 'gruenes-internet.de' in page_content['content']:
+            generator = 'wordpress-gruenes-internet'
+
         elif 'Urwahl3000' in page_content['content']:
             generator = 'wordpress-urwahl'
 
