@@ -1,0 +1,41 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: green-spider-spider
+spec:
+  # Monday, Wednesday, Friday at 1:25 UTC
+  schedule: "25 1 * * 1,3,5"
+  jobTemplate:
+    spec:
+      parallelism: 2
+      template:
+        spec:
+          containers:
+          - name: spider
+            image: quay.io/netzbegruenung/green-spider:latest
+            imagePullPolicy: Always
+            args:
+              - "--credentials-path=/secrets/datastore-writer.json"
+              - "--loglevel=info"
+              - spider
+            volumeMounts:
+            - name: secrets
+              mountPath: "/secrets"
+              readOnly: true
+            - name: shared
+              mountPath: /dev/shm
+            resources:
+              requests:
+                cpu: 800m
+                memory: 5000M
+          restartPolicy: OnFailure
+          volumes:
+          - name: secrets
+            secret:
+              secretName: green-spider
+              items:
+              - key: datastore-writer.json
+                path: datastore-writer.json
+          - name: shared
+            emptyDir: {}
+
