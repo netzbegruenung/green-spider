@@ -10,10 +10,17 @@ class AbstractChecker(object):
         # Key is the name of the checker that has generated the result.
         self._previous_results = previous_results
 
+    def depends_on_results(self):
+        """
+        Should return  the name(s) of checks this one depends on.
+        Empty list means this check has no prerequisites.
+        """
+        return []
+
     def run(self):
         """Executes the check routine, returns result dict"""
         raise NotImplementedError()
-
+    
     @property
     def config(self):
         return self._config

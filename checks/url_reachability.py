@@ -23,6 +23,9 @@ class Checker(AbstractChecker):
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
     
+    def depends_on_results(self):
+        return ['dns_resolution']
+
     def run(self):
         headers = {
             "User-Agent": self.config.user_agent

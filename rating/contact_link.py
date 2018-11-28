@@ -31,7 +31,7 @@ class Rater(AbstractRater):
                     # make sure we only count 1 for this url
                     break
 
-        if urls_with_contact_link == urls:
+        if urls > 0 and urls_with_contact_link == urls:
             score = self.max_score
             value = True
 

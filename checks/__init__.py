@@ -56,6 +56,15 @@ def perform_checks(input_url):
     for check_name, check in check_modules:
         checker = check.Checker(config=config,
                                 previous_results=results)
+
+        # see if dependencies are met
+        dependencies = checker.depends_on_results()
+        if dependencies != []:
+            for dep in dependencies:
+                if (dep not in results or results[dep] is None or results[dep] == {} or results[dep] == []):
+                    logging.debug("Skipping check %s as dependency %s is not met" % (check_name, dep))
+                    continue
+
         result = checker.run()
         results[check_name] = result
 
