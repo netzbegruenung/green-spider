@@ -11,7 +11,10 @@ from checks.abstract_checker import AbstractChecker
 class Checker(AbstractChecker):
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
-    
+
+    def depends_on_results(self):
+        return ['page_content']
+
     def run(self):
         assert 'page_content' in self.previous_results
         
