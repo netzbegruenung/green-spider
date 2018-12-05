@@ -74,7 +74,8 @@ class Checker(AbstractChecker):
         elif 'gruenes-internet.de' in page_content['content']:
             generator = 'wordpress-gruenes-internet'
 
-        elif 'Urwahl3000' in page_content['content']:
+        elif ('Urwahl3000' in page_content['content'] or
+            '/themes/urwahl3000' in page_content['content']):
             generator = 'wordpress-urwahl'
 
         elif ('josephknowsbest' in page_content['content'] or
