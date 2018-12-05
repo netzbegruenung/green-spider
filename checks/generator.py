@@ -3,8 +3,6 @@ Checks the 'generator' meta tag and page content properties
 to detect well-known content management systems, themes etc.
 """
 
-import logging
-
 from checks.abstract_checker import AbstractChecker
 
 class Checker(AbstractChecker):
