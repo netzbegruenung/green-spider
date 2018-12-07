@@ -10,7 +10,6 @@ from checks.config import Config
 class TestHyperlinks(unittest.TestCase):
 
     def test_links(self):
-        self.maxDiff = 2000
         page_body = """
             <html>
                 <head>

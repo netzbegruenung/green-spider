@@ -10,6 +10,7 @@ from checks import certificate
 from checks import dns_resolution
 from checks import duplicate_content
 from checks import domain_variations
+from checks import frameset
 from checks import generator
 from checks import html_head
 from checks import http_and_https
@@ -41,6 +42,7 @@ def perform_checks(input_url):
         ('duplicate_content', duplicate_content),
         ('charset', charset),
         ('html_head', html_head),
+        ('frameset', frameset),
         ('hyperlinks', hyperlinks),
         ('generator', generator),
         ('load_in_browser', load_in_browser),
