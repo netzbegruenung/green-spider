@@ -16,6 +16,7 @@ from checks import html_head
 from checks import http_and_https
 from checks import hyperlinks
 from checks import page_content
+from checks import load_feeds
 from checks import load_in_browser
 from checks import url_reachability
 from checks import url_canonicalization
@@ -45,6 +46,7 @@ def perform_checks(input_url):
         ('frameset', frameset),
         ('hyperlinks', hyperlinks),
         ('generator', generator),
+        ('load_feeds', load_feeds),
         ('load_in_browser', load_in_browser),
     ]
 
