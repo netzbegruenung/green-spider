@@ -25,6 +25,10 @@ class Rater(AbstractRater):
                 continue
             if 'sizes' not in self.check_results['load_in_browser'][url]:
                 continue
+            if self.check_results['load_in_browser'][url]['sizes'] == []:
+                continue
+            if self.check_results['load_in_browser'][url]['sizes'] is None:
+                continue
 
             if (self.check_results['load_in_browser'][url]['min_document_width'] <=
                 self.check_results['load_in_browser'][url]['sizes'][0]['viewport_width']):

@@ -36,8 +36,10 @@ class Checker(AbstractChecker):
         feeds.
         """
         head = self.previous_results['html_head'][url]
-        assert 'link_rss_atom' in head
-        assert isinstance(head['link_rss_atom'], list)
+        if 'link_rss_atom' not in head:
+            return
+        if not isinstance(head['link_rss_atom'], list):
+            return
         
         for feed_url in head['link_rss_atom']:
             if feed_url not in self.feeds:
@@ -67,6 +69,9 @@ class Checker(AbstractChecker):
         if 'bozo_exception' in data:
             result['exception'] = data['bozo_exception']
 
+        if 'headers' not in data:
+            return result
+
         if data['headers'].get('status') not in ('200', '301', '302'):
             result['exception'] = 'Server responded with status %s' % data['headers'].get('status')
         
@@ -76,7 +81,10 @@ class Checker(AbstractChecker):
             result['num_entries'] = len(data['entries'])
             result['latest_entry'] = self.find_latest_entry(data['entries'])
             result['first_entry'] = self.find_first_entry(data['entries'])
-            if result['num_entries'] > 1 and result['first_entry'] < result['latest_entry']:
+            if (result['num_entries'] > 1 and 
+                result['first_entry'] is not None and
+                result['latest_entry'] is not None and
+                result['first_entry'] < result['latest_entry']):
                 result['average_interval'] = round((result['latest_entry'] - result['first_entry']).total_seconds() / (result['num_entries'] - 1))
         
         return result
@@ -86,7 +94,10 @@ class Checker(AbstractChecker):
         max_date = None
 
         for entry in entries:
-            timestamp = mktime(entry.get('published_parsed'))
+            published_parsed = entry.get('published_parsed')
+            if published_parsed is None:
+                return
+            timestamp = mktime(published_parsed)
             if max_date is None or timestamp > max_date:
                 max_date = timestamp
         
@@ -98,7 +109,10 @@ class Checker(AbstractChecker):
         min_date = None
 
         for entry in entries:
-            timestamp = mktime(entry.get('published_parsed'))
+            published_parsed = entry.get('published_parsed')
+            if published_parsed is None:
+                return
+            timestamp = mktime(published_parsed)
             if min_date is None or timestamp < min_date:
                 min_date = timestamp
         
