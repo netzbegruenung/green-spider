@@ -90,7 +90,8 @@ class Checker(AbstractChecker):
             if max_date is None or timestamp > max_date:
                 max_date = timestamp
         
-        return datetime.fromtimestamp(max_date)
+        if max_date is not None:
+            return datetime.fromtimestamp(max_date)
 
 
     def find_first_entry(self, entries):
@@ -101,4 +102,5 @@ class Checker(AbstractChecker):
             if min_date is None or timestamp < min_date:
                 min_date = timestamp
         
-        return datetime.fromtimestamp(min_date)
+        if min_date is not None:
+            return datetime.fromtimestamp(min_date)

@@ -70,5 +70,53 @@ class TestFeed(unittest.TestCase):
         })
 
 
+    def test_empty_feed_rss2(self):
+        """
+        Checks RSS 2.0
+        """
+
+        feed = """<?xml version="1.0"?>
+            <rss version="2.0">
+                <channel>
+                    <title>Empty Feed</title>
+                    <link>http://example.com/</link>
+                    <pubDate></pubDate>
+                </channel>
+            </rss>
+        """
+
+        feed_url = 'http://example.com/feed.xml'
+        httpretty.register_uri(httpretty.GET, feed_url,
+                               body=feed,
+                               adding_headers={
+                                   "Content-type": "application/rss+xml",
+                               })
+
+        # mocking a previous result from some page
+        results = {
+            'html_head': {
+                'http://example.com/': {
+                    'link_rss_atom': ['http://example.com/feed.xml']
+                }
+            }
+        }
+        config = Config(urls=['http://example.com/'])
+        checker = load_feeds.Checker(config=config, previous_results=results)
+
+        result = checker.run()
+        print(result)
+
+        self.assertEqual(result, {
+            'http://example.com/feed.xml': {
+                'exception': None,
+                'title': 'Empty Feed',
+                'latest_entry': None,
+                'first_entry': None,
+                'average_interval': None,
+                'num_entries': 0,
+            }
+        })
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -78,7 +78,7 @@ def work_of_queue(datastore_client, entity_kind):
         logging.info("Starting job %s", job["url"])
         result = check_and_rate_site(entry=job)
 
-        logging.debug("Full JSON representation of returned result: %s", json.dumps(result))
+        logging.debug("Full JSON representation of returned result: %s", json.dumps(result, default=str))
 
         logging.info("Job %s finished checks", job["url"])
         logging.info("Job %s writing to DB", job["url"])
