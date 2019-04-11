@@ -12,6 +12,8 @@ Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.n
 
 - Webapp: Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/)
 
+- Indexer: Lädt Ergebnisdaten in Elasticsearch. Siehe [netzbegruenung/green-spider-indexer](https://github.com/netzbegruenung/green-spider-indexer)
+
 ## Aktivitäten
 
 Es ist geplant, auf Basis der gesammelten Informationen (siehe Spider) Informationen an die Betreiber*innen der Websites zu versenden. Hierzu müssen Prozesse erarbeitet und vermutlich weitere Tools geschaffen werden.
