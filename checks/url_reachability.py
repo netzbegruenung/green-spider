@@ -80,7 +80,7 @@ class Checker(AbstractChecker):
             
             # if redirects end in www.facebook.com or www.denic.de, remove this URL again
             # remove if redirect target is facebook
-            if result['exception'] is not None and result['redirect_history'] is not None and len(result['redirect_history']) > 0:
+            if result['exception'] is None and result['redirect_history'] is not None and len(result['redirect_history']) > 0:
                 parsed = urlparse(result['redirect_history'][-1]['redirect_to'])
                 if parsed.hostname in ('www.facebook.com', 'www.denic.de', 'sedo.com'):
                     result[url]['exception'] = {
