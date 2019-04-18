@@ -80,17 +80,19 @@ class Checker(AbstractChecker):
             
             # if redirects end in www.facebook.com or www.denic.de, remove this URL again
             # remove if redirect target is facebook
-            if result['exception'] is not None and result['redirect_history'] is not None and len(result['redirect_history']) > 0:
-                parsed = urlparse(result['redirect_history'][-1]['redirect_to'])
-                if parsed.hostname in ('www.facebook.com', 'www.denic.de', 'sedo.com'):
-                    result[url]['exception'] = {
+            if result['exception'] is None and result['redirect_history'] is not None and len(result['redirect_history']) > 0:
+                target_url = result['redirect_history'][-1]['redirect_to']
+                parsed = urlparse(target_url)
+                if parsed.netloc in ('www.facebook.com', 'www.denic.de', 'sedo.com'):
+                    result['exception'] = {
                         'type': 'Bad target domain',
-                        'message': 'The URL redirects to %s, which is unsupported by green-spider as it doesn\'t qualify as an owned website' % parsed.hostname,
+                        'message': 'The URL redirects to %s, which is unsupported by green-spider as it doesn\'t qualify as an owned website' % parsed.netloc,
                     }
-                    self.config.remove_url(url)
+                    self.config.remove_url(target_url)
+                    print("Removing URL %s" % target_url)
 
             results[url] = result
-        
+
         return results
 
     def expand_history(self, history):

@@ -7,6 +7,8 @@ from checks import load_feeds
 from checks.config import Config
 from datetime import datetime
 
+from pprint import pprint
+
 @httprettified
 class TestFeed(unittest.TestCase):
 
@@ -56,14 +58,14 @@ class TestFeed(unittest.TestCase):
         checker = load_feeds.Checker(config=config, previous_results=results)
 
         result = checker.run()
-        print(result)
+        pprint(result)
 
         self.assertEqual(result, {
             'http://example.com/feed.xml': {
                 'exception': None,
                 'title': 'Liftoff News',
-                'latest_entry': datetime(2003, 6, 3, 10, 39, 21),
-                'first_entry': datetime(2003, 5, 30, 12, 6, 42),
+                'latest_entry': datetime(2003, 6, 3, 9, 39, 21),
+                'first_entry': datetime(2003, 5, 30, 11, 6, 42),
                 'average_interval': 340359,
                 'num_entries': 2,
             }
@@ -104,7 +106,7 @@ class TestFeed(unittest.TestCase):
         checker = load_feeds.Checker(config=config, previous_results=results)
 
         result = checker.run()
-        print(result)
+        pprint(result)
 
         self.assertEqual(result, {
             'http://example.com/feed.xml': {
@@ -161,7 +163,7 @@ class TestFeed(unittest.TestCase):
         checker = load_feeds.Checker(config=config, previous_results=results)
 
         result = checker.run()
-        print(result)
+        pprint(result)
 
         self.assertEqual(result, {
             'http://example.com/feed.xml': {

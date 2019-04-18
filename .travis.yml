@@ -11,7 +11,5 @@ python:
   - "3.6"
 
 script:
-  - pip install --upgrade pip
-  - pip install --upgrade codecov
+  - make
   - make test
-  - codecov

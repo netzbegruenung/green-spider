@@ -25,7 +25,7 @@ spider:
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
-		spider --kind $(DB_ENTITY)
+		spider --kind $(DB_ENTITY) ${ARGS}
 
 export:
 	docker run --rm -ti \
