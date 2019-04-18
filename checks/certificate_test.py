@@ -24,7 +24,7 @@ class TestCertificateChecker(unittest.TestCase):
         result = checker.run()
         self.assertIn(url, result)
         self.assertIsNone(result[url]['exception'])
-        self.assertEqual(result[url]['issuer']['O'], 'COMODO CA Limited')
+        self.assertEqual(result[url]['issuer']['O'], 'Sectigo Limited')
 
     def test_tls_v_1_0(self):
         """Load a certificate for a TLS v1.0 server"""

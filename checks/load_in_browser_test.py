@@ -38,7 +38,7 @@ class TestLoadInBrowser(unittest.TestCase):
             'httpOnly': False,
             'name': 'cookiename',
             'path': '/',
-            'secure': True,
+            'secure': False,
             'value': 'cookievalue'
         }])
 
