@@ -65,6 +65,21 @@ def check_and_rate_site(entry):
     return result
 
 
+def test_url(url):
+    """
+    Run the spider for a single URL and print the result.
+    Doesn't write anything to the database.
+    """
+    logging.info("Crawling URL %s", url)
+
+    # mock job
+    job = {
+        "url": url,
+    }
+
+    result = check_and_rate_site(entry=job)
+    pprint(result['rating'])
+
 def work_of_queue(datastore_client, entity_kind):
     """
     Take job from queue and finish it until there are no more jobs
