@@ -36,6 +36,7 @@ if __name__ == "__main__":
     # spider subcommand
     spider_parser = subparsers.add_parser('spider', help='Take jobs off the queue and spider')
     spider_parser.add_argument('--kind', default='spider-results', help='Datastore entity kind to write (default: spider-results)')
+    spider_parser.add_argument('--url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
 
     # jobs subcommand
     jobs_parser = subparsers.add_parser('jobs', help='Adds spider jobs to the queue. By default, all green-directory URLs are added.')
@@ -79,4 +80,8 @@ if __name__ == "__main__":
 
     else:
         from spider import spider
-        spider.work_of_queue(datastore_client, args.kind)
+        if args.url:
+            # spider one URL for diagnostic purposes
+            spider.test_url(args.url)
+        else:
+            spider.work_of_queue(datastore_client, args.kind)
