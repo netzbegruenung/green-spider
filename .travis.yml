@@ -11,6 +11,5 @@ python:
   - "3.6"
 
 script:
-  - pip install --upgrade pip
   - make
   - make test
