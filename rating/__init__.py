@@ -12,6 +12,7 @@ from rating import feeds
 from rating import https
 from rating import no_network_errors
 from rating import no_script_errors
+from rating import no_third_party_cookies
 from rating import reachable
 from rating import resolvable
 from rating import response_duration
@@ -40,6 +41,7 @@ def calculate_rating(results):
         'HTTP_RESPONSE_DURATION': response_duration,
         'NO_NETWORK_ERRORS': no_network_errors,
         'NO_SCRIPT_ERRORS': no_script_errors,
+        'NO_THIRD_PARTY_COOKIES': no_third_party_cookies,
         'RESPONSIVE': responsive_layout,
         'SITE_REACHABLE': reachable,
         'SOCIAL_MEDIA_LINKS': social_media_links,
