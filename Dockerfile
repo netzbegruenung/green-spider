@@ -1,4 +1,4 @@
-FROM python:3.6-alpine3.8
+FROM python:3.6-alpine3.9
 
 # Note: we pin selenium to 3.8.0 because of https://github.com/SeleniumHQ/selenium/issues/5296
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.7/main" >> /etc/apk/repositories && \
