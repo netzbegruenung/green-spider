@@ -22,8 +22,6 @@ import tenacity
 
 from checks.abstract_checker import AbstractChecker
 
-from pprint import pprint
-
 class Checker(AbstractChecker):
 
     page_load_timeout = 30
@@ -116,7 +114,6 @@ class Checker(AbstractChecker):
             
             try:
                 results[url]['cookies'] = self.get_cookies()
-                pprint(results[url]['cookies'])
             except TimeoutException as e:
                 logging.warn("TimeoutException when collecting cookies %s: %s" % (url, e))
                 pass
