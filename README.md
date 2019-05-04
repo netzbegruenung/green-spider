@@ -6,13 +6,13 @@ Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.n
 
 ## Tools
 
-- Spider: Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
-
-- Screenshotter: Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
-
-- Webapp: Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/)
-
-- Indexer: Lädt Ergebnisdaten in Elasticsearch. Siehe [netzbegruenung/green-spider-indexer](https://github.com/netzbegruenung/green-spider-indexer)
+- **Spider:** Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
+- **Screenshotter:** Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
+- **Webapp:** Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/). Dazu gehören
+  - **API**: [netzbegruenung/green-spider-api](https://github.com/netzbegruenung/green-spider-api)
+  - **Elasticsearch**
+  - **Indexer:** Lädt Ergebnisdaten in Elasticsearch. Siehe [netzbegruenung/green-spider-indexer](https://github.com/netzbegruenung/green-spider-indexer)
+- **Auswertung**: R Projekt zur Auswertung der Ergebnisse. Siehe [netzbegruenung/green-spider-analysis](https://github.com/netzbegruenung/green-spider-analysis)
 
 ## Aktivitäten
 
@@ -24,40 +24,37 @@ Green Spider ist ein Projekt des [netzbegrünung](https://blog.netzbegruenung.de
 
 Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die [Issues](https://github.com/netzbegruenung/green-spider/issues) hier in diesem Repository.
 
-## Anleitung
+## Betrieb
+
+Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
+
+## Entwicklung
+
+Green Spider ist in Python 3 geschrieben und wird aktuell unter 3.6 getestet und ausgeführt.
+
+Aufgrund zahlreicher Dependencies empfiehlt es sich, den Spider Code lokal in Docker
+auszuführen.
+
+Das Image wird über den folgenden Befehl erzeugt:
+
+```nohighlight
+make
+```
+
+Das dauert beim ersten Ausführen einige Zeit, wiel einige Python-Module das Kompilieren diverser Libraries erfordern.
+Nach dem ersten erfolgreichen Durchlauf dauert ein neuer Aufruf von `make` nur noch wenige Sekunden.
+
+### Tests ausführen
+
+In aller Kürze: `make test`
 
 ### Spider ausführen
 
-Zum Ausführen des Spider auf einem Server siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
-
-Voraussetzungen zum lokalen Ausführen:
-
-- Docker
-- Schlüssel mit Schreibrecht für die Ergebnis-Datenbank
-
-Um alle Sites aus aus [netzbegruenung/green-directory](https://github.com/netzbegruenung/green-directory) zu spidern:
+Der Spider kann einzelne URLs verarbeiten, ohne die Ergebnisse in eine Datenbank zu schreiben.
+Am einfachsten geht das über den `make spider` Befehl, so:
 
 ```nohighlight
-make spiderjobs
-make spider
+make spider ARGS="--url http://www.example.com/"
 ```
 
-Alternativ kann wie im nachfolgenden Beispiel gezeogt das Spidern einer einzelnen URL angestoßen werden. Diese muss nicht zwingend Teil des `green-directory` sein.
-
-```nohighlight
-docker run --rm -ti \
-  -v $PWD/secrets:/secrets
-  quay.io/netzbegruenung/green-spider:latest \
-  --credentials-path /secrets/datastore-writer.json \
-  jobs --url https://www.trittin.de/
-
-make spider
-```
-
-### Screenshots erstellen
-
-Siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
-
-### Webapp deployen
-
-Siehe Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
+Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenank.
