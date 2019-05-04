@@ -1,10 +1,8 @@
 venv
 cache
-webapp/node_modules
 secrets
 temp
 __pycache__
 .vscode/settings.json
-webapp/dist/bundle.js
-dev-shm
-/export-*
+kubernetes/green-spider-secret.yaml
+/volumes
