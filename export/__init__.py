@@ -2,14 +2,26 @@
 Exports data from the database to JSON files for use in a static webapp
 """
 
-from hashlib import md5
-import json
+import datetime
 import logging
 import sys
 import os
+from hashlib import md5
 
+import json
 import requests
 
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        elif isinstance(obj, datetime.date):
+            return obj.isoformat()
+        elif isinstance(obj, datetime.timedelta):
+            return (datetime.datetime.min + obj).time().isoformat()
+        else:
+            return super(DateTimeEncoder, self).default(obj)
 
 def export_results(client, entity_kind):
     """
@@ -31,6 +43,6 @@ def export_results(client, entity_kind):
             'score': entity.get('score'),
         })
 
-    output_filename = "spider_result.json"
+    output_filename = "/json-export/spider_result.json"
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
-        json.dump(out, jsonfile, indent=2, sort_keys=True, ensure_ascii=False)
+        json.dump(out, jsonfile, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder)
