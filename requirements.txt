@@ -1,0 +1,14 @@
+beautifulsoup4==4.7.1
+feedparser==5.2.1
+GitPython
+google-cloud-datastore==1.7.3
+html-similarity==0.3.2
+httpretty==0.9.6
+pyopenssl==19.0.0
+PyYAML
+requests==2.21.0
+responses==0.10.6
+selenium==3.8.0
+smmap2==2.0.5
+tenacity==5.0.4
+urllib3==1.25.2
