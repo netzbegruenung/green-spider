@@ -1,7 +1,5 @@
-.git
-webapp
-docs
-secrets
-temp
-venv
-/export-*
+/.git
+/.vscode
+/secrets
+/venv
+/volumes
