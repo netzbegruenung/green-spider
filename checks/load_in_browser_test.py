@@ -26,21 +26,5 @@ class TestLoadInBrowser(unittest.TestCase):
         self.assertEqual(result[url]['font_families'], ['"times new roman"'])
 
 
-    def test_cookies(self):
-        """Loads a page that sets cookies"""
-        url = 'https://httpbin.org/cookies/set/cookiename/cookievalue'
-        config = Config(urls=[url])
-        checker = load_in_browser.Checker(config=config, previous_results={})
-        result = checker.run()
-
-        self.assertEqual(result[url]['cookies'], [{
-            'domain': 'httpbin.org',
-            'httpOnly': False,
-            'name': 'cookiename',
-            'path': '/',
-            'secure': False,
-            'value': 'cookievalue'
-        }])
-
 if __name__ == '__main__':
     unittest.main()

@@ -5,21 +5,22 @@ functionality of a site or individual pages.
 
 import logging
 
-from checks import charset
 from checks import certificate
+from checks import charset
 from checks import dns_resolution
-from checks import duplicate_content
 from checks import domain_variations
+from checks import duplicate_content
 from checks import frameset
 from checks import generator
 from checks import html_head
 from checks import http_and_https
 from checks import hyperlinks
-from checks import page_content
+from checks import load_favicons
 from checks import load_feeds
 from checks import load_in_browser
-from checks import url_reachability
+from checks import page_content
 from checks import url_canonicalization
+from checks import url_reachability
 
 from checks.config import Config
 
@@ -46,6 +47,7 @@ def perform_checks(input_url):
         ('frameset', frameset),
         ('hyperlinks', hyperlinks),
         ('generator', generator),
+        ('load_favicons', load_favicons),
         ('load_feeds', load_feeds),
         ('load_in_browser', load_in_browser),
     ]
