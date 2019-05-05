@@ -39,3 +39,35 @@ devops/run-job.sh screenshotter
 ```nohighlight
 devops/deploy-webapp.sh
 ```
+
+## Einloggen per SSH
+
+```
+export FLOATING_IP=195.201.252.221  # Floating IP im hetzner-Projekt
+ssh -o StrictHostKeyChecking=no -q root@$FLOATING_IP
+```
+
+## LetsEncrypt Zertifikat erneuern
+
+Hostname: `green-spider.netzbegruenung.de`
+
+```
+docker-compose stop webapp
+docker run -it --rm -p 443:443 -p 80:80 --name certbot \
+  -v /etc/letsencrypt:/etc/letsencrypt \
+  -v /var/lib/letsencrypt:/var/lib/letsencrypt \
+  certbot/certbot certonly --standalone -n --email marian@sendung.de --agree-tos -d green-spider.netzbegruenung.de
+docker-compose up -d webapp
+```
+
+## IPv6 "Floating IP" temporär an Device binden
+
+```
+sudo ip addr add 2a01:4f8:1c0c:811f::1 dev eth0
+```
+
+## curl-Zugriff mittels IPv6
+
+```
+curl https://[2a01:4f8:1c0c:811f::1]
+```
