@@ -20,8 +20,9 @@ spiderjobs:
 # Run spider in docker image
 spider:
 	docker run --rm -ti \
-	  -v $(PWD)/dev-shm:/dev/shm \
+	  -v $(PWD)/volumes/dev-shm:/dev/shm \
 		-v $(PWD)/secrets:/secrets \
+		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
@@ -29,18 +30,17 @@ spider:
 
 export:
 	docker run --rm -ti \
-		-w $(PWD)/export-json \
 		-v $(PWD)/secrets:/secrets \
-		-v $(PWD)/export-siteicons:/icons \
+		-v $(PWD)/volumes/json-export:/json-export \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-reader.json \
 		--loglevel debug \
 		export --kind $(DB_ENTITY)
 
 # run spider tests
-# FIXME
 test:
 	docker run --rm -ti \
+	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		--entrypoint "python3" \
 		$(IMAGE) \
 		-m unittest discover -p '*_test.py' -v
