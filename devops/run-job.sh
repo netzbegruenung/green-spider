@@ -164,7 +164,8 @@ else
 
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP mkdir -p /dev-shm
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-    -v /dev-shm:/dev/shm \
+    --shm-size=1g \
+    -v /dev/shm:/dev/shm \
     -v /root/secrets:/secrets \
     $DOCKERIMAGE \
     --credentials-path /secrets/datastore-writer.json \
