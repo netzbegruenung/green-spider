@@ -1,8 +1,8 @@
-FROM python:3.6-alpine3.9
+FROM python:3.6-alpine3.8
 
 # Note: we pin selenium to 3.8.0 because of https://github.com/SeleniumHQ/selenium/issues/5296
-RUN echo "http://dl-4.alpinelinux.org/alpine/v3.9/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/v3.9/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/v3.8/main" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories && \
     apk update && \
     apk --no-cache add chromium chromium-chromedriver python3-dev build-base git py3-lxml libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev && \
     pip3 install --upgrade pip && \
