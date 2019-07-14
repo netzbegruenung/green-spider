@@ -162,9 +162,9 @@ else
   #  --credentials-path /secrets/datastore-writer.json \
   #  jobs
 
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP mkdir -p /dev-shm
+  #ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP mkdir -p /dev-shm
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-    --shm-size=1g \
+    --shm-size=2g \
     -v /dev/shm:/dev/shm \
     -v /root/secrets:/secrets \
     $DOCKERIMAGE \
