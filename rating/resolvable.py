@@ -20,7 +20,7 @@ class Rater(AbstractRater):
 
         count = 0
         for url in self.check_results['dns_resolution']:
-            if self.check_results['dns_resolution'][url]['resolvable']:
+            if self.check_results['dns_resolution'][url]['resolvable_ipv4']:
                 count += 1
         
         if count > 0:
