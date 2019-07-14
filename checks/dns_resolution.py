@@ -5,9 +5,10 @@ URLs which are not resolvable are removed from the config.
 """
 
 import logging
-from socket import gethostbyname_ex
 from urllib.parse import urlparse
 from urllib.parse import urlunparse
+
+import dns.resolver
 
 from checks.abstract_checker import AbstractChecker
 
@@ -27,8 +28,8 @@ class Checker(AbstractChecker):
             
             results[url] = self.resolve_hostname(parsed.hostname)
 
-            # remove URL if non-resolvable
-            if not results[url]['resolvable']:
+            # remove URL if IPv4 non-resolvable
+            if not results[url]['resolvable_ipv4']:
                 self.config.remove_url(url)
 
         return results
@@ -39,17 +40,29 @@ class Checker(AbstractChecker):
         """
         result = {
             'hostname': hostname,
-            'resolvable': False,
+            'resolvable_ipv4': False,
+            'resolvable_ipv6': False,
             'aliases': [],
             'ipv4_addresses': [],
+            'ipv6_addresses': [],
         }
 
+        # IPv4
         try:
-            hostname, aliases, ipv4_addresses = gethostbyname_ex(hostname)
-            result['resolvable'] = True
-            result['aliases'] = aliases
-            result['ipv4_addresses'] = ipv4_addresses
+            answers = dns.resolver.query(hostname, "A")
+            result['resolvable_ipv4'] = True
+            for rdata in answers:
+                result['ipv4_addresses'].append(rdata.address)
         except Exception as e:
-            logging.debug("Hostname %s not resolvable. Exception: %r" % (hostname, e))
+            logging.debug("Hostname %s not resolvable via IPv4. Exception: %r" % (hostname, e))
+
+        # IPv6
+        try:
+            answers = dns.resolver.query(hostname, "AAAA")
+            result['resolvable_ipv6'] = True
+            for rdata in answers:
+                result['ipv6_addresses'].append(rdata.address)
+        except Exception as e:
+            logging.debug("Hostname %s not resolvable via IPv4. Exception: %r" % (hostname, e))
         
         return result
