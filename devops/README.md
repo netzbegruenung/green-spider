@@ -43,8 +43,7 @@ devops/deploy-webapp.sh
 ## Einloggen per SSH
 
 ```
-export FLOATING_IP=195.201.252.221  # Floating IP im hetzner-Projekt
-ssh -o StrictHostKeyChecking=no -q root@$FLOATING_IP
+devops/ssh.sh
 ```
 
 ## LetsEncrypt Zertifikat erneuern
