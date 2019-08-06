@@ -17,10 +17,7 @@ class TestLoadInBrowser(unittest.TestCase):
         self.assertIn('cookies', result[url])
         self.assertIn('font_families', result[url])
         self.assertIn('logs', result[url])
-        self.assertIn('min_document_width', result[url])
-        self.assertIn('sizes', result[url])
 
-        self.assertTrue(result[url]['min_document_width'] < 360)
         self.assertEqual(result[url]['cookies'], [])
         self.assertEqual(result[url]['logs'], [])
         self.assertEqual(result[url]['font_families'], ['"times new roman"'])
