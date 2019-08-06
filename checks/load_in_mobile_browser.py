@@ -54,10 +54,8 @@ class Checker(AbstractChecker):
 
             # responsive check
             try:
-                doc_width = self.check_responsiveness(url)
-                results[url] = {
-                    'document_width': doc_width,
-                }
+                result = self.check_responsiveness(url)
+                results[url] = result
             except TimeoutException as e:
                 logging.warn("TimeoutException when checking responsiveness for %s: %s" % (url, e))
                 pass
@@ -74,7 +72,18 @@ class Checker(AbstractChecker):
     def check_responsiveness(self, url):
         self.driver.get(url)
         time.sleep(1.0)
-        doc_width = self.driver.execute_script("return document.body.scrollWidth")
+        body_scroll_width = self.driver.execute_script("return document.body.scrollWidth")
+        body_client_width = self.driver.execute_script("return document.body.clientWidth")
+        window_inner_width = self.driver.execute_script("return window.innerWidth")
+        window_outer_width = self.driver.execute_script("return window.outerWidth")
+        screen_width = self.driver.execute_script("return screen.width")
+        device_pixel_ratio = self.driver.execute_script("return window.devicePixelRatio")
 
-        return int(doc_width)
-
+        return {
+            "body_scroll_width": int(body_scroll_width),
+            "body_client_width": int(body_client_width),
+            "window_inner_width": int(window_inner_width),
+            "window_outer_width": int(window_outer_width),
+            "device_pixel_ratio": int(device_pixel_ratio),
+            "screen_width": int(screen_width),
+        }
