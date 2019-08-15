@@ -43,6 +43,7 @@ export:
 test:
 	docker run --rm -ti \
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
+	    -e GOOGLE_URL_TESTING_API_KEY \
 		--entrypoint "python3" \
 		$(IMAGE) \
 		-m unittest discover -p '*_test.py' -v
