@@ -18,7 +18,7 @@ from checks import hyperlinks
 from checks import load_favicons
 from checks import load_feeds
 from checks import load_in_browser
-from checks import load_in_mobile_browser
+from checks import mobile_friendliness
 from checks import page_content
 from checks import url_canonicalization
 from checks import url_reachability
@@ -51,7 +51,7 @@ def perform_checks(input_url):
         ('load_favicons', load_favicons),
         ('load_feeds', load_feeds),
         ('load_in_browser', load_in_browser),
-        ('load_in_mobile_browser', load_in_mobile_browser),
+        ('mobile_friendliness', mobile_friendliness),
     ]
 
     results = {}
