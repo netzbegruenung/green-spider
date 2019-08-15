@@ -20,9 +20,11 @@ spiderjobs:
 # Run spider in docker image
 spider:
 	docker run --rm -ti \
-	  -v $(PWD)/volumes/dev-shm:/dev/shm \
+		-v $(PWD)/volumes/dev-shm:/dev/shm \
 		-v $(PWD)/secrets:/secrets \
 		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
+		-v $(PWD)/volumes/screenshots:/screenshots \
+		-e GOOGLE_URL_TESTING_API_KEY=$(shell cat ./secrets/google-url-testing-api-key.txt) \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
@@ -41,6 +43,7 @@ export:
 test:
 	docker run --rm -ti \
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
+	    -e GOOGLE_URL_TESTING_API_KEY \
 		--entrypoint "python3" \
 		$(IMAGE) \
 		-m unittest discover -p '*_test.py' -v

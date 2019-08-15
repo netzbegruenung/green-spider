@@ -3,7 +3,6 @@ Collects information by loading pages in a browser.
 
 Information includes:
 
-- whether the document width adapts well to viewports as little as 360 pixels wide
 - whether javascript errors or errors from missing resources occur
 - what CSS font-family properties are in use
 - what cookies are set during loading the page
@@ -25,14 +24,6 @@ from checks.abstract_checker import AbstractChecker
 class Checker(AbstractChecker):
 
     page_load_timeout = 30
-
-    # sizes we check for (width, height)
-    sizes = (
-        (360, 640), # rather old smartphone
-        (768, 1024), # older tablet or newer smartphone
-        (1024, 768), # older desktop or horiz. tablet
-        (1920, 1080), # Full HD horizontal
-    )
 
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
@@ -60,18 +51,14 @@ class Checker(AbstractChecker):
 
             results[url] = {
                 'cookies': None,
-                'sizes': None,
-                'min_document_width': None,
                 'logs': None,
                 'font_families': None,
             }
 
-            # responsive check
+            # page load check
             try:
-                sizes = self.check_responsiveness(url)
+                sizes = self.load_page(url)
                 results[url] = {
-                    'sizes': sizes,
-                    'min_document_width': min([s['document_width'] for s in sizes]),
                     'logs': self.capture_log(),
                 }
             except TimeoutException as e:
@@ -141,26 +128,10 @@ class Checker(AbstractChecker):
 
     @tenacity.retry(stop=tenacity.stop_after_attempt(3),
                     retry=tenacity.retry_if_exception_type(TimeoutException))
-    def check_responsiveness(self, url):
-        result = []
-
-        # set window to the first size initially
-        self.driver.set_window_size(self.sizes[0][0], self.sizes[0][1])
+    def load_page(self, url):
+        # window size is desktop friendly
+        self.driver.set_window_size(1400, 1100)
         self.driver.get(url)
-
-        for (width, height) in self.sizes:
-            self.driver.set_window_size(width, height)
-            
-            # wait for re-render/re-flow
-            time.sleep(1.0)
-            doc_width = self.driver.execute_script("return document.body.scrollWidth")
-            
-            result.append({
-                'viewport_width': width,
-                'document_width': int(doc_width),
-            })
-
-        return result
     
     def capture_log(self):
         """
