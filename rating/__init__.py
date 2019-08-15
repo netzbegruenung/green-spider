@@ -16,7 +16,7 @@ from rating import no_third_party_cookies
 from rating import reachable
 from rating import resolvable
 from rating import response_duration
-from rating import responsive_layout
+from rating import mobile_friendliness
 from rating import social_media_links
 from rating import use_specific_fonts
 from rating import www_optional
@@ -39,10 +39,11 @@ def calculate_rating(results):
         'FEEDS': feeds,
         'HTTPS': https,
         'HTTP_RESPONSE_DURATION': response_duration,
+        'MOBILE_FRIENDLY': mobile_friendliness,
         'NO_NETWORK_ERRORS': no_network_errors,
         'NO_SCRIPT_ERRORS': no_script_errors,
         'NO_THIRD_PARTY_COOKIES': no_third_party_cookies,
-        'RESPONSIVE': responsive_layout,
+        'RESPONSIVE': mobile_friendliness,
         'SITE_REACHABLE': reachable,
         'SOCIAL_MEDIA_LINKS': social_media_links,
         'USE_SPECIFIC_FONTS': use_specific_fonts,
