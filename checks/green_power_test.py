@@ -14,17 +14,9 @@ class TestGreenPower(unittest.TestCase):
         result = checker.run()
         self.assertEqual(result['https://google.com/'], True)
 
-
-        self.assertEqual(1, 1)
-
     def test_is_not_green(self):
         """Check that we get a grey result for grey powered site"""
         config = Config(urls=['http://www.kochind.com/'])
         checker = green_power.Checker(config=config)
         result = checker.run()
         self.assertEqual(result['http://www.kochind.com/'], False)
-
-
-
-
-
