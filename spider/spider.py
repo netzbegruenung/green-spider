@@ -80,7 +80,7 @@ def test_url(url):
     result = check_and_rate_site(entry=job)
     pprint(result)
 
-def execute_single_job(job):
+def execute_single_job(datastore_client, job, entity_kind):
     """
     Executes spider for one single job
     """
@@ -90,6 +90,8 @@ def execute_single_job(job):
     result = check_and_rate_site(entry=job)
 
     logging.debug("Full JSON representation of returned result: %s", json.dumps(result, default=str))
+    logging.debug("Python representation:")
+    pprint(result)
 
     logging.info("Job %s finished checks", job["url"])
     logging.info("Job %s writing to DB", job["url"])
@@ -121,7 +123,7 @@ def work_of_queue(datastore_client, entity_kind):
             logging.info("No more jobs. Exiting.")
             break
 
-        execute_single_job(job)
+        execute_single_job(datastore_client, job, entity_kind)
 
 def validate_job(jobdict):
     if "url" not in jobdict:

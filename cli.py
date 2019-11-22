@@ -87,6 +87,6 @@ if __name__ == "__main__":
             spider.test_url(args.url)
         elif args.job:
             job = json.loads(args.job)
-            spider.execute_single_job(job)
+            spider.execute_single_job(datastore_client, job, args.kind)
         else:
             spider.work_of_queue(datastore_client, args.kind)
