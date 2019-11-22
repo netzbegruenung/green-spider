@@ -63,6 +63,6 @@ class Checker(AbstractChecker):
             for rdata in answers:
                 result['ipv6_addresses'].append(rdata.address)
         except Exception as e:
-            logging.debug("Hostname %s not resolvable via IPv4. Exception: %r" % (hostname, e))
+            logging.debug("Hostname %s not resolvable via IPv6. Exception: %r" % (hostname, e))
         
         return result
