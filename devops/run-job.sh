@@ -140,6 +140,8 @@ if [[ $1 == "screenshotter" ]]; then
   # Copy service account secret to server
   echo "Copying secret to /root/secrets/service-account.json"
   scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/service-account.json
+  scp -o StrictHostKeyChecking=no -q secrets/screenshots-uploader.json root@$SERVER_IP:/root/secrets/screenshots-uploader.json
+  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
 
   # Run docker job
   echo "Starting Docker Job"
