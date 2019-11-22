@@ -67,7 +67,7 @@ class Checker(AbstractChecker):
         data = feedparser.parse(feed_url)
 
         if 'bozo_exception' in data:
-            result['exception'] = data['bozo_exception']
+            result['exception'] = str(data['bozo_exception'])
 
         if 'headers' not in data:
             return result
