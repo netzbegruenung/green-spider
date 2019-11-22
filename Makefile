@@ -23,6 +23,7 @@ spider:
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
 		-v $(PWD)/secrets:/secrets \
 		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
+		--shm-size=2g \
 		$(IMAGE) \
 		--credentials-path /secrets/datastore-writer.json \
 		--loglevel debug \
