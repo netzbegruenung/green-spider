@@ -48,7 +48,7 @@ Nach dem ersten erfolgreichen Durchlauf dauert ein neuer Aufruf von `make` nur n
 
 In aller Kürze: `make test`
 
-### Spider ausführen
+### Spider twetweise ausführen (Debugging)
 
 Der Spider kann einzelne URLs verarbeiten, ohne die Ergebnisse in eine Datenbank zu schreiben.
 Am einfachsten geht das über den `make spider` Befehl, so:
