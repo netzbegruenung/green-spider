@@ -78,7 +78,38 @@ def test_url(url):
     }
 
     result = check_and_rate_site(entry=job)
-    pprint(result['rating'])
+    pprint(result)
+
+def execute_single_job(datastore_client, job, entity_kind):
+    """
+    Executes spider for one single job
+    """
+    validate_job(job)
+
+    logging.info("Starting job %s", job["url"])
+    result = check_and_rate_site(entry=job)
+
+    logging.debug("Full JSON representation of returned result: %s", json.dumps(result, default=str))
+
+    logging.info("Job %s finished checks", job["url"])
+    logging.info("Job %s writing to DB", job["url"])
+
+    key = datastore_client.key(entity_kind, job["url"])
+    entity = datastore.Entity(key=key)
+    record = {
+        'created': datetime.utcnow(),
+        'meta': result['meta'],
+        'checks': result['checks'],
+        'rating': result['rating'],
+        'score': result['score'],
+    }
+    entity.update(record)
+    try:
+        datastore_client.put(entity)
+    except InvalidArgument as ex:
+        logging.error("Could not write result: %s", ex)
+    except Exception as ex:
+        logging.error("Could not write result: %s", ex)
 
 def work_of_queue(datastore_client, entity_kind):
     """
@@ -90,28 +121,8 @@ def work_of_queue(datastore_client, entity_kind):
             logging.info("No more jobs. Exiting.")
             break
 
-        logging.info("Starting job %s", job["url"])
-        result = check_and_rate_site(entry=job)
+        execute_single_job(datastore_client, job, entity_kind)
 
-        logging.debug("Full JSON representation of returned result: %s", json.dumps(result, default=str))
-
-        logging.info("Job %s finished checks", job["url"])
-        logging.info("Job %s writing to DB", job["url"])
-
-        key = datastore_client.key(entity_kind, job["url"])
-        entity = datastore.Entity(key=key)
-        record = {
-            'created': datetime.utcnow(),
-            'meta': result['meta'],
-            'checks': result['checks'],
-            'rating': result['rating'],
-            'score': result['score'],
-        }
-        entity.update(record)
-        try:
-            datastore_client.put(entity)
-        except InvalidArgument as ex:
-            logging.error("Could not write result: %s", ex)
-        except Exception as ex:
-            logging.error("Could not write result: %s", ex)
-
+def validate_job(jobdict):
+    if "url" not in jobdict:
+        raise Exception("Job does not have required 'url' attribute")

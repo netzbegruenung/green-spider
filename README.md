@@ -48,7 +48,7 @@ Nach dem ersten erfolgreichen Durchlauf dauert ein neuer Aufruf von `make` nur n
 
 In aller Kürze: `make test`
 
-### Spider ausführen
+### Spider testweise ausführen (Debugging)
 
 Der Spider kann einzelne URLs verarbeiten, ohne die Ergebnisse in eine Datenbank zu schreiben.
 Am einfachsten geht das über den `make spider` Befehl, so:
@@ -58,3 +58,17 @@ make spider ARGS="--url http://www.example.com/"
 ```
 
 Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenank.
+
+Wenn nur eine einzelne Site gespidert werden soll, die Ergebnisse aber in die Datenbank geschrieben werden sollen, kann der Spider so mit `--job` und einem JSON-Object aufgerufen werden (Beispiel):
+
+```
+docker run --rm -ti \
+  -v $(pwd)/volumes/dev-shm:/dev/shm \
+  -v $(pwd)/secrets:/secrets \
+  -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
+  --shm-size=2g \
+  quay.io/netzbegruenung/green-spider:latest \
+    --credentials-path /secrets/datastore-writer.json \
+    --loglevel debug \
+    spider --job '{"url": "https://xn--grne-porta-westfalica-9hc.de/", "meta": {"city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}}'
+```
