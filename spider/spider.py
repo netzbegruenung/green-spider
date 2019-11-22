@@ -90,8 +90,6 @@ def execute_single_job(datastore_client, job, entity_kind):
     result = check_and_rate_site(entry=job)
 
     logging.debug("Full JSON representation of returned result: %s", json.dumps(result, default=str))
-    logging.debug("Python representation:")
-    pprint(result)
 
     logging.info("Job %s finished checks", job["url"])
     logging.info("Job %s writing to DB", job["url"])
