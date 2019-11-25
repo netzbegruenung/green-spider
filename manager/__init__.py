@@ -1,5 +1,5 @@
 """
-The jobs module allows to create jobs for the queue and take jobs off the queue
+The manager module allows to fill the job queue.
 """
 
 from datetime import datetime
@@ -7,15 +7,19 @@ import logging
 import os
 import random
 import shutil
+import time
 
 from git import Repo
-import tenacity
-import yaml
 from google.api_core.exceptions import Aborted
 from google.cloud import datastore
+from rq import Queue
+import redis
+import tenacity
+import yaml
 
 import config
 
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 
 def clone_data_directory():
     """
@@ -62,6 +66,18 @@ def create_jobs(datastore_client, url=None):
     will be added as a spider job.
     """
 
+    logging.info('Waiting for redis at %s' % REDIS_URL)
+    redis_success = False
+    while not redis_success:
+        try:
+            redis_conn = redis.from_url(REDIS_URL)
+            redis_success = True
+        except Exception as ex:
+            logging.error(ex)
+            time.sleep(5)
+
+    q = Queue('low', connection=redis_conn)
+
     # refresh our local clone of the green directory
     logging.info("Refreshing green-directory clone")
     clone_data_directory()
@@ -93,77 +109,56 @@ def create_jobs(datastore_client, url=None):
                             continue
                         input_entries.append({
                             "url": website_url,
-                            "type": entry.get("type"),
-                            "level": entry.get("level"),
-                            "state": entry.get("state"),
-                            "district": entry.get("district"),
-                            "city": entry.get("city"),
+                            "meta": {
+                                "type": entry.get("type"),
+                                "level": entry.get("level"),
+                                "state": entry.get("state"),
+                                "district": entry.get("district"),
+                                "city": entry.get("city"),
+                            }
                         })
                         count += 1
             except NameError:
                 logging.error("Error in %s: 'url' key missing (%s)",
                               repr_entry(entry), entry['urls'][index])
 
-    # ensure the passed URL argument is really there, even if not part
+    # Ensure the passed URL argument is really there, even if not part
     # of the directory.
     if url and count == 0:
         logging.info("Adding job for URL %s which is not part of green-directory", url)
         input_entries.append({
             "url": url,
-            "type": None,
-            "level": None,
-            "state": None,
-            "district": None,
-            "city": None,
-            "index": int(random.uniform(1000000, 9999999)),
+            "meta": {
+                "type": None,
+                "level": None,
+                "state": None,
+                "district": None,
+                "city": None,
+            }
         })
 
     count = 0
+    errorcount = 0
     logging.info("Writing jobs")
 
-    entities = []
-
     for entry in input_entries:
-        key = datastore_client.key(config.JOB_DATASTORE_KIND, entry["url"])
-        entity = datastore.Entity(key=key)
-        entity.update({
-            "created": datetime.utcnow(),
-            "type": entry["type"],
-            "level": entry["level"],
-            "state": entry["state"],
-            "district": entry["district"],
-            "city": entry["city"],
-            "index": int(random.uniform(1000000, 9999999)),
-        })
-        entities.append(entity)
-
-    # commmit to DB
-    for chunk in chunks(entities, 300):
-        logging.debug("Writing jobs chunk of length %d", len(chunk))
-        datastore_client.put_multi(chunk)
-        count += len(chunk)
+        try:
+            enqueued_job = q.enqueue('job.run',
+                # job_timeout: maximum runtime of this job.
+                job_timeout='300s',
+                # keywords args passes on the job function
+                kwargs={
+                    'job': entry,
+                })
+            logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
+            count += 1
+        except Exception as e:
+            errorcount += 1
+            logging.error("Error adding job for URL %s: %s" % (entry['url'], e))
 
     logging.info("Writing jobs done, %s jobs added", count)
+    logging.info("%d errors while writing jobs", errorcount)
 
-
-@tenacity.retry(wait=tenacity.wait_exponential(),
-                retry=tenacity.retry_if_exception_type(Aborted))
-def get_job_from_queue(datastore_client):
-    """
-    Returns a URL from the queue
-    """
-    out = None
-
-    with datastore_client.transaction():
-        query = datastore_client.query(kind=config.JOB_DATASTORE_KIND,
-                                       order=['index'])
-        for entity in query.fetch(limit=1):
-            logging.debug("Got job: %s", entity)
-            out = dict(entity)
-            out["url"] = entity.key.name
-            datastore_client.delete(entity.key)
-
-    return out
 
 def repr_entry(entry):
     """
