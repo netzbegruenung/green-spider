@@ -12,12 +12,11 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.8/main" >> /etc/apk/repositories
     pip3 install -r requirements.txt && \
     apk del python3-dev build-base
 
-ADD cli.py /
-ADD config /config
-ADD jobs /jobs
-ADD checks /checks
-ADD rating /rating
-ADD spider /spider
-ADD export /export
-
-ENTRYPOINT ["python3", "/cli.py"]
+ADD cli.py /workdir/
+ADD manager /workdir/manager
+ADD config /workdir/config
+ADD checks /workdir/checks
+ADD rating /workdir/rating
+ADD spider /workdir/spider
+ADD export /workdir/export
+ADD job.py /workdir/
