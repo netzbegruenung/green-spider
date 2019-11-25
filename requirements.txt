@@ -10,7 +10,7 @@ PyYAML
 requests==2.20.0
 responses==0.9.0
 # Note: we pin selenium to 3.8.0 because of https://github.com/SeleniumHQ/selenium/issues/5296
-selenium==3.8.0
+selenium==3.141.0
 smmap2==2.0.3
 tenacity==5.0.2
 urllib3==1.25.7
