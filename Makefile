@@ -9,7 +9,7 @@ dockerimage:
 	docker build -t $(IMAGE) .
 
 # Create spider job queue
-spiderjobs:
+jobs:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
 		$(IMAGE) \
