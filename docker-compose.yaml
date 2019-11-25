@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+
+  # manager manages the job queue.
+  manager:
+    image: quay.io/netzbegruenung/green-spider:dev
+    command: >
+      python3 cli.py
+      --credentials-path /secrets/datastore-writer.json
+      --loglevel debug manager
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ${PWD}/secrets:/secrets
+    depends_on:
+      - redis
+
+  worker:
+    image: quay.io/netzbegruenung/green-spider:dev
+    command: rq worker high default low --url redis://redis:6379/0
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ${PWD}/secrets:/secrets
+      - ${PWD}/volumes/dev-shm:/dev/shm
+      - ${PWD}/volumes/chrome-userdir:/opt/chrome-userdir
+    depends_on:
+      - redis
+
+  rqdashboard:
+    image: eoranged/rq-dashboard
+    environment:
+      RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
+    ports:
+      - "9181:9181"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:5-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
