@@ -8,14 +8,15 @@ DB_ENTITY := spider-results
 dockerimage:
 	docker build -t $(IMAGE) .
 
-# Create spider job queue
+# Fill the queue with spider jobs, one for each site.
 jobs:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
 		$(IMAGE) \
-		--credentials-path /secrets/datastore-writer.json \
-		--loglevel debug \
-		jobs
+		python cli.py \
+			--credentials-path /secrets/datastore-writer.json \
+			--loglevel debug \
+			manager
 
 # Run spider in docker image
 spider:
