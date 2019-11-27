@@ -1,8 +1,12 @@
 from pprint import pprint
 import json
 import os
+from datetime import datetime
+import time
+
 import docker
 
+TIMEOUT = 40
 
 DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:dev'
 
@@ -31,12 +35,40 @@ def run(job):
     cmd = cmd_template.format(path=CREDENTIALS_PATH,
                               job_json=json.dumps(job))
     
-    output = client.containers.run(image=DOCKER_IMAGE,
+    container = client.containers.run(image=DOCKER_IMAGE,
                           command=cmd,
+                          detach=True,
                           remove=True,
                           shm_size='2G',
-                          detach=False,
+                          stdout=True,
+                          stderr=True,
                           tty=False,
                           volumes=volumes)
 
-    return output
+    id = container.id
+
+    logs = ""
+
+    # wait for finish
+    start = datetime.utcnow()
+    while True:
+        time.sleep(5)
+
+        clist = client.containers.list(filters={'id': id})
+        if len(clist) == 0:
+            break
+
+        for c in clist:
+            if c.status != "running":
+                print("Container %s status: %s" % (c.id, c.status))
+
+            if c.status == "exited":
+                break
+
+            runtime = (datetime.utcnow() - start).seconds
+            if runtime > TIMEOUT:
+                logs = container.logs()
+                c.kill()
+                raise Exception("Execution took too long. Killed container.")
+
+    return logs
