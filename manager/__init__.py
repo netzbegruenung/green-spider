@@ -109,13 +109,11 @@ def create_jobs(datastore_client, url=None):
                             continue
                         input_entries.append({
                             "url": website_url,
-                            "meta": {
-                                "type": entry.get("type"),
-                                "level": entry.get("level"),
-                                "state": entry.get("state"),
-                                "district": entry.get("district"),
-                                "city": entry.get("city"),
-                            }
+                            "type": entry.get("type"),
+                            "level": entry.get("level"),
+                            "state": entry.get("state"),
+                            "district": entry.get("district"),
+                            "city": entry.get("city"),
                         })
                         count += 1
             except NameError:
@@ -128,13 +126,11 @@ def create_jobs(datastore_client, url=None):
         logging.info("Adding job for URL %s which is not part of green-directory", url)
         input_entries.append({
             "url": url,
-            "meta": {
-                "type": None,
-                "level": None,
-                "state": None,
-                "district": None,
-                "city": None,
-            }
+            "type": None,
+            "level": None,
+            "state": None,
+            "district": None,
+            "city": None,
         })
 
     count = 0
