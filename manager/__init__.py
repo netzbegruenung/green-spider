@@ -142,6 +142,8 @@ def create_jobs(datastore_client, url=None):
             enqueued_job = q.enqueue('job.run',
                 # job_timeout: maximum runtime of this job.
                 job_timeout='300s',
+                # bring some randomness into the order.
+                at_front=random.choice([True, False]),
                 # keywords args passes on the job function
                 kwargs={
                     'job': entry,
