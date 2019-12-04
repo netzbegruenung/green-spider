@@ -8,7 +8,7 @@ import docker
 
 TIMEOUT = 40
 
-DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:dev'
+DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:latest'
 
 CREDENTIALS_PATH = '/secrets/datastore-writer.json'
 
@@ -24,9 +24,6 @@ volumes[chromedir_path] = {'bind': '/opt/chrome-userdir', 'mode': 'rw'}
 
 
 def run(job):
-    print("This is the job we got:")
-    pprint(job)
-
     cmd_template = ("python cli.py --credentials-path={path} "
                     " --loglevel=debug "
                     " spider "
