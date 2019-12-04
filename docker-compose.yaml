@@ -3,7 +3,7 @@ services:
 
   # manager manages the job queue.
   manager:
-    image: quay.io/netzbegruenung/green-spider:dev
+    image: quay.io/netzbegruenung/green-spider:latest
     command: >
       python3 cli.py
       --credentials-path /secrets/datastore-writer.json
@@ -16,7 +16,7 @@ services:
       - redis
 
   worker:
-    image: quay.io/netzbegruenung/green-spider:dev
+    image: quay.io/netzbegruenung/green-spider:latest
     command: rq worker high default low --url redis://redis:6379/0
     environment:
       REDIS_URL: redis://redis:6379/0
