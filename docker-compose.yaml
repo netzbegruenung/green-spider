@@ -1,6 +1,15 @@
 version: "2"
 services:
 
+  redis:
+    image: redis:5-alpine
+    command: redis-server --save "" --appendonly no
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - internal_network
+
   # manager manages the job queue.
   manager:
     image: quay.io/netzbegruenung/green-spider:latest
@@ -14,18 +23,8 @@ services:
       - ${PWD}/secrets:/secrets
     depends_on:
       - redis
-
-  worker:
-    image: quay.io/netzbegruenung/green-spider:latest
-    command: rq worker high default low --url redis://redis:6379/0
-    environment:
-      REDIS_URL: redis://redis:6379/0
-    volumes:
-      - ${PWD}/secrets:/secrets
-      - ${PWD}/volumes/dev-shm:/dev/shm
-      - ${PWD}/volumes/chrome-userdir:/opt/chrome-userdir
-    depends_on:
-      - redis
+    networks:
+      - internal_network
 
   rqdashboard:
     image: eoranged/rq-dashboard
@@ -35,9 +34,9 @@ services:
       - "9181:9181"
     depends_on:
       - redis
+    networks:
+      - internal_network
 
-  redis:
-    image: redis:5-alpine
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
+networks:
+  internal_network:
+    internal: true
