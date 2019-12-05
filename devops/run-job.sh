@@ -127,12 +127,10 @@ ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
 
   echo ""
   echo "Install docker"
-  apt-get install -y docker-ce
+  apt-get install -y docker-ce docker-compose
 
   mkdir /root/secrets
 EOF
-
-echo "Done with remote setup."
 
 if [[ $1 == "screenshotter" ]]; then
   ### screenshotter
@@ -149,6 +147,40 @@ if [[ $1 == "screenshotter" ]]; then
     -v /root/secrets:/secrets \
     quay.io/netzbegruenung/green-spider-screenshotter
 
+elif [[ $1 == "spider-new" ]]
+then
+  # Some dependencies specific to this task
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP apt-get install -y python3-pip build-essential
+
+  # Upload some files
+  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
+  scp -o StrictHostKeyChecking=no -q docker-compose.yaml root@$SERVER_IP:/root/docker-compose.yaml
+  scp -o StrictHostKeyChecking=no -q requirements.txt root@$SERVER_IP:/root/requirements.txt
+  scp -o StrictHostKeyChecking=no -q job.py root@$SERVER_IP:/root/job.py
+
+  # Bring up redis for the queue
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull redis
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up -d redis
+  sleep 5
+
+  # Bring up queue manager
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull manager
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up -d manager
+  sleep 3
+
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq info --url redis://localhost:6379/0
+
+  # Start worker and work off the queue once
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq worker --burst high default low --url redis://localhost:6379/0
+
+  # Re-queue failed jobs once, then re-execute.
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq requeue --queue low -u redis://localhost:6379 --all
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq info --url redis://localhost:6379/0
+
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq worker --burst high default low --url redis://localhost:6379/0
+
+  echo "Done with queued jobs."
+  
 else
   ### spider
 

@@ -8,7 +8,7 @@ import docker
 
 TIMEOUT = 40
 
-DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:latest'
+DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:rq'
 
 CREDENTIALS_PATH = '/secrets/datastore-writer.json'
 
