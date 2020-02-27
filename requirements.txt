@@ -12,5 +12,5 @@ responses==0.10.7
 # Note: we pin selenium to 3.8.0 because of https://github.com/SeleniumHQ/selenium/issues/5296
 selenium==3.8.0
 smmap2==2.0.5
-tenacity==5.0.2
+tenacity==6.1.0
 urllib3==1.25.7
