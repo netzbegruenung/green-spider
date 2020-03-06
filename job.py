@@ -1,3 +1,8 @@
+"""
+Dieses Script wird vom RQ Worker ausgeführt, um einen einzelnen Job aus der
+Spider-Warteschlange abzuarbeiten.
+"""
+
 from pprint import pprint
 import json
 import os
@@ -6,9 +11,11 @@ import time
 
 import docker
 
-TIMEOUT = 40
+# Maximum oper-job runtime in seconds. This can be increased for second, third attempt
+# via the environment JOB_TIMEOUT variable.
+TIMEOUT = int(os.environ.get("JOB_TIMEOUT", "50"))
 
-DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:rq'
+DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:latest'
 
 CREDENTIALS_PATH = '/secrets/datastore-writer.json'
 
@@ -66,6 +73,6 @@ def run(job):
             if runtime > TIMEOUT:
                 logs = container.logs()
                 c.kill()
-                raise Exception("Execution took too long. Killed container.")
+                raise Exception("Execution took too long. Killed container after %s seconds." % TIMEOUT)
 
     return logs
