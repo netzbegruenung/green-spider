@@ -32,7 +32,7 @@ Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://git
 
 Green Spider ist in Python 3 geschrieben und wird aktuell unter 3.6 getestet und ausgeführt.
 
-Aufgrund zahlreicher Dependencies empfiehlt es sich, den Spider Code lokal in Docker
+Aufgrund zahlreicher Abhängigkeiten empfiehlt es sich, den Spider Code lokal in Docker
 auszuführen.
 
 Das Image wird über den folgenden Befehl erzeugt:
@@ -67,8 +67,8 @@ docker run --rm -ti \
   -v $(pwd)/secrets:/secrets \
   -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
   --shm-size=2g \
-  quay.io/netzbegruenung/green-spider:latest \
+  quay.io/netzbegruenung/green-spider:latest python cli.py \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel debug \
-    spider --job '{"url": "https://xn--grne-porta-westfalica-9hc.de/", "meta": {"city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}}'
+    spider --job '{"url": "https://xn--grne-porta-westfalica-9hc.de/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
 ```

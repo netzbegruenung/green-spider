@@ -103,9 +103,11 @@ def execute_single_job(datastore_client, job, entity_kind):
         'rating': result['rating'],
         'score': result['score'],
     }
+
     entity.update(record)
     try:
         datastore_client.put(entity)
+        logging.debug("Successfully wrote record to database")
     except InvalidArgument as ex:
         logging.error("Could not write result: %s", ex)
     except Exception as ex:

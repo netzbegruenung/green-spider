@@ -12,14 +12,16 @@ import time
 from git import Repo
 from google.api_core.exceptions import Aborted
 from google.cloud import datastore
+
 from rq import Queue
+from rq.job import Job
+
 import redis
 import tenacity
 import yaml
 
 import config
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
 
 def clone_data_directory():
@@ -77,7 +79,7 @@ def create_jobs(datastore_client, url=None):
             logging.error(ex)
             time.sleep(5)
 
-    q = Queue('low', connection=redis_conn)
+    queue = Queue('low', connection=redis_conn)
 
     # refresh our local clone of the green directory
     logging.info("Refreshing green-directory clone")
@@ -140,16 +142,14 @@ def create_jobs(datastore_client, url=None):
 
     for entry in input_entries:
         try:
-            enqueued_job = q.enqueue('job.run',
-                # job_timeout: maximum runtime of this job.
+            job = queue.enqueue('job.run',
                 job_timeout='300s',
-                # bring some randomness into the order.
                 at_front=random.choice([True, False]),
                 # keywords args passes on the job function
                 kwargs={
                     'job': entry,
                 })
-            logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
+            #logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
             count += 1
         except Exception as e:
             errorcount += 1

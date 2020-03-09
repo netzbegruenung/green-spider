@@ -5,10 +5,11 @@ services:
     image: redis:5-alpine
     command: redis-server --save "" --appendonly no
     restart: unless-stopped
-    ports:
-      - "6379:6379"
     networks:
       - internal_network
+      - external_network
+    ports:
+      - "6379:6379"
 
   # manager manages the job queue.
   manager:
@@ -21,22 +22,26 @@ services:
       REDIS_URL: redis://redis:6379/0
     volumes:
       - ${PWD}/secrets:/secrets
-    depends_on:
-      - redis
     networks:
       - internal_network
+      - external_network
+    depends_on:
+      - redis
 
-  rqdashboard:
+  dashboard:
     image: eoranged/rq-dashboard
     environment:
       RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
+    networks:
+      - internal_network
+      - external_network
     ports:
       - "9181:9181"
     depends_on:
       - redis
-    networks:
-      - internal_network
 
 networks:
   internal_network:
     internal: true
+  external_network:
+    internal: false
