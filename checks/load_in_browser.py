@@ -131,7 +131,7 @@ class Checker(AbstractChecker):
         db = sqlite3.connect('/opt/chrome-userdir/Default/Cookies')
         db.row_factory = sqlite3.Row
         c = db.cursor()
-        c.execute("SELECT creation_utc, host_key, name, path, expires_utc, is_secure, is_httponly, has_expires, is_persistent, firstpartyonly FROM cookies")
+        c.execute("SELECT creation_utc, host_key, name, path, expires_utc, is_secure, is_httponly, has_expires, is_persistent FROM cookies")
         for row in c.fetchall():
             cookies.append(dict(row))
         c.close()

@@ -16,7 +16,7 @@ from google.cloud import datastore
 
 import checks
 import config
-import jobs
+import manager
 import rating
 
 def check_and_rate_site(entry):
@@ -103,9 +103,11 @@ def execute_single_job(datastore_client, job, entity_kind):
         'rating': result['rating'],
         'score': result['score'],
     }
+
     entity.update(record)
     try:
         datastore_client.put(entity)
+        logging.debug("Successfully wrote record to database")
     except InvalidArgument as ex:
         logging.error("Could not write result: %s", ex)
     except Exception as ex:
@@ -116,7 +118,7 @@ def work_of_queue(datastore_client, entity_kind):
     Take job from queue and finish it until there are no more jobs
     """
     while True:
-        job = jobs.get_job_from_queue(datastore_client)
+        job = manager.get_job_from_queue(datastore_client)
         if job is None:
             logging.info("No more jobs. Exiting.")
             break
