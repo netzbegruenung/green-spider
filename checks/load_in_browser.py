@@ -28,10 +28,10 @@ class Checker(AbstractChecker):
 
     # sizes we check for (width, height)
     sizes = (
-        (360, 640), # rather old smartphone
-        (768, 1024), # older tablet or newer smartphone
-        (1024, 768), # older desktop or horiz. tablet
         (1920, 1080), # Full HD horizontal
+        (1024, 768), # older desktop or horiz. tablet
+        (768, 1024), # older tablet or newer smartphone
+        (360, 640), # rather old smartphone
     )
 
     def __init__(self, config, previous_results=None):
@@ -66,12 +66,15 @@ class Checker(AbstractChecker):
                 'font_families': None,
             }
 
+            self.driver.get(url)
+
             # responsive check
             try:
                 sizes = self.check_responsiveness(url)
                 results[url] = {
                     'sizes': sizes,
                     'min_document_width': min([s['document_width'] for s in sizes]),
+                    'dom_size': self.get_dom_size(),
                     'logs': self.capture_log(),
                 }
             except TimeoutException as e:
@@ -146,7 +149,6 @@ class Checker(AbstractChecker):
 
         # set window to the first size initially
         self.driver.set_window_size(self.sizes[0][0], self.sizes[0][1])
-        self.driver.get(url)
 
         for (width, height) in self.sizes:
             self.driver.set_window_size(width, height)
@@ -161,6 +163,10 @@ class Checker(AbstractChecker):
             })
 
         return result
+    
+    def get_dom_size(self):
+        dom_length = self.driver.execute_script("return document.getElementsByTagName('*').length")
+        return int(dom_length)
     
     def capture_log(self):
         """
