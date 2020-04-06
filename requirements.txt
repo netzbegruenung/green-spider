@@ -1,4 +1,4 @@
-beautifulsoup4==4.8.1
+beautifulsoup4==4.9.0
 dnspython==1.16.0
 feedparser==5.2.1
 GitPython
