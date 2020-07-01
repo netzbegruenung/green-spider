@@ -7,7 +7,7 @@ html-similarity==0.3.2
 httpretty==0.9.7
 pyopenssl==18.0.0
 PyYAML
-requests==2.22.0
+requests==2.24.0
 responses==0.10.15
 # Note: we pin selenium to 3.8.0 because of https://github.com/SeleniumHQ/selenium/issues/5296
 selenium==3.8.0
