@@ -57,14 +57,15 @@ Am einfachsten geht das über den `make spider` Befehl, so:
 make spider ARGS="--url http://www.example.com/"
 ```
 
-Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenank.
+Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenbank.
 
 Wenn nur eine einzelne Site gespidert werden soll, die Ergebnisse aber in die Datenbank geschrieben werden sollen, kann der Spider so mit `--job` und einem JSON-Object aufgerufen werden (Beispiel):
 
-```
+```nohighlight
 docker run --rm -ti \
   -v $(pwd)/volumes/dev-shm:/dev/shm \
   -v $(pwd)/secrets:/secrets \
+  -v $(pwd)/screenshots:/screenshots \
   -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
   --shm-size=2g \
   quay.io/netzbegruenung/green-spider:latest python cli.py \
