@@ -158,6 +158,8 @@ then
   scp -o StrictHostKeyChecking=no -q requirements.txt root@$SERVER_IP:/root/requirements.txt
   scp -o StrictHostKeyChecking=no -q job.py root@$SERVER_IP:/root/job.py
 
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP pip3 install -r requirements.txt
+
   # Bring up redis for the queue
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull redis
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up -d redis
@@ -165,8 +167,7 @@ then
 
   # Bring up queue manager
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull manager
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up -d manager
-  sleep 3
+  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up manager
 
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq info --url redis://localhost:6379/0
 
