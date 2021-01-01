@@ -54,10 +54,17 @@ def check_and_rate_site(entry):
     for key in result['rating']:
         result['score'] += result['rating'][key]['score']
 
-    # remove full HTML page content and hyperlinks to safe some storage
+    # Remove bigger result portions to safe some storage:
+    # - HTML page content
+    # - Hyperlinks
+    # - Performnance log
     try:
         for url in result['checks']['page_content']:
             del result['checks']['page_content'][url]['content']
+
+        for url in result['checks']['load_in_browser']:
+            del result['checks']['load_in_browser'][url]['performance_log']
+
         del result['checks']['hyperlinks']
     except:
         pass
@@ -79,6 +86,7 @@ def test_url(url):
 
     result = check_and_rate_site(entry=job)
     pprint(result)
+
 
 def execute_single_job(datastore_client, job, entity_kind):
     """

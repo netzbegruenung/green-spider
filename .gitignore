@@ -6,3 +6,4 @@ __pycache__
 .vscode/settings.json
 kubernetes/green-spider-secret.yaml
 /volumes
+/screenshots
