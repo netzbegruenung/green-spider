@@ -16,7 +16,7 @@ GREEN_DIRECTORY_DATA_PATH = 'data/countries/de'
 GREEN_DIRECTORY_LOCAL_PATH = './cache/green-directory'
 
 # IP address of the newthinking GCMS server
-GCMS_IP = "91.102.13.20"
+GCMS_IP = "194.29.234.123"
 
 # kind name of the spider job key datastore entities
 JOB_DATASTORE_KIND = 'spider-jobs'
