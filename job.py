@@ -8,7 +8,6 @@ import json
 import os
 from datetime import datetime
 import time
-import sys
 import logging
 
 import docker
@@ -97,7 +96,6 @@ def run(job):
             # Collect stats
             try:
                 stats = low_level_client.stats(id, stream=False)
-                #logger.debug("Stats: %s" % json.dumps(stats, indent=2))
 
                 cpu_usage = stats['cpu_stats']['cpu_usage']['total_usage'] / 1000000000.0
                 if 'networks' in stats:
@@ -109,9 +107,10 @@ def run(job):
                     memory_max_bytes = stats['memory_stats']['max_usage']
                     results['memory_max_bytes'] = memory_max_bytes
 
+                #logger.debug("Stats: CPU time %d Sec, RX %d KB, Mem %d MB" % (cpu_usage, network_received_bytes/1000, memory_max_bytes/1000000))
+
                 if cpu_usage > 0:
                     results['cpu_usage_seconds'] = round(cpu_usage)
-                    logger.debug("Stats: CPU time %d Sec, RX %d KB, Mem %d MB" % (cpu_usage, network_received_bytes/1000, memory_max_bytes/1000000))
                 
                 if network_received_bytes > 0:
                     results['network_received_bytes'] = network_received_bytes
@@ -129,8 +128,8 @@ def run(job):
             runtime = (datetime.utcnow() - start).seconds
             results['duration_seconds'] = round(runtime)
 
-            if c.status != "running":
-                logger.info("Container %s status: %s" % (c.id, c.status))
+            #if c.status != "running":
+            #    logger.info("Container %s status: %s" % (c.id, c.status))
 
             if c.status == "exited":
                 logger.debug("Container %s is exited." % c.id)

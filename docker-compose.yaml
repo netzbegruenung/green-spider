@@ -4,6 +4,8 @@ services:
   redis:
     image: redis:5-alpine
     command: redis-server --save "" --appendonly no
+    volumes:
+      - ${PWD}/volumes/redis-data:/data
     restart: unless-stopped
     networks:
       - internal_network
