@@ -4,7 +4,7 @@ feedparser==5.2.1
 GitPython
 google-cloud-datastore==1.10.0
 html-similarity==0.3.2
-httpretty==0.9.7
+httpretty==1.0.5
 pyopenssl==18.0.0
 PyYAML
 requests==2.22.0
