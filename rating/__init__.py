@@ -20,6 +20,7 @@ from rating import responsive_layout
 from rating import social_media_links
 from rating import use_specific_fonts
 from rating import www_optional
+from rating import green_power
 
 
 def calculate_rating(results):
@@ -47,6 +48,7 @@ def calculate_rating(results):
         'SOCIAL_MEDIA_LINKS': social_media_links,
         'USE_SPECIFIC_FONTS': use_specific_fonts,
         'WWW_OPTIONAL': www_optional,
+        'GREEN_POWER': green_power,
     }
 
     output = {}
