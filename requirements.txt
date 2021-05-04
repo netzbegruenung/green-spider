@@ -1,6 +1,6 @@
 beautifulsoup4==4.8.1
 dnspython==1.16.0
-feedparser==5.2.1
+feedparser==6.0.2
 GitPython
 google-cloud-datastore==1.10.0
 html-similarity==0.3.2
