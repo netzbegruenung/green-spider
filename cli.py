@@ -19,7 +19,7 @@ def handle_sigint(signum, frame):
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT,handle_sigint)
+    signal.signal(signal.SIGINT, handle_sigint)
 
     parser = argparse.ArgumentParser()
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     if args.command == 'manager':
 
         import manager
-        manager.create_jobs(datastore_client, args.url)
+        manager.create_jobs(args.url)
     
     elif args.command == 'export':
 

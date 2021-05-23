@@ -1,9 +1,8 @@
 """
-Dieses Script wird vom RQ Worker ausgeführt, um einen einzelnen Job aus der
+Dieses Script wird vom RQ worker ausgeführt, um einen einzelnen Job aus der
 Spider-Warteschlange abzuarbeiten.
 """
 
-from pprint import pprint
 import json
 import os
 from datetime import datetime

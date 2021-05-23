@@ -31,7 +31,7 @@ services:
       - redis
 
   dashboard:
-    image: eoranged/rq-dashboard
+    image: eoranged/rq-dashboard:v0.6.1
     environment:
       RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
     networks:

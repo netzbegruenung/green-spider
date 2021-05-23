@@ -1,5 +1,5 @@
 """
-The manager module allows to fill the job queue.
+The manager module allows to fill the RQ job queue.
 """
 
 from datetime import datetime
@@ -8,16 +8,12 @@ import os
 import random
 import shutil
 import time
+import json
+import sys
 
 from git import Repo
-from google.api_core.exceptions import Aborted
-from google.cloud import datastore
-
 from rq import Queue
-from rq.job import Job
-
 import redis
-import tenacity
 import yaml
 from yaml import Loader
 
@@ -61,7 +57,7 @@ def chunks(the_list, size):
         yield the_list[i:i + size]
 
 
-def create_jobs(datastore_client, url=None):
+def create_jobs(url=None):
     """
     Read all URLs from green directory and fill a job database
     with one job per URL.
@@ -143,13 +139,17 @@ def create_jobs(datastore_client, url=None):
 
     for entry in input_entries:
         try:
-            job = queue.enqueue('job.run',
+            _ = queue.enqueue('job.run',
                 job_timeout='300s',
                 at_front=random.choice([True, False]),
                 # keywords args passes on the job function
                 kwargs={
                     'job': entry,
                 })
+
+            # Print job for debugging purposes
+            print(json.dumps(entry))
+
             #logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
             count += 1
         except Exception as e:
