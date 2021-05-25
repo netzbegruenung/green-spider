@@ -21,7 +21,6 @@ grpcio==1.37.1
 html-similarity==0.3.3
 httpretty==0.9.7
 idna==2.10
-lxml==4.6.3
 parsel==1.6.0
 protobuf==3.15.8
 pyasn1==0.4.8
@@ -36,7 +35,6 @@ responses==0.13.3
 rq==1.8.0
 rsa==4.7.2
 selenium==3.141.0
-six==1.16.0
 smmap==3.0.4
 smmap2==2.0.5
 soupsieve==2.2.1
