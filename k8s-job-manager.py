@@ -20,6 +20,7 @@ def main():
     random.seed()
     random.shuffle(jobs)
 
+    # TODO: change to work inside the cluster
     kubernetes.config.load_kube_config(context='giantswarm-5jka7')
     v1client = kubernetes.client.CoreV1Api()
     k8sclient = kubernetes.client.ApiClient()
