@@ -6,7 +6,7 @@ DB_ENTITY := spider-results
 
 # Build docker image
 dockerimage:
-	docker build -t $(IMAGE) .
+	docker build --progress plain -t $(IMAGE) .
 
 # Fill the queue with spider jobs, one for each site.
 jobs:
