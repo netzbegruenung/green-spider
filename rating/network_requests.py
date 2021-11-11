@@ -42,11 +42,12 @@ class Rater(AbstractRater):
         # Calculate score based on the largest value found for a URL.
         # See https://github.com/netzbegruenung/green-spider/issues/11#issuecomment-600307544
         # for details.
-        value = max(num_requests_for_urls)
-        if value <= 28:
-            score = 1.0
-        elif value <= 38:
-            score = 0.5
+        if len(num_requests_for_urls) > 0:
+            value = max(num_requests_for_urls)
+            if value <= 28:
+                score = 1.0
+            elif value <= 38:
+                score = 0.5
 
         return {
             'type': self.rating_type,
