@@ -68,8 +68,6 @@ if __name__ == "__main__":
 
     logging.debug("Called command %s", args.command)
 
-    datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
-
     if args.command == 'manager':
 
         import manager
@@ -78,10 +76,13 @@ if __name__ == "__main__":
     elif args.command == 'export':
 
         import export
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
         export.export_results(datastore_client, args.kind)
 
     else:
         from spider import spider
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
+        
         if args.url:
             # spider one URL for diagnostic purposes
             spider.test_url(args.url)
