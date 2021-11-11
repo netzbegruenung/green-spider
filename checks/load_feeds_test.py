@@ -60,15 +60,13 @@ class TestFeed(unittest.TestCase):
         result = checker.run()
         pprint(result)
 
-        self.assertEqual(result, {
-            'http://example.com/feed.xml': {
-                'exception': None,
-                'title': 'Liftoff News',
-                'latest_entry': datetime(2003, 6, 3, 9, 39, 21),
-                'first_entry': datetime(2003, 5, 30, 11, 6, 42),
-                'average_interval': 340359,
-                'num_entries': 2,
-            }
+        self.assertEqual(result['http://example.com/feed.xml'], {
+            'exception': None,
+            'average_interval': 340359,
+            'first_entry': datetime(2003, 5, 30, 11, 6, 42),
+            'latest_entry': datetime(2003, 6, 3, 9, 39, 21),
+            'num_entries': 2,
+            'title': 'Liftoff News',
         })
 
 
