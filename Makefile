@@ -42,6 +42,9 @@ export:
 # run spider tests
 test:
 	docker run --rm -ti \
+	  -v $(PWD)/volumes/dev-shm:/dev/shm \
+      -v $(PWD)/secrets:/secrets \
+      -v $(PWD)/screenshots:/screenshots \
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		--entrypoint "python3" \
 		$(IMAGE) \
