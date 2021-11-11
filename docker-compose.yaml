@@ -22,6 +22,8 @@ services:
       --loglevel debug manager
     environment:
       REDIS_URL: redis://redis:6379/0
+      GIT_USERNAME: ${GIT_USERNAME}
+      GIT_PASSWORD: ${GIT_PASSWORD}
     volumes:
       - ${PWD}/secrets:/secrets
     networks:
