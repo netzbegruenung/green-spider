@@ -5,10 +5,10 @@ class Config(object):
 
     def __init__(self,
                  urls,
-                 screenshot_bucket_name,
-                 screenshot_datastore_kind,
-                 storage_credentials_path,
-                 datastore_credentials_path,
+                 screenshot_bucket_name='',
+                 screenshot_datastore_kind='',
+                 storage_credentials_path='',
+                 datastore_credentials_path='',
                  user_agent='green-spider/1.0'):
         self._urls = set(urls)
         self._user_agent = user_agent
