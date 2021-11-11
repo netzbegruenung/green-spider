@@ -76,6 +76,11 @@ class Checker(AbstractChecker):
         capabilities = DesiredCapabilities.CHROME
         capabilities['goog:loggingPrefs'] = {'performance': 'ALL'}
 
+        # TODO: also do this
+        # (from https://stackoverflow.com/questions/60375633/capture-logs-from-chrome-during-test-is-running-python#comment106827817_60385493)
+        capabilities['loggingPrefs'] = {'performance': 'ALL'}
+
+
         self.driver = webdriver.Chrome(options=chrome_options, desired_capabilities=capabilities)
         self.driver.set_page_load_timeout(self.page_load_timeout)
 
