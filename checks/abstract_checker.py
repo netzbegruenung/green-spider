@@ -21,6 +21,20 @@ class AbstractChecker(object):
         """Executes the check routine, returns result dict"""
         raise NotImplementedError()
     
+    def post_hook(self, result):
+        """
+        Optional function to execute after run(). Can be used to post-process
+        results data. Should be defined by the implementing checker.
+
+        Params:
+          result: Result data from the run() function.
+        
+        Returns:
+          Dict: Modified results data
+          None: Means that nothing has been done, so should be ignored.
+        """
+        return None
+    
     @property
     def config(self):
         return self._config

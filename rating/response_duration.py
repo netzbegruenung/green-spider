@@ -9,7 +9,7 @@ from rating.abstract_rater import AbstractRater
 class Rater(AbstractRater):
 
     rating_type = 'number'
-    default_value = False
+    default_value = 0
     depends_on_checks = ['page_content']
     max_score = 1.0
 

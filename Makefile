@@ -6,16 +6,17 @@ DB_ENTITY := spider-results
 
 # Build docker image
 dockerimage:
-	docker build -t $(IMAGE) .
+	docker build --progress plain -t $(IMAGE) .
 
-# Create spider job queue
-spiderjobs:
+# Fill the queue with spider jobs, one for each site.
+jobs:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
 		$(IMAGE) \
-		--credentials-path /secrets/datastore-writer.json \
-		--loglevel debug \
-		jobs
+		python cli.py \
+			--credentials-path /secrets/datastore-writer.json \
+			--loglevel debug \
+			manager
 
 # Run spider in docker image
 spider:
@@ -41,6 +42,9 @@ export:
 # run spider tests
 test:
 	docker run --rm -ti \
+	  -v $(PWD)/volumes/dev-shm:/dev/shm \
+      -v $(PWD)/secrets:/secrets \
+      -v $(PWD)/screenshots:/screenshots \
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		--entrypoint "python3" \
 		$(IMAGE) \

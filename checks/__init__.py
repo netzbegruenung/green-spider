@@ -54,16 +54,27 @@ def perform_checks(input_url):
 
     results = {}
 
+    # TODO:
+    # Set screenshot_bucket_name and storage_credentials_path
+    # based on flags.
     config = Config(urls=[input_url],
         user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) ' +
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 ' +
-                   'Safari/537.36 green-spider/0.2')
+                   'Safari/537.36 green-spider/0.2',
+        screenshot_bucket_name='green-spider-screenshots.sendung.de',
+        screenshot_datastore_kind='webscreenshot',
+        storage_credentials_path='/secrets/screenshots-uploader.json',
+        datastore_credentials_path='/secrets/datastore-writer.json')
 
+    # Iterate over all checks.
     for check_name, check in check_modules:
+
+        # checker is the individual test/assertion handler we instantiate
+        # for each check step.
         checker = check.Checker(config=config,
                                 previous_results=results)
 
-        # see if dependencies are met
+        # Ensure that dependencies are met for the checker.
         dependencies = checker.depends_on_results()
         if dependencies != []:
             for dep in dependencies:
@@ -71,10 +82,16 @@ def perform_checks(input_url):
                     logging.debug("Skipping check %s as dependency %s is not met" % (check_name, dep))
                     continue
 
+        # Execute the checker's main function.
         result = checker.run()
         results[check_name] = result
 
-        # update config for the next check
+        # Execute any cleanup/aftermath function (if given) for the checker.
+        modified_results = checker.post_hook(result)
+        if modified_results is not None:
+            results[check_name] = modified_results
+
+        # Update config for the next check(s) in the sequence.
         config = checker.config
         logging.debug("config after check %s: %r" % (check_name, config))
     

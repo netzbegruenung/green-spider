@@ -19,7 +19,7 @@ def handle_sigint(signum, frame):
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT,handle_sigint)
+    signal.signal(signal.SIGINT, handle_sigint)
 
     parser = argparse.ArgumentParser()
 
@@ -40,9 +40,9 @@ if __name__ == "__main__":
     spider_parser.add_argument('--url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
     spider_parser.add_argument('--job', help='Job JSON object. To spider one URL, write the result back and exit.')
     
-    # jobs subcommand
-    jobs_parser = subparsers.add_parser('jobs', help='Adds spider jobs to the queue. By default, all green-directory URLs are added.')
-    jobs_parser.add_argument('--url', help='Add a job to spider a specific URL')
+    # manager subcommand
+    manager_parser = subparsers.add_parser('manager', help='Adds spider jobs to the queue. By default, all green-directory URLs are added.')
+    manager_parser.add_argument('--url', help='Add a job to spider a specific URL')
 
     # export subcommand
     export_parser = subparsers.add_parser('export', help='Export JSON data')
@@ -68,20 +68,21 @@ if __name__ == "__main__":
 
     logging.debug("Called command %s", args.command)
 
-    datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
+    if args.command == 'manager':
 
-    if args.command == 'jobs':
-
-        import jobs
-        jobs.create_jobs(datastore_client, args.url)
+        import manager
+        manager.create_jobs(args.url)
     
     elif args.command == 'export':
 
         import export
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
         export.export_results(datastore_client, args.kind)
 
     else:
         from spider import spider
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
+        
         if args.url:
             # spider one URL for diagnostic purposes
             spider.test_url(args.url)

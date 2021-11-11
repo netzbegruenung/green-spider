@@ -50,7 +50,7 @@ devops/ssh.sh
 
 Hostname: `green-spider.netzbegruenung.de`
 
-```
+```shell
 docker-compose stop webapp
 docker run -it --rm -p 443:443 -p 80:80 --name certbot \
   -v /etc/letsencrypt:/etc/letsencrypt \

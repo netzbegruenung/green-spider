@@ -10,6 +10,8 @@ from rating import contact_link
 from rating import favicon
 from rating import feeds
 from rating import https
+from rating import network_payload
+from rating import network_requests
 from rating import no_network_errors
 from rating import no_script_errors
 from rating import no_third_party_cookies
@@ -39,6 +41,8 @@ def calculate_rating(results):
         'FEEDS': feeds,
         'HTTPS': https,
         'HTTP_RESPONSE_DURATION': response_duration,
+        'NETWORK_PAYLOAD': network_payload,
+        'NETWORK_REQUESTS': network_requests,
         'NO_NETWORK_ERRORS': no_network_errors,
         'NO_SCRIPT_ERRORS': no_script_errors,
         'NO_THIRD_PARTY_COOKIES': no_third_party_cookies,

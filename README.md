@@ -32,7 +32,7 @@ Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://git
 
 Green Spider ist in Python 3 geschrieben und wird aktuell unter 3.6 getestet und ausgeführt.
 
-Aufgrund zahlreicher Dependencies empfiehlt es sich, den Spider Code lokal in Docker
+Aufgrund zahlreicher Abhängigkeiten empfiehlt es sich, den Spider Code lokal in Docker
 auszuführen.
 
 Das Image wird über den folgenden Befehl erzeugt:
@@ -57,18 +57,19 @@ Am einfachsten geht das über den `make spider` Befehl, so:
 make spider ARGS="--url http://www.example.com/"
 ```
 
-Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenank.
+Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenbank.
 
 Wenn nur eine einzelne Site gespidert werden soll, die Ergebnisse aber in die Datenbank geschrieben werden sollen, kann der Spider so mit `--job` und einem JSON-Object aufgerufen werden (Beispiel):
 
-```
+```nohighlight
 docker run --rm -ti \
   -v $(pwd)/volumes/dev-shm:/dev/shm \
   -v $(pwd)/secrets:/secrets \
+  -v $(pwd)/screenshots:/screenshots \
   -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
   --shm-size=2g \
-  quay.io/netzbegruenung/green-spider:latest \
+  quay.io/netzbegruenung/green-spider:latest python3 cli.py \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel debug \
-    spider --job '{"url": "https://xn--grne-porta-westfalica-9hc.de/", "meta": {"city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}}'
+    spider --job '{"url": "https://gruene-porta-westfalica.de/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
 ```

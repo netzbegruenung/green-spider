@@ -1,23 +1,26 @@
-FROM python:3.7-alpine3.9
+FROM alpine:3.14
 
 WORKDIR /workdir
 
 ADD requirements.txt /workdir/
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/v3.8/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories && \
-    apk update && \
-    apk --no-cache add chromium chromium-chromedriver python3-dev build-base git py3-lxml libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev && \
-    pip3 install --upgrade pip && \
-    pip3 install -r requirements.txt && \
-    apk del python3-dev build-base
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk --update --no-cache add ca-certificates chromium chromium-chromedriver \
+          python3-dev py3-grpcio py3-wheel py3-pip py3-lxml \
+          build-base git libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev cargo && \
+    pip install -r requirements.txt && \
+    apk del build-base
 
-ADD cli.py /
-ADD config /config
-ADD jobs /jobs
-ADD checks /checks
-ADD rating /rating
-ADD spider /spider
-ADD export /export
+# As alpine's py3-cryptography did not work as of alpine v3.14, we use this hack from
+# https://github.com/pyca/cryptography/issues/3344#issuecomment-650845512
+RUN LDFLAGS="-L/opt/openssl/lib -Wl,-rpath,/opt/openssl/lib" CFLAGS="-I/opt/openssl/include" pip3 install -U cryptography
 
-ENTRYPOINT ["python3", "/cli.py"]
+ADD cli.py /workdir/
+ADD manager /workdir/manager
+ADD config /workdir/config
+ADD checks /workdir/checks
+ADD rating /workdir/rating
+ADD spider /workdir/spider
+ADD export /workdir/export
+ADD job.py /workdir/

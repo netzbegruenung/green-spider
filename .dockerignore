@@ -1,6 +1,6 @@
 .git
-webapp
 docs
+/screenshots
 secrets
 temp
 venv

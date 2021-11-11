@@ -75,6 +75,9 @@ class Checker(AbstractChecker):
         elif ('Urwahl3000' in page_content['content'] or
             '/themes/urwahl3000' in page_content['content']):
             generator = 'wordpress-urwahl'
+        
+        elif ('/themes/sunflower' in page_content['content']):
+            generator = 'wordpress-sunflower'
 
         elif ('/themes/sunflower' in page_content['content']):
             generator = 'wordpress-sunflower'
