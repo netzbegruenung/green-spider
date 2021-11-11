@@ -2,20 +2,21 @@
 The manager module allows to fill the RQ job queue.
 """
 
-from datetime import datetime
 import logging
+import math
 import os
 import random
 import shutil
 import time
 import json
-import sys
+from datetime import datetime
 
 from git import Repo
 from rq import Queue
 import redis
 import yaml
 from yaml import Loader
+from hashlib import sha256
 
 import config
 
@@ -137,6 +138,7 @@ def create_jobs(url=None):
     errorcount = 0
     logging.info("Writing jobs")
 
+    count = 0
     for entry in input_entries:
         try:
             _ = queue.enqueue('job.run',
@@ -155,9 +157,37 @@ def create_jobs(url=None):
         except Exception as e:
             errorcount += 1
             logging.error("Error adding job for URL %s: %s" % (entry['url'], e))
+        
+        # Write kubernetes Job
+        make_k8s_job(entry, count)
+
+        count += 1
 
     logging.info("Writing jobs done, %s jobs added", count)
     logging.info("%d errors while writing jobs", errorcount)
+
+
+def make_k8s_job(job_data, count):
+    now = datetime.utcnow().strftime('%Y%m%d%H%M')
+    urlhash = sha256(job_data['url'].encode('utf-8')).hexdigest()[0:12]
+    job_name = f'gs-{now}-{urlhash}'
+    filename = f'{job_name}.yaml'
+    batch_folder = math.floor(count / config.K8S_JOB_BATCH_SIZE)
+    output_dir = os.path.join(config.K8S_JOBS_PATH, str(batch_folder))
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, filename)
+    job_json = json.dumps(job_data)
+    job_flag = f'\'--job={job_json}\''
+
+    with open(config.K8S_JOB_TEMPLATE, "r") as template_file:
+        template = template_file.read()
+    
+    template = template.replace('JOB_NAME', job_name)
+    template = template.replace('POD_NAME', job_name)
+    template = template.replace('JOB_FLAG', job_flag)
+
+    with open(output_path, "w") as output:
+        output.write(template)
 
 
 def repr_entry(entry):

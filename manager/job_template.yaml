@@ -1,0 +1,67 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: JOB_NAME
+  namespace: marian
+  labels:
+    app: green-spider
+spec:
+  activeDeadlineSeconds: 600
+  ttlSecondsAfterFinished: 600
+  completions: 1
+  backoffLimit: 3
+
+  # Pod template
+  template:
+    metadata:
+      name: POD_NAME
+      namespace: marian
+      labels:
+        app: green-spider
+    spec:
+      restartPolicy: Never
+      nodeSelector:
+        giantswarm.io/machine-pool: 5n27k
+      # affinity:
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #         matchExpressions:
+      #         - key: app
+      #           operator: In
+      #           values:
+      #           - green-spider
+      #       topologyKey: topology.kubernetes.io/region
+      containers:
+      - name: spider
+        image: quay.io/netzbegruenung/green-spider:20211031-chromium93
+        imagePullPolicy: IfNotPresent
+        command:
+        - python3
+        - cli.py
+        - --credentials-path=/secrets/datastore-writer.json
+        - --loglevel=debug
+        - spider
+        - JOB_FLAG
+        volumeMounts:
+        - name: secrets
+          mountPath: "/secrets"
+          readOnly: true
+        - name: shared
+          mountPath: /dev/shm
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 5000M
+      volumes:
+      - name: secrets
+        secret:
+          secretName: green-spider
+          items:
+          - key: datastore-writer.json
+            path: datastore-writer.json
+          - key: screenshots-uploader.json
+            path: screenshots-uploader.json
+      - name: shared
+        emptyDir: {}
