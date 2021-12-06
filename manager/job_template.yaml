@@ -23,19 +23,9 @@ spec:
       restartPolicy: Never
       nodeSelector:
         giantswarm.io/machine-pool: 5n27k
-      # affinity:
-      #   podAntiAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #     - labelSelector:
-      #         matchExpressions:
-      #         - key: app
-      #           operator: In
-      #           values:
-      #           - green-spider
-      #       topologyKey: topology.kubernetes.io/region
       containers:
       - name: spider
-        image: quay.io/netzbegruenung/green-spider:20211031-chromium93
+        image: quay.io/netzbegruenung/green-spider:20211206
         imagePullPolicy: IfNotPresent
         command:
         - python3

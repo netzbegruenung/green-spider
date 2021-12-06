@@ -20,7 +20,7 @@ def main():
     random.seed()
     random.shuffle(jobs)
 
-    kubernetes.config.load_kube_config(context='giantswarm-5jka7')
+    kubernetes.config.load_kube_config(context='gs-gollum-5jka7')
     v1client = kubernetes.client.CoreV1Api()
     k8sclient = kubernetes.client.ApiClient()
 
