@@ -1,18 +1,17 @@
 # Green Spider
 
-Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts von Bündnis 90/Die Grünen im Web.
+Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts von BÜNDNIS 90/DIE GRÜNEN im Web.
 
 Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.netzbegruenung.de/)
 
 ## Tools
 
 - **Spider:** Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
-- **Screenshotter:** Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
-- **Webapp:** Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/). Dazu gehören
-  - **API**: [netzbegruenung/green-spider-api](https://github.com/netzbegruenung/green-spider-api)
+- **Webapp:** Darstellung der Spider-Ergebnisse. Siehe [Netzbegruenung/green-spider-webapp](https://git.verdigado.com/Netzbegruenung/green-spider-webapp/). Dazu gehören
+  - **API**: [NB-Public/green-spider-api](https://git.verdigado.com/NB-Public/green-spider-api)
   - **Elasticsearch**
-  - **Indexer:** Lädt Ergebnisdaten in Elasticsearch. Siehe [netzbegruenung/green-spider-indexer](https://github.com/netzbegruenung/green-spider-indexer)
-- **Auswertung**: R Projekt zur Auswertung der Ergebnisse. Siehe [netzbegruenung/green-spider-analysis](https://github.com/netzbegruenung/green-spider-analysis)
+  - **Indexer:** Lädt Ergebnisdaten in Elasticsearch. Siehe [NB-Public/green-spider-indexer](https://git.verdigado.com/NB-Public/green-spider-indexer)
+- **Auswertung**: R Projekt zur Auswertung der Ergebnisse. Siehe [NB-Public/green-spider-analysis](https://git.verdigado.com/NB-Public/green-spider-analysis)
 
 ## Aktivitäten
 
@@ -22,11 +21,11 @@ Es ist geplant, auf Basis der gesammelten Informationen (siehe Spider) Informati
 
 Green Spider ist ein Projekt des [netzbegrünung](https://blog.netzbegruenung.de/) e. V. -- Mitwirkung ist herzlich willkommen.
 
-Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die [Issues](https://github.com/netzbegruenung/green-spider/issues) hier in diesem Repository.
+Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die [Issues](https://git.verdigado.com/NB-Public/green-spider/issues) hier in diesem Repository.
 
 ## Betrieb
 
-Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/master/devops).
+Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://git.verdigado.com/NB-Public/green-spider/src/branch/main/devops).
 
 ## Entwicklung
 
