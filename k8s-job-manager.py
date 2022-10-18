@@ -11,6 +11,8 @@ import kubernetes
 PENDING_LIMIT = 2
 RUNNING_LIMIT = 4
 
+KUBECONTEXT = 'gs-gollum-5jka7-clientcert'
+
 INTERVAL = 10 # Seconds
 
 def main():
@@ -23,7 +25,7 @@ def main():
     # TODO: change to work inside the cluster like shown in
     # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py#L55
     #
-    kubernetes.config.load_kube_config(context='giantswarm-5jka7')
+    kubernetes.config.load_kube_config(context=KUBECONTEXT)
     
     v1client = kubernetes.client.CoreV1Api()
     k8sclient = kubernetes.client.ApiClient()
