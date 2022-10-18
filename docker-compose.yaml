@@ -26,6 +26,7 @@ services:
       GIT_PASSWORD: ${GIT_PASSWORD}
     volumes:
       - ${PWD}/secrets:/secrets
+      - ${PWD}/cache/green-directory:/workdir/cache/green-directory
     networks:
       - internal_network
       - external_network

@@ -1,3 +1,9 @@
+# Howto:
+#
+# 1. source ./venv/bin/activate.fish
+# 2. python cli.py manager
+# 3. python k8s-job-manager.py
+
 import config
 
 import os
@@ -11,6 +17,8 @@ import kubernetes
 PENDING_LIMIT = 2
 RUNNING_LIMIT = 4
 
+KUBECONTEXT = 'gs-gollum-5jka7-clientcert'
+
 INTERVAL = 10 # Seconds
 
 def main():
@@ -20,7 +28,11 @@ def main():
     random.seed()
     random.shuffle(jobs)
 
-    kubernetes.config.load_kube_config(context='gs-gollum-5jka7')
+    # TODO: change to work inside the cluster like shown in
+    # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py#L55
+    #
+    kubernetes.config.load_kube_config(context=KUBECONTEXT)
+    
     v1client = kubernetes.client.CoreV1Api()
     k8sclient = kubernetes.client.ApiClient()
 

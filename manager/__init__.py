@@ -28,7 +28,7 @@ def clone_data_directory():
     into the local file system using git
     """
     if os.path.exists(config.GREEN_DIRECTORY_LOCAL_PATH):
-        shutil.rmtree(config.GREEN_DIRECTORY_LOCAL_PATH)
+        return
     Repo.clone_from(config.GREEN_DIRECTORY_REPO, config.GREEN_DIRECTORY_LOCAL_PATH)
 
 
