@@ -1,3 +1,9 @@
+# Howto:
+#
+# 1. source ./venv/bin/activate.fish
+# 2. python cli.py manager
+# 3. python k8s-job-manager.py
+
 import config
 
 import os
