@@ -45,7 +45,7 @@ class Rater(AbstractRater):
                 if ("facebook.com" in parsed.hostname or
                     "twitter.com" in parsed.hostname or
                     "instagram.com" in parsed.hostname or
-                    "plus.google.com" in parsed.hostname):
+                    "gruene.social" in parsed.hostname):
                     logging.debug("Found social media link on %s: %s" % (url, link['href']))
                     urls_with_social_media_links += 1
                     
