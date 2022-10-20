@@ -1,14 +1,14 @@
-FROM alpine:3.15.6
+FROM alpine:3.16
 
 WORKDIR /workdir
 
 ADD requirements.txt /workdir/
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
     apk --update --no-cache add ca-certificates chromium chromium-chromedriver py3-cryptography \
-          python3-dev py3-grpcio py3-wheel py3-pip py3-lxml \
-          build-base git libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev cargo && \
+          python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
+          build-base git icu-libs libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev cargo && \
     pip install -r requirements.txt && \
     apk del build-base
 
