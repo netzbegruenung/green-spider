@@ -9,6 +9,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build Docker image
         run: make dockerimage
+      - name: Run tests in Docker image
+        run: make test
       # - name: Set up Python ${{ matrix.python-version }}
       #   uses: actions/setup-python@v4
       #   with:
