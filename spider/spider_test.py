@@ -27,10 +27,9 @@ class TestSpider(unittest.TestCase):
         url = "https://httpbin.org/html"
         try:
             result = check_and_rate_site(entry)
+            self.assertEqual(result["input_url"], url)
         except ValueError:
             pass
-
-        self.assertEqual(result["input_url"], url)
 
 if __name__ == '__main__':
     unittest.main()
