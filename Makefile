@@ -41,7 +41,7 @@ export:
 
 # run spider tests
 test:
-	docker run --rm -ti \
+	docker run --rm \
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
       -v $(PWD)/secrets:/secrets \
       -v $(PWD)/screenshots:/screenshots \
