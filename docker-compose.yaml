@@ -15,7 +15,7 @@ services:
 
   # manager manages the job queue.
   manager:
-    image: quay.io/netzbegruenung/green-spider:latest
+    image: quay.io/netzbegruenung/green-spider:main
     command: >
       python3 cli.py
       --credentials-path /secrets/datastore-writer.json

@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: spider
-            image: quay.io/netzbegruenung/green-spider:latest
+            image: quay.io/netzbegruenung/green-spider:main
             imagePullPolicy: Always
             args:
               - "--credentials-path=/secrets/datastore-writer.json"

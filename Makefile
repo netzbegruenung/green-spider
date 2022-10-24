@@ -1,4 +1,4 @@
-IMAGE := quay.io/netzbegruenung/green-spider:latest
+IMAGE := quay.io/netzbegruenung/green-spider:main
 
 DB_ENTITY := spider-results
 
