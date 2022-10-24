@@ -8,4 +8,5 @@ kubernetes/green-spider-secret.yaml
 /volumes
 /screenshots
 /k8s-jobs
+/VERSION
 .env

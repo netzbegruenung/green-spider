@@ -1,11 +1,13 @@
-IMAGE := quay.io/netzbegruenung/green-spider:latest
+IMAGE := quay.io/netzbegruenung/green-spider:main
 
 DB_ENTITY := spider-results
+
+VERSION = $(shell git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
 
 .PHONY: dockerimage spider export
 
 # Build docker image
-dockerimage:
+dockerimage: VERSION
 	docker build --progress plain -t $(IMAGE) .
 
 # Fill the queue with spider jobs, one for each site.
@@ -50,3 +52,5 @@ test:
 		$(IMAGE) \
 		-m unittest discover -p '*_test.py' -v
 
+VERSION:
+	@echo $(VERSION) > VERSION

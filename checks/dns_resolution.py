@@ -49,7 +49,7 @@ class Checker(AbstractChecker):
 
         # IPv4
         try:
-            answers = dns.resolver.query(hostname, "A")
+            answers = dns.resolver.resolve(hostname, "A")
             result['resolvable_ipv4'] = True
             for rdata in answers:
                 result['ipv4_addresses'].append(rdata.address)
@@ -58,7 +58,7 @@ class Checker(AbstractChecker):
 
         # IPv6
         try:
-            answers = dns.resolver.query(hostname, "AAAA")
+            answers = dns.resolver.resolve(hostname, "AAAA")
             result['resolvable_ipv6'] = True
             for rdata in answers:
                 result['ipv6_addresses'].append(rdata.address)
