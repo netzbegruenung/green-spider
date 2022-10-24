@@ -11,6 +11,9 @@ WORKDIR /workdir
 # Execute time consuming compilations in a separate step
 RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0
 
+ADD https://pki.google.com/roots.pem /google_roots.pem
+ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
+
 ADD requirements.txt /workdir/
 RUN pip install -r requirements.txt
 
