@@ -1,10 +1,13 @@
 FROM alpine:3.16.2
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
-    apk --update --no-cache add ca-certificates chromium chromium-chromedriver py3-cryptography \
-          python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
-          build-base git icu-libs libssl1.1 libssl3 libxml2 libxml2-dev libxslt libxslt-dev libffi-dev openssl-dev cargo
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk --update --no-cache add ca-certificates chromium chromium-chromedriver \
+          py3-cryptography python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
+          build-base git icu-libs libssl1.1 libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
+          libffi-dev openssl-dev cargo
+
+RUN apk info -v | sort
 
 WORKDIR /workdir
 
