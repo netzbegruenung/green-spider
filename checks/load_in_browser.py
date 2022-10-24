@@ -119,20 +119,20 @@ class Checker(AbstractChecker):
                     'screenshots': check_responsiveness_results['screenshots'],
                 }
             except TimeoutException as e:
-                logging.warn("TimeoutException when checking responsiveness for %s: %s" % (url, e))
+                logging.warning("TimeoutException when checking responsiveness for %s: %s" % (url, e))
                 pass
             except tenacity.RetryError as re:
-                logging.warn("RetryError when checking responsiveness for %s: %s" % (url, re))
+                logging.warning("RetryError when checking responsiveness for %s: %s" % (url, re))
                 pass
             
             # Scroll page to bottom, to load all lazy-loading resources.
             try:
                 self.scroll_to_bottom()
             except TimeoutException as e:
-                logging.warn("TimeoutException in scroll_to_bottom for %s: %s" % (url, e))
+                logging.warning("TimeoutException in scroll_to_bottom for %s: %s" % (url, e))
                 pass
             except tenacity.RetryError as re:
-                logging.warn("RetryError in scroll_to_bottom for %s: %s" % (url, re))
+                logging.warning("RetryError in scroll_to_bottom for %s: %s" % (url, re))
                 pass
 
             # CSS collection
@@ -148,23 +148,23 @@ class Checker(AbstractChecker):
                             continue
                         font_families.add(font_family.lower())
                     except StaleElementReferenceException as e:
-                        logging.warn("StaleElementReferenceException when collecting CSS properties for %s: %s" % (url, e))
+                        logging.warning("StaleElementReferenceException when collecting CSS properties for %s: %s" % (url, e))
                         continue
 
                 results[url]['font_families'] = sorted(list(font_families))
             
             except TimeoutException as e:
-                logging.warn("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
+                logging.warning("TimeoutException when collecting CSS elements for %s: %s" % (url, e))
                 pass
             
             # Process cookies.
             try:
                 results[url]['cookies'] = self.get_cookies()
             except TimeoutException as e:
-                logging.warn("TimeoutException when collecting cookies %s: %s" % (url, e))
+                logging.warning("TimeoutException when collecting cookies %s: %s" % (url, e))
                 pass
             except tenacity.RetryError as re:
-                logging.warn("RetryError when collecting cookies for %s: %s" % (url, re))
+                logging.warning("RetryError when collecting cookies for %s: %s" % (url, re))
                 pass
         
             for logentry in self.driver.get_log('performance'):
@@ -209,7 +209,7 @@ class Checker(AbstractChecker):
                         blob.upload_from_file(my_file, content_type="image/png")
                         blob.make_public()
                 except Exception as e:
-                    logging.warn("Error uploading screenshot for %s: %s" % (screenshot['url'], e))
+                    logging.warning("Error uploading screenshot for %s: %s" % (screenshot['url'], e))
                     continue
 
                 try:
@@ -232,7 +232,7 @@ class Checker(AbstractChecker):
                     datastore_client.put(entity)
                     logging.debug("Successfully stored screenshot metadata for %s" % screenshot['screenshot_url'])
                 except Exception as e:
-                    logging.warn("Error in %s: %s" % (screenshot['url'], e))
+                    logging.warning("Error in %s: %s" % (screenshot['url'], e))
 
 
             # Remove screenshots part from results
@@ -289,7 +289,7 @@ class Checker(AbstractChecker):
             success = self.driver.save_screenshot(abs_filepath)
 
             if not success:
-                logging.warn("Failed to create screenshot %s" % abs_filepath)
+                logging.warning("Failed to create screenshot %s" % abs_filepath)
                 continue
 
             result['screenshots'].append({

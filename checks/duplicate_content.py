@@ -36,7 +36,7 @@ class Checker(AbstractChecker):
             page_content = self.previous_results['page_content'][url]
 
             if page_content['content'] is None:
-                logging.warn("Content for URL %s is None" % url)
+                logging.warning("Content for URL %s is None" % url)
 
             content[url] = page_content['content']
         
