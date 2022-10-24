@@ -1,8 +1,12 @@
 FROM alpine:3.16.2
 
+ENV CHROMIUM_VERSION=106.0.5249.119-r1
+
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    apk --update --no-cache add ca-certificates chromium chromium-chromedriver \
+    apk --update --no-cache add ca-certificates \
+          chromium=$CHROMIUM_VERSION \
+          chromium-chromedriver=$CHROMIUM_VERSION \
           py3-cryptography python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
           build-base git icu-libs libssl1.1 libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
           libffi-dev openssl-dev cargo
