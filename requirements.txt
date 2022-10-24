@@ -10,12 +10,12 @@ docker==4.4.1
 feedparser==6.0.8
 gitdb==4.0.9
 GitPython==3.1.24
-google-api-core==2.2.2
-google-auth==2.3.3
-google-cloud-core==2.2.1
-google-cloud-datastore==2.4.0
-google-cloud-storage==1.43.0
-googleapis-common-protos==1.53.0
+google-api-core==2.10.2
+google-auth==2.13.0
+google-cloud-core==2.3.2
+google-cloud-datastore==2.9.0
+google-cloud-storage==2.5.0
+googleapis-common-protos==1.56.4
 html-similarity==0.3.3
 httpretty==1.1.4
 idna==2.10
@@ -25,7 +25,7 @@ protobuf==4.21.8
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
-pyOpenSSL==22.1.0
+pyOpenSSL==22.0.0
 pytz==2021.3
 redis==4.1.0
 requests==2.26.0
