@@ -37,6 +37,6 @@ smmap==3.0.4
 smmap2==2.0.5
 soupsieve==2.2.1
 tenacity==5.1.5
-urllib3==1.26.7
+urllib3==1.26.12
 w3lib==1.22.0
 websocket-client==0.59.0
