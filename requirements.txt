@@ -21,7 +21,7 @@ httpretty==1.1.4
 idna==2.10
 kubernetes==20.13.0
 parsel==1.6.0
-protobuf==4.21.8
+protobuf==4.21.9
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
