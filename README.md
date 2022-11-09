@@ -25,7 +25,7 @@ Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbeg
 
 ## Betrieb
 
-Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://git.verdigado.com/NB-Public/green-spider/src/branch/main/devops).
+Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://github.com/netzbegruenung/green-spider/tree/main/devops).
 
 ## Entwicklung
 
