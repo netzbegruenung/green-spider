@@ -1,4 +1,4 @@
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.2
 cachetools==4.2.4
 certifi==2021.10.8
 cffi==1.15.1
