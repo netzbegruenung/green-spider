@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-ENV CHROMIUM_VERSION=106.0.5249.119-r1
+ENV CHROMIUM_VERSION=121.0.6167.184-r0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
