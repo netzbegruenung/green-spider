@@ -1,4 +1,4 @@
-FROM alpine:3.16.2
+FROM alpine:3.19.1
 
 ENV CHROMIUM_VERSION=106.0.5249.119-r1
 
