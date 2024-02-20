@@ -16,13 +16,13 @@ RUN apk info -v | sort
 WORKDIR /workdir
 
 # Execute time consuming compilations in a separate step
-RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0
+RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0 --break-system-packages
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
 ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
 
 ADD requirements.txt /workdir/
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --break-system-packages
 
 RUN python3 -m pip freeze
 
