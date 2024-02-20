@@ -8,7 +8,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
           py3-cryptography python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
-          build-base git icu-libs libssl1.1 libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
+          build-base git icu-libs libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
           libffi-dev openssl-dev cargo
 
 RUN apk info -v | sort
