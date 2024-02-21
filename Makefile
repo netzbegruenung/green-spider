@@ -28,33 +28,30 @@ spider:
 		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		--shm-size=2g \
 		$(IMAGE) \
-		--credentials-path /secrets/datastore-writer.json \
-		--loglevel debug \
-		spider --kind $(DB_ENTITY) ${ARGS}
+		python3 cli.py \
+			--credentials-path /secrets/datastore-writer.json \
+			--loglevel debug \
+			spider --kind $(DB_ENTITY) ${ARGS}
 
 export:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
 		-v $(PWD)/volumes/json-export:/json-export \
 		$(IMAGE) \
-		--credentials-path /secrets/datastore-reader.json \
-		--loglevel debug \
-		export --kind $(DB_ENTITY)
+		python3 cli.py \
+			--credentials-path /secrets/datastore-reader.json \
+			--loglevel debug \
+			export --kind $(DB_ENTITY)
 
 # run spider tests
 test:
-	# Debugging
-	docker run --rm --entrypoint pwd $(IMAGE)
-	docker run --rm --entrypoint ls $(IMAGE) -la
-
 	docker run --rm \
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
       -v $(PWD)/secrets:/secrets \
       -v $(PWD)/screenshots:/screenshots \
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
-		--entrypoint "python3" \
 		$(IMAGE) \
-		-m unittest discover -p '*_test.py' -v
+			python3 -m unittest discover -p '*_test.py' -v
 
 VERSION:
 	@echo $(VERSION) > VERSION
