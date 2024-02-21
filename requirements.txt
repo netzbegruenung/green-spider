@@ -9,7 +9,7 @@ dnspython==2.1.0
 docker==4.4.1
 feedparser==6.0.8
 gitdb==4.0.9
-GitPython==3.1.24
+GitPython==3.1.41
 google-api-core==2.10.2
 google-auth==2.13.0
 google-cloud-core==2.3.2
