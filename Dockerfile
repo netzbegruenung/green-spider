@@ -1,6 +1,6 @@
-FROM alpine:3.16.2
+FROM alpine:3.19
 
-ENV CHROMIUM_VERSION=106.0.5249.119-r1
+ENV CHROMIUM_VERSION=121.0.6167.184-r0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
@@ -8,7 +8,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
           py3-cryptography python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
-          build-base git icu-libs libssl1.1 libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
+          build-base git icu-libs libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
           libffi-dev openssl-dev cargo
 
 RUN apk info -v | sort
@@ -16,13 +16,13 @@ RUN apk info -v | sort
 WORKDIR /workdir
 
 # Execute time consuming compilations in a separate step
-RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0
+RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0 --break-system-packages
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
 ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
 
 ADD requirements.txt /workdir/
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --break-system-packages
 
 RUN python3 -m pip freeze
 

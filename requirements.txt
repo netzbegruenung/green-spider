@@ -25,7 +25,7 @@ protobuf==4.21.8
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
-pyOpenSSL==22.0.0
+pyOpenSSL==23.0.0
 pytz==2021.3
 redis==4.1.0
 requests==2.26.0
@@ -36,7 +36,7 @@ selenium==3.141.0
 smmap==3.0.4
 smmap2==2.0.5
 soupsieve==2.2.1
-tenacity==5.1.5
+tenacity==8.2.3
 urllib3==1.26.7
 w3lib==1.22.0
 websocket-client==0.59.0
