@@ -43,6 +43,10 @@ export:
 
 # run spider tests
 test:
+	# Debugging
+	docker run --rm --entrypoint pwd $(IMAGE)
+	docker run --rm --entrypoint ls $(IMAGE) -la
+
 	docker run --rm \
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
       -v $(PWD)/secrets:/secrets \
