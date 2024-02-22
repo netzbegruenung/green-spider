@@ -1,28 +1,23 @@
 # Green Spider
 
-Initiative und Tools zur Förderung eines benutzer*innenfreundlichen Auftritts von Bündnis 90/Die Grünen im Web.
+Green Spider prüft Websites von Bündnis 90/Die Grünen Gliederungen auf Einhaltung ausgewählter Standards. Die Ergebnisse sind unter [green-spider.netzbegruenung.de](https://green-spider.netzbegruenung.de/) einsehbar.
 
-Zur Auswertung: [https://green-spider.netzbegruenung.de/](https://green-spider.netzbegruenung.de/)
+Dieses Repository beinhaltet Code für den _Spider_, der Websites besucht und prüft.
 
-## Tools
+Green Spider ist ein Projekt von [netzbegrünung e. V.](https://blog.netzbegruenung.de/).
 
-- **Spider:** Sammelt Informationen über Websites von B90/GRÜNE Gliederungen
-- **Screenshotter:** Erstellt Seiten-Screenshots. Siehe [netzbegruenung/green-spider-screenshotter](https://github.com/netzbegruenung/green-spider-screenshotter/)
+## Übersicht aller Green Spider Repositories
+
+- **Spider:** Dieses Repository
 - **Webapp:** Darstellung der Spider-Ergebnisse. Siehe [netzbegruenung/green-spider-webapp](https://github.com/netzbegruenung/green-spider-webapp/). Dazu gehören
   - **API**: [netzbegruenung/green-spider-api](https://github.com/netzbegruenung/green-spider-api)
   - **Elasticsearch**
   - **Indexer:** Lädt Ergebnisdaten in Elasticsearch. Siehe [netzbegruenung/green-spider-indexer](https://github.com/netzbegruenung/green-spider-indexer)
 - **Auswertung**: R Projekt zur Auswertung der Ergebnisse. Siehe [netzbegruenung/green-spider-analysis](https://github.com/netzbegruenung/green-spider-analysis)
 
-## Aktivitäten
+## Green Spider verbessern
 
-Es ist geplant, auf Basis der gesammelten Informationen (siehe Spider) Informationen an die Betreiber*innen der Websites zu versenden. Hierzu müssen Prozesse erarbeitet und vermutlich weitere Tools geschaffen werden.
-
-## Community
-
-Green Spider ist ein Projekt des [netzbegrünung](https://blog.netzbegruenung.de/) e. V. -- Mitwirkung ist herzlich willkommen.
-
-Zur Kommunikation dient der Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) sowie die [Issues](https://github.com/netzbegruenung/green-spider/issues) hier in diesem Repository.
+Du kannst über den Chatbegrünung-Kanal [#green-spider](https://chatbegruenung.de/channel/green-spider) Probleme melden, Fragen stellen und Verbesserungsvorschläge machen. Wenn Du möchtest, kannst Du auch die [Issues](https://github.com/netzbegruenung/green-spider/issues) hier in diesem Repository einsehen ud kommentieren oder selbst ein Issue anlegen.
 
 ## Betrieb
 
@@ -72,4 +67,14 @@ docker run --rm -ti \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel debug \
     spider --job '{"url": "https://gruene-porta-westfalica.de/home/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
+```
+
+### Spider auf Kubernetes ausführen
+
+```nohighlight
+o login gollum 5jka7
+cd cache/green-directory && git fetch && git pull && cd ../..
+dc up manager
+. /venv/bin/activate.fish
+python k8s-job-manager.py
 ```
