@@ -1,10 +1,6 @@
 name: Publish container image
 
 on:
-  # TODO: Delete 'push' once it's confirm to work fine
-  push:
-    branches:
-      - add-release-package-workflow
   release:
     types:
       - published
