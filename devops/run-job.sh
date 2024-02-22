@@ -19,7 +19,7 @@
 #   secrets/datastore-writer.json
 
 
-DOCKERIMAGE="quay.io/netzbegruenung/green-spider:latest"
+DOCKERIMAGE="ghcr.io/netzbegruenung/green-spider:latest"
 
 RESULTS_ENTITY_KIND="spider-results"
 
@@ -193,7 +193,7 @@ else
   echo "Starting Docker Job"
   #ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
   #  -v /root/secrets:/secrets \
-  #  quay.io/netzbegruenung/green-spider spider.py \
+  #  ghcr.io/netzbegruenung/green-spider:latest spider.py \
   #  --credentials-path /secrets/datastore-writer.json \
   #  jobs
 

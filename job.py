@@ -16,7 +16,7 @@ from google.cloud import datastore
 # via the environment JOB_TIMEOUT variable.
 TIMEOUT = int(os.environ.get("JOB_TIMEOUT", "50"))
 
-DOCKER_IMAGE = 'quay.io/netzbegruenung/green-spider:main'
+DOCKER_IMAGE = 'ghcr.io/netzbegruenung/green-spider:latest'
 
 CREDENTIALS_PATH = '/secrets/datastore-writer.json'
 

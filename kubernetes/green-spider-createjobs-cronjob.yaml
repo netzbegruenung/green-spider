@@ -12,8 +12,8 @@ spec:
         spec:
           containers:
           - name: spider
-            image: quay.io/netzbegruenung/green-spider:main
-            imagePullPolicy: Always
+            image: ghcr.io/netzbegruenung/green-spider:latest
+            imagePullPolicy: IfNotPresent
             args:
               - "--credentials-path=/secrets/datastore-writer.json"
               - "--loglevel=info"

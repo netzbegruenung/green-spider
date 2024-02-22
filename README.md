@@ -63,7 +63,7 @@ docker run --rm -ti \
   -v $(pwd)/screenshots:/screenshots \
   -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
   --shm-size=2g \
-  quay.io/netzbegruenung/green-spider:main python3 cli.py \
+  ghcr.io/netzbegruenung/green-spider:latest python3 cli.py \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel debug \
     spider --job '{"url": "https://gruene-porta-westfalica.de/home/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
