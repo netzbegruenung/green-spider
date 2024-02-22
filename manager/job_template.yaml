@@ -25,7 +25,7 @@ spec:
         giantswarm.io/machine-pool: 5n27k
       containers:
       - name: spider
-        image: quay.io/netzbegruenung/green-spider:v1.0.0
+        image: ghcr.io/netzbegruenung/green-spider:latest
         imagePullPolicy: IfNotPresent
         command:
         - python3
