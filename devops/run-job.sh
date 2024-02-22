@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Creates a server, installs Docker, runs the screenshots job, tears down the server.
+# Creates a server, installs Docker, runs a job, tears down the server.
 #
 # This will take several hours. For a complete, clean run it is required to leave the
 # terminal running the script open. Otherwise the server won't be deleted properly
@@ -29,7 +29,7 @@ source $API_TOKEN_SECRET
 
 
 if [[ "$1" = "" ]]; then
-  echo "No argument given. Please use 'screenshotter' or 'spider' as arguments."
+  echo "No argument given. Please use 'spider-new' or 'spider' as arguments."
   exit 1
 fi
 
@@ -132,23 +132,7 @@ ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
   mkdir /root/secrets
 EOF
 
-if [[ $1 == "screenshotter" ]]; then
-  ### screenshotter
-
-  # Copy service account secret to server
-  echo "Copying secret to /root/secrets/service-account.json"
-  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/service-account.json
-  scp -o StrictHostKeyChecking=no -q secrets/screenshots-uploader.json root@$SERVER_IP:/root/secrets/screenshots-uploader.json
-  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
-
-  # Run docker job
-  echo "Starting Docker Job"
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-    -v /root/secrets:/secrets \
-    quay.io/netzbegruenung/green-spider-screenshotter
-
-elif [[ $1 == "spider-new" ]]
-then
+if [[ $1 == "spider-new" ]]; then
   # Some dependencies specific to this task
   ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP apt-get install -y python3-pip build-essential
 

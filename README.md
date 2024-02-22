@@ -68,13 +68,3 @@ docker run --rm -ti \
     --loglevel debug \
     spider --job '{"url": "https://gruene-porta-westfalica.de/home/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
 ```
-
-### Spider auf Kubernetes ausführen
-
-```nohighlight
-o login gollum 5jka7
-cd cache/green-directory && git fetch && git pull && cd ../..
-dc up manager
-. /venv/bin/activate.fish
-python k8s-job-manager.py
-```
