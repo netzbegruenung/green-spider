@@ -1,5 +1,5 @@
 beautifulsoup4==4.12.3
-cachetools==5.3.2
+cachetools==5.3.3
 certifi==2023.7.22
 cffi==1.15.1
 chardet==5.2.0
@@ -30,11 +30,11 @@ pytz==2021.3
 redis==4.1.0
 requests==2.31.0
 responses==0.22.0
-rq==1.8.0
+rq==1.16.0
 rsa==4.9
 selenium==3.141.0
 smmap==5.0.1
-smmap2==2.0.5
+smmap2==3.0.1
 soupsieve==2.2.1
 tenacity==8.2.3
 urllib3==1.26.7
