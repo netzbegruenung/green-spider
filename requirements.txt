@@ -4,7 +4,7 @@ certifi==2023.7.22
 cffi==1.15.1
 chardet==5.2.0
 click==8.0.3
-cssselect==1.1.0
+cssselect==1.2.0
 dnspython==2.6.1
 docker==4.4.1
 feedparser==6.0.8
