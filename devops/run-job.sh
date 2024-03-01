@@ -12,7 +12,7 @@
 # Requirements:
 #
 # - curl
-# - jq (https://stedolan.github.io/jq/)
+# - jq (https://jqlang.github.io/jq/)
 # - ssh
 # - SSH key referenced in the server details ("ssh_keys")
 # - Service account with write permission for Storage and Datastore in 
