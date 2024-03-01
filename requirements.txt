@@ -20,7 +20,7 @@ html-similarity==0.3.3
 httpretty==1.1.4
 idna==3.6
 kubernetes==29.0.0
-parsel==1.6.0
+parsel==1.8.1
 protobuf==4.25.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
