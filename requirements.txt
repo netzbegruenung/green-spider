@@ -34,7 +34,7 @@ rq==1.8.0
 rsa==4.9
 selenium==3.141.0
 smmap==5.0.1
-smmap2==2.0.5
+smmap2==3.0.1
 soupsieve==2.2.1
 tenacity==8.2.3
 urllib3==1.26.7
