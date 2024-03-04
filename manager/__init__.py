@@ -6,12 +6,10 @@ import logging
 import math
 import os
 import random
-import shutil
 import time
 import json
 from datetime import datetime
 
-from git import Repo
 from rq import Queue
 import redis
 import yaml
@@ -20,16 +18,12 @@ from hashlib import sha256
 
 import config
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
+# Maximum age for an active spider job
+JOB_TTL = '300s'
 
-def clone_data_directory():
-    """
-    Clones the source of website URLs, the green directory,
-    into the local file system using git
-    """
-    if os.path.exists(config.GREEN_DIRECTORY_LOCAL_PATH):
-        return
-    Repo.clone_from(config.GREEN_DIRECTORY_REPO, config.GREEN_DIRECTORY_LOCAL_PATH)
+QUEUE_NAME = 'low'
+
+REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
 
 
 def directory_entries():
@@ -77,11 +71,7 @@ def create_jobs(url=None):
             logging.error(ex)
             time.sleep(5)
 
-    queue = Queue('low', connection=redis_conn)
-
-    # refresh our local clone of the green directory
-    logging.info("Refreshing green-directory clone")
-    clone_data_directory()
+    queue = Queue(QUEUE_NAME, connection=redis_conn)
 
     # build the list of website URLs to run checks for
     logging.info("Processing green-directory")
@@ -142,17 +132,15 @@ def create_jobs(url=None):
     for entry in input_entries:
         try:
             _ = queue.enqueue('job.run',
-                job_timeout='300s',
-                at_front=random.choice([True, False]),
+                job_timeout=JOB_TTL,
+                at_front=random.choice([True, False]), # queue shuffling
                 # keywords args passes on the job function
                 kwargs={
                     'job': entry,
                 })
 
             # Print job for debugging purposes
-            print(json.dumps(entry))
-
-            #logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
+            logging.debug(f"Created job: {json.dumps(entry)}")
             count += 1
         except Exception as e:
             errorcount += 1
@@ -168,6 +156,9 @@ def create_jobs(url=None):
 
 
 def make_k8s_job(job_data, count):
+    """
+    Generate a Kubernetes Job resource for this spider job.
+    """
     now = datetime.utcnow().strftime('%Y%m%d%H%M')
     urlhash = sha256(job_data['url'].encode('utf-8')).hexdigest()[0:12]
     job_name = f'gs-{now}-{urlhash}'

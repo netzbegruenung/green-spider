@@ -1,10 +1,10 @@
-IMAGE := ghcr.io/netzbegruenung/green-spider:main
+IMAGE := ghcr.io/netzbegruenung/green-spider:latest
 
 DB_ENTITY := spider-results
 
 VERSION = $(shell git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
 
-.PHONY: dockerimage spider export
+.PHONY: dockerimage spider export dryrun test
 
 # Build docker image
 dockerimage: VERSION
@@ -12,16 +12,14 @@ dockerimage: VERSION
 
 # Fill the queue with spider jobs, one for each site.
 jobs:
-	docker run --rm -ti \
-		-v $(PWD)/secrets:/secrets \
-		$(IMAGE) \
-		python cli.py \
-			--credentials-path /secrets/datastore-writer.json \
-			--loglevel debug \
-			manager
+	mkdir -p cache
+	test -d cache/green-directory || git clone --depth 1 https://git.verdigado.com/NB-Public/green-directory.git cache/green-directory	
+	git -C cache/green-directory fetch && git -C cache/green-directory pull
+	docker compose up manager
+	venv/bin/rq info
 
-# Run spider in docker image
-spider:
+# Spider a single URL and inspect the result
+dryrun:
 	docker run --rm -ti \
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
 		-v $(PWD)/secrets:/secrets \
@@ -31,7 +29,12 @@ spider:
 		python3 cli.py \
 			--credentials-path /secrets/datastore-writer.json \
 			--loglevel debug \
-			spider --kind $(DB_ENTITY) ${ARGS}
+			dryrun ${ARGS}
+
+# Run the spider.
+# OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.
+spider:
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES venv/bin/rq --verbose --burst high default low
 
 export:
 	docker run --rm -ti \
@@ -52,6 +55,12 @@ test:
 	  -v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
 		$(IMAGE) \
 			python3 -m unittest discover -p '*_test.py' -v
+
+# Create Python virtual environment
+venv:
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install -r requirements.txt
 
 VERSION:
 	@echo $(VERSION) > VERSION

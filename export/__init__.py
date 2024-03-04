@@ -11,17 +11,7 @@ from hashlib import md5
 import json
 import requests
 
-
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        elif isinstance(obj, datetime.date):
-            return obj.isoformat()
-        elif isinstance(obj, datetime.timedelta):
-            return (datetime.datetime.min + obj).time().isoformat()
-        else:
-            return super(DateTimeEncoder, self).default(obj)
+from export import datetimeencoder
 
 def export_results(client, entity_kind):
     """
@@ -45,4 +35,4 @@ def export_results(client, entity_kind):
 
     output_filename = "/json-export/spider_result.json"
     with open(output_filename, 'w', encoding="utf8") as jsonfile:
-        json.dump(out, jsonfile, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder)
+        json.dump(out, jsonfile, indent=2, sort_keys=True, ensure_ascii=False, cls=datetimeencoder.DateTimeEncoder)

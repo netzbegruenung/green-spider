@@ -34,11 +34,9 @@ if __name__ == "__main__":
     # subcommands
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
-    # spider subcommand
-    spider_parser = subparsers.add_parser('spider', help='Take jobs off the queue and spider')
-    spider_parser.add_argument('--kind', default='spider-results', help='Datastore entity kind to write (default: spider-results)')
-    spider_parser.add_argument('--url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
-    spider_parser.add_argument('--job', help='Job JSON object. To spider one URL, write the result back and exit.')
+    # 'dryrun' subcommand to spider one URL without writing results back.
+    dryrun_parser = subparsers.add_parser('dryrun', help='Spider an arbitrary URL without storing results. ')
+    dryrun_parser.add_argument('url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
     
     # manager subcommand
     manager_parser = subparsers.add_parser('manager', help='Adds spider jobs to the queue. By default, all green-directory URLs are added.')
@@ -69,25 +67,21 @@ if __name__ == "__main__":
     logging.debug("Called command %s", args.command)
 
     if args.command == 'manager':
-
         import manager
         manager.create_jobs(args.url)
     
     elif args.command == 'export':
-
         import export
         datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
         export.export_results(datastore_client, args.kind)
 
-    else:
+    elif args.command == 'dryrun':
         from spider import spider
-        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
-        
-        if args.url:
-            # spider one URL for diagnostic purposes
-            spider.test_url(args.url)
-        elif args.job:
-            job = json.loads(args.job)
-            spider.execute_single_job(datastore_client, job, args.kind)
-        else:
-            spider.work_of_queue(datastore_client, args.kind)
+        from export.datetimeencoder import DateTimeEncoder
+
+        result = spider.check_and_rate_site({"url": args.url, "type": "REGIONAL_CHAPTER", "level": "DE:KREISVERBAND", "state": "Unnamed", "district": "Unnamed"})        
+        print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder))
+
+    else:
+        parser.print_help()
+        sys.exit(1)
