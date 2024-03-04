@@ -20,6 +20,11 @@ from hashlib import sha256
 
 import config
 
+# Maximum age for an active spider job
+JOB_TTL = '300s'
+
+QUEUE_NAME = 'low'
+
 REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
 
 def clone_data_directory():
@@ -77,7 +82,7 @@ def create_jobs(url=None):
             logging.error(ex)
             time.sleep(5)
 
-    queue = Queue('low', connection=redis_conn)
+    queue = Queue(QUEUE_NAME, connection=redis_conn)
 
     # refresh our local clone of the green directory
     logging.info("Refreshing green-directory clone")
@@ -142,17 +147,15 @@ def create_jobs(url=None):
     for entry in input_entries:
         try:
             _ = queue.enqueue('job.run',
-                job_timeout='300s',
-                at_front=random.choice([True, False]),
+                job_timeout=JOB_TTL,
+                at_front=random.choice([True, False]), # queue shuffling
                 # keywords args passes on the job function
                 kwargs={
                     'job': entry,
                 })
 
             # Print job for debugging purposes
-            print(json.dumps(entry))
-
-            #logging.debug("Added job with ID %s for URL %s" % (enqueued_job.id, entry['url']))
+            logging.debug(f"Created job: {json.dumps(entry)}")
             count += 1
         except Exception as e:
             errorcount += 1
@@ -168,6 +171,9 @@ def create_jobs(url=None):
 
 
 def make_k8s_job(job_data, count):
+    """
+    Generate a Kubernetes Job resource for this spider job.
+    """
     now = datetime.utcnow().strftime('%Y%m%d%H%M')
     urlhash = sha256(job_data['url'].encode('utf-8')).hexdigest()[0:12]
     job_name = f'gs-{now}-{urlhash}'
