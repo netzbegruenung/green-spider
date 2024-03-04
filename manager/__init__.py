@@ -6,12 +6,10 @@ import logging
 import math
 import os
 import random
-import shutil
 import time
 import json
 from datetime import datetime
 
-from git import Repo
 from rq import Queue
 import redis
 import yaml
@@ -26,15 +24,6 @@ JOB_TTL = '300s'
 QUEUE_NAME = 'low'
 
 REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
-
-def clone_data_directory():
-    """
-    Clones the source of website URLs, the green directory,
-    into the local file system using git
-    """
-    if os.path.exists(config.GREEN_DIRECTORY_LOCAL_PATH):
-        return
-    Repo.clone_from(config.GREEN_DIRECTORY_REPO, config.GREEN_DIRECTORY_LOCAL_PATH)
 
 
 def directory_entries():
@@ -83,10 +72,6 @@ def create_jobs(url=None):
             time.sleep(5)
 
     queue = Queue(QUEUE_NAME, connection=redis_conn)
-
-    # refresh our local clone of the green directory
-    logging.info("Refreshing green-directory clone")
-    clone_data_directory()
 
     # build the list of website URLs to run checks for
     logging.info("Processing green-directory")
