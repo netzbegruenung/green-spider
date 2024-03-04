@@ -4,7 +4,7 @@ DB_ENTITY := spider-results
 
 VERSION = $(shell git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
 
-.PHONY: dockerimage spider export
+.PHONY: dockerimage spider export dryrun test
 
 # Build docker image
 dockerimage: VERSION
@@ -17,6 +17,19 @@ jobs:
 	git -C cache/green-directory fetch && git -C cache/green-directory pull
 	docker compose up manager
 	venv/bin/rq info
+
+# Spider a single URL and inspect the result
+dryrun:
+	docker run --rm -ti \
+	  -v $(PWD)/volumes/dev-shm:/dev/shm \
+		-v $(PWD)/secrets:/secrets \
+		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
+		--shm-size=2g \
+		$(IMAGE) \
+		python3 cli.py \
+			--credentials-path /secrets/datastore-writer.json \
+			--loglevel debug \
+			dryrun ${ARGS}
 
 # Run the spider.
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.

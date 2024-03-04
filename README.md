@@ -25,53 +25,36 @@ Alle Informationen zum Betrieb befinden sich im Verzeichnis [devops](https://git
 
 ## Entwicklung
 
-Green Spider ist in Python 3 geschrieben und wird aktuell unter 3.6 getestet und ausgeführt.
+Green Spider ist in Python geschrieben. Der Code ist darauf ausgelegt, in einem Docker Container ausführbar zu sein. Darüber hinaus _kann_ er möglicherweise in einer lokalen Python-Umgebung funktionieren. Für reproduzierbare Bedingungen beim Ausführen des headless Browsers (chromium, chromedriver) empfielt es sich jedoch, in einer Container-Umgebung zu testen.
 
-Aufgrund zahlreicher Abhängigkeiten empfiehlt es sich, den Spider Code lokal in Docker
-auszuführen.
+Das aktuellste Container Image steht unter `ghcr.io/netzbegruenung/green-spider:latest` zur Verfügung. Alternative Versionen und Tags sind unter [Packages](https://github.com/netzbegruenung/green-spider/pkgs/container/green-spider) auffindbar.
 
-Das Image wird über den folgenden Befehl erzeugt:
+Lokal kann das Image mit diesem Befehl gebaut werden:
 
 ```nohighlight
-make
+make dockerimage
 ```
 
-Das dauert beim ersten Ausführen einige Zeit, wiel einige Python-Module das Kompilieren diverser Libraries erfordern.
-Nach dem ersten erfolgreichen Durchlauf dauert ein neuer Aufruf von `make` nur noch wenige Sekunden.
+### Unittests ausführen
 
-### Tests ausführen
-
-In aller Kürze: `make test`
+Nach dem Bauen des Container Image (siehe oben) werden die Unit Tests im Container über `make test` ausgeführt.
 
 ### Spider testweise ausführen (Debugging)
 
 Der Spider kann einzelne URLs verarbeiten, ohne die Ergebnisse in eine Datenbank zu schreiben.
-Am einfachsten geht das über den `make spider` Befehl, so:
+Am einfachsten geht das über den `make dryrun` Befehl, so:
 
 ```nohighlight
-make spider ARGS="--url http://www.example.com/"
+make dryrun ARGS="http://www.example.com/"
 ```
 
-Wenn nur eine einzelne Site gespidert werden soll, die Ergebnisse aber in die Datenbank geschrieben werden sollen, kann der Spider so mit `--job` und einem JSON-Object aufgerufen werden (Beispiel):
+### Warteschlange und Worker
+
+Für einen kompletten Durchlauf wird die Warteschlange gefüllt und dann abgearbeitet. Das passiert im Betrieb über das Script [devops/run-job.sh](https://github.com/netzbegruenung/green-spider/blob/main/devops/run-job.sh).
+
+Lokal kann das über die folgenden Befehle getestet werden:
 
 ```nohighlight
-docker run --rm -ti \
-  -v $(pwd)/volumes/dev-shm:/dev/shm \
-  -v $(pwd)/secrets:/secrets \
-  -v $(pwd)/screenshots:/screenshots \
-  -v $(pwd)/volumes/chrome-userdir:/opt/chrome-userdir \
-  --shm-size=2g \
-  ghcr.io/netzbegruenung/green-spider:latest python3 cli.py \
-    --credentials-path /secrets/datastore-writer.json \
-    --loglevel debug \
-    spider --job '{"url": "https://gruene-porta-westfalica.de/home/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
-```
-
-Wenn Jobs in der rq Warteschlange vorliegen, kann der Spider auch durch Starten eines rq workers mit diesem Kommando angestoßen werden:
-
-```shell
-# Unter mac OS evtl benötigt:
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-rq worker --verbose --burst high default low
+make jobs
+make spider
 ```
