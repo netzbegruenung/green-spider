@@ -33,12 +33,6 @@ if __name__ == "__main__":
 
     # subcommands
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
-
-    # spider subcommand
-    spider_parser = subparsers.add_parser('spider', help='Take jobs off the queue and spider')
-    spider_parser.add_argument('--kind', default='spider-results', help='Datastore entity kind to write (default: spider-results)')
-    spider_parser.add_argument('--url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
-    spider_parser.add_argument('--job', help='Job JSON object. To spider one URL, write the result back and exit.')
     
     # manager subcommand
     manager_parser = subparsers.add_parser('manager', help='Adds spider jobs to the queue. By default, all green-directory URLs are added.')
@@ -80,14 +74,5 @@ if __name__ == "__main__":
         export.export_results(datastore_client, args.kind)
 
     else:
-        from spider import spider
-        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
-        
-        if args.url:
-            # spider one URL for diagnostic purposes
-            spider.test_url(args.url)
-        elif args.job:
-            job = json.loads(args.job)
-            spider.execute_single_job(datastore_client, job, args.kind)
-        else:
-            spider.work_of_queue(datastore_client, args.kind)
+        parser.print_help()
+        sys.exit(1)
