@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Creates a server, installs Docker, runs a job, tears down the server.
+# Creates a server, installs Docker, clones green-directory, creates jobs, runs spider jops, tears down the server.
 #
 # This will take several hours. For a complete, clean run it is required to leave the
 # terminal running the script open. Otherwise the server won't be deleted properly
@@ -15,9 +15,10 @@
 # - jq (https://jqlang.github.io/jq/)
 # - ssh
 # - SSH key referenced in the server details ("ssh_keys")
-# - Service account with write permission for Storage and Datastore in 
-#   secrets/datastore-writer.json
-
+# - Credentials:
+#   - Hetzner API token in secrets/hetzner-api-token.sh
+#   - Service account with write permission for Storage and Datastore in secrets/datastore-writer.json
+#   - Git token for read access to https://git.verdigado.com/NB-Public/green-directory.git in secrets/git-clone-token.sh
 
 DOCKERIMAGE="ghcr.io/netzbegruenung/green-spider:latest"
 
@@ -27,13 +28,11 @@ API_TOKEN_SECRET="secrets/hetzner-api-token.sh"
 test -f $API_TOKEN_SECRET || { echo >&2 "File $API_TOKEN_SECRET does not exist."; exit 1; }
 source $API_TOKEN_SECRET
 
+GIT_TOKEN_SECRET="secrets/git-clone-token.sh"
+test -f $GIT_TOKEN_SECRET || { echo >&2 "File $GIT_TOKEN_SECRET does not exist."; exit 1; }
+source $GIT_TOKEN_SECRET
 
-if [[ "$1" = "" ]]; then
-  echo "No argument given. Please use 'spider-new' or 'spider' as arguments."
-  exit 1
-fi
-
-SERVERNAME="$1-$(date | md5 | cut -c1-3)"
+SERVERNAME="spider-$(date | md5 | cut -c1-3)"
 
 # possible values: cx11 (1 core 2 GB), cx21 (2 cores, 4 GB), cx31 (2 cores, 8 GB)
 SERVERTYPE="cx21"
@@ -42,11 +41,10 @@ function create_server()
 {
   echo "Creating server $SERVERNAME"
 
-  # server_type 'cx11' is the smallest, cheapest category.
-  # location 'nbg1' is Nürnberg/Nuremberg, Germany.
-  # image 'debian-9' is a plain Debian stretch.
   # ssh_keys ['Marian'] adds Marian's public key to the server and can be extended.
   # user_data: Ensures that we can detect when the cloud-init setup is done.
+  #
+  # For the rest: https://docs.hetzner.cloud/#servers-create-a-server
   #
   CREATE_RESPONSE=$(curl -s -X POST https://api.hetzner.cloud/v1/servers \
     -H "Content-Type: application/json" \
@@ -54,9 +52,9 @@ function create_server()
     -d "{
       \"name\": \"$SERVERNAME\",
       \"server_type\": \"$SERVERTYPE\",
-      \"location\": \"nbg1\",
+      \"location\": \"fsn1\",
       \"start_after_create\": true,
-      \"image\": \"debian-9\",
+      \"image\": \"debian-11\",
       \"ssh_keys\": [
         \"Marian\"
       ],
@@ -100,9 +98,12 @@ function wait_for_server()
 create_server $1
 wait_for_server
 
-echo "Executing remote commands..."
+echo "\nExecuting remote commands..."
 
-ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
+SSHCMD="ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP"
+SCPCMD="scp -o StrictHostKeyChecking=no -q"
+
+$SSHCMD << EOF
   DEBIAN_FRONTEND=noninteractive
   
   echo ""
@@ -111,90 +112,83 @@ ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
 
   echo ""
   echo "Install dependencies"
-  apt-get install -y curl apt-transport-https gnupg2 software-properties-common
+  apt-get install -y apt-transport-https ca-certificates curl git gnupg2 lsb-release software-properties-common
 
   echo ""
-  echo "Add docker repo key"
-  curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+  echo "Add Docker key"
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add the repository to Apt sources
+  echo ""
+  #echo "Get distro name"
+  #. /etc/os-release && echo "$VERSION_CODENAME"
+
+  echo \
+    "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    bullseye stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null
 
   echo ""
-  echo "Add repo"
-  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+  echo "Resulting /etc/apt/sources.list.d/docker.list"
+  cat /etc/apt/sources.list.d/docker.list
 
   echo ""
-  echo "Update package sources again"
-  apt-get update -q
+  echo "Install Docker packages"
+  apt-get update
+  apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
   echo ""
-  echo "Install docker"
-  apt-get install -y docker-ce docker-compose
+  echo "Test docker"
+  docker run --rm hello-world
 
   mkdir /root/secrets
 EOF
 
-if [[ $1 == "spider-new" ]]; then
-  # Some dependencies specific to this task
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP apt-get install -y python3-pip build-essential
+echo "\nCopying files to server"
+$SCPCMD secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
+$SCPCMD docker-compose.yaml root@$SERVER_IP:/root/docker-compose.yaml
+$SCPCMD job.py root@$SERVER_IP:/root/job.py
+$SCPCMD requirements.txt root@$SERVER_IP:/root/requirements.txt
 
-  # Upload some files
-  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
-  scp -o StrictHostKeyChecking=no -q docker-compose.yaml root@$SERVER_IP:/root/docker-compose.yaml
-  scp -o StrictHostKeyChecking=no -q requirements.txt root@$SERVER_IP:/root/requirements.txt
-  scp -o StrictHostKeyChecking=no -q job.py root@$SERVER_IP:/root/job.py
+echo "\nInstalling Python dependencies"
+$SSHCMD apt-get install -y python3-pip build-essential
+$SSHCMD pip3 install -r requirements.txt
 
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP pip3 install -r requirements.txt
+echo "\nCloning green-directory"
+$SSHCMD git clone --progress --depth 1 https://$GIT_TOKEN@git.verdigado.com/NB-Public/green-directory.git /root/cache/green-directory
 
-  # Bring up redis for the queue
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull redis
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up -d redis
-  sleep 5
+echo "\nPulling Docker images"
+$SSHCMD docker compose pull --quiet redis manager
 
-  # Bring up queue manager
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose pull manager
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker-compose up manager
+echo "\nStarting redis in background"
+$SSHCMD docker compose up -d redis
+sleep 5
 
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq info --url redis://localhost:6379/0
+echo "\nCreating jobs"
+$SSHCMD docker compose up manager
 
-  # Start worker and work off the queue once
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq worker --burst high default low --url redis://localhost:6379/0
+echo "\nQueue status:"
+$SSHCMD rq info --url redis://localhost:6379/0
 
-  # Re-queue failed jobs once, then re-execute.
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq requeue --queue low -u redis://localhost:6379 --all
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq info --url redis://localhost:6379/0
+echo "\nStarting worker (first run)"
+$SSHCMD rq worker --burst high default low --url redis://localhost:6379/0
 
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP rq worker --burst high default low --url redis://localhost:6379/0
+echo "\nRe-queuing failed jobs"
+$SSHCMD rq requeue --queue low --all --url redis://localhost:6379
 
-  echo "Done with queued jobs."
+echo "\nQueue status:"
+$SSHCMD rq info --url redis://localhost:6379/0
+
+echo "\nStarting worker (second run)"
+$SSHCMD rq worker --burst high default low --url redis://localhost:6379/0
+
+echo "\nDone."
   
-else
-  ### spider
 
-  # Copy service account secret to server
-  echo "Copying secret to /root/secrets/datastore-writer.json"
-  scp -o StrictHostKeyChecking=no -q secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
-
-  # Run docker job
-  echo "Starting Docker Job"
-  #ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-  #  -v /root/secrets:/secrets \
-  #  ghcr.io/netzbegruenung/green-spider:latest spider.py \
-  #  --credentials-path /secrets/datastore-writer.json \
-  #  jobs
-
-  #ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP mkdir -p /dev-shm
-  ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP docker run -t \
-    --shm-size=2g \
-    -v /dev/shm:/dev/shm \
-    -v /root/secrets:/secrets \
-    $DOCKERIMAGE \
-    --credentials-path /secrets/datastore-writer.json \
-    --loglevel info \
-    spider --kind $RESULTS_ENTITY_KIND
-
-fi
 
 # Delete the box
-echo "Deleting server $SERVERNAME with ID $SERVER_ID"
+echo "\nDeleting server $SERVERNAME with ID $SERVER_ID"
 curl -s -X DELETE -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   https://api.hetzner.cloud/v1/servers/$SERVER_ID
