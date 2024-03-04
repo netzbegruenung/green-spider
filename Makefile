@@ -1,4 +1,4 @@
-IMAGE := ghcr.io/netzbegruenung/green-spider:main
+IMAGE := ghcr.io/netzbegruenung/green-spider:latest
 
 DB_ENTITY := spider-results
 
