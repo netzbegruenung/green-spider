@@ -6,9 +6,6 @@ CONNECT_TIMEOUT = 5
 # response timeout for website checks
 READ_TIMEOUT = 10
 
-# Git repo for our data
-GREEN_DIRECTORY_REPO = 'https://git.verdigado.com/NB-Public/green-directory.git'
-
 # folder in that repo that holds the data
 GREEN_DIRECTORY_DATA_PATH = 'data/countries/de'
 
