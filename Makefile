@@ -12,26 +12,11 @@ dockerimage: VERSION
 
 # Fill the queue with spider jobs, one for each site.
 jobs:
-	docker run --rm -ti \
-		-v $(PWD)/secrets:/secrets \
-		$(IMAGE) \
-		python cli.py \
-			--credentials-path /secrets/datastore-writer.json \
-			--loglevel debug \
-			manager
-
-# Run spider in docker image
-spider:
-	docker run --rm -ti \
-	  -v $(PWD)/volumes/dev-shm:/dev/shm \
-		-v $(PWD)/secrets:/secrets \
-		-v $(PWD)/volumes/chrome-userdir:/opt/chrome-userdir \
-		--shm-size=2g \
-		$(IMAGE) \
-		python3 cli.py \
-			--credentials-path /secrets/datastore-writer.json \
-			--loglevel debug \
-			spider --kind $(DB_ENTITY) ${ARGS}
+	mkdir -p cache
+	test -d cache/green-directory || git clone --depth 1 https://git.verdigado.com/NB-Public/green-directory.git cache/green-directory	
+	git -C cache/green-directory fetch && git -C cache/green-directory pull
+	docker compose up manager
+	venv/bin/rq info
 
 export:
 	docker run --rm -ti \

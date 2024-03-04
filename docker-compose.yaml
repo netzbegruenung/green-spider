@@ -19,7 +19,8 @@ services:
     command: >
       python3 cli.py
       --credentials-path /secrets/datastore-writer.json
-      --loglevel debug manager
+      --loglevel debug
+      manager
     environment:
       REDIS_URL: redis://redis:6379/0
       GIT_USERNAME: ${GIT_USERNAME}
