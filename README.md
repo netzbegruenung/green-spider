@@ -52,8 +52,6 @@ Am einfachsten geht das über den `make spider` Befehl, so:
 make spider ARGS="--url http://www.example.com/"
 ```
 
-Ohne `ARGS` aufgerufen, arbeitet der Spider eine Jobliste ab. Dies erfordert Zugriff auf die entsprechende Datenbank.
-
 Wenn nur eine einzelne Site gespidert werden soll, die Ergebnisse aber in die Datenbank geschrieben werden sollen, kann der Spider so mit `--job` und einem JSON-Object aufgerufen werden (Beispiel):
 
 ```nohighlight
@@ -67,4 +65,13 @@ docker run --rm -ti \
     --credentials-path /secrets/datastore-writer.json \
     --loglevel debug \
     spider --job '{"url": "https://gruene-porta-westfalica.de/home/", "city": "Porta Westfalica", "country": "DE", "district": "Minden-Lübbecke", "level": "DE:ORTSVERBAND", "state":" Nordrhein-Westfalen", "type": "REGIONAL_CHAPTER"}'
+```
+
+Wenn Jobs in der rq Warteschlange vorliegen, kann der Spider auch durch Starten eines rq workers mit diesem Kommando angestoßen werden:
+
+```shell
+# Unter mac OS evtl benötigt:
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+rq worker --verbose --burst high default low
 ```
