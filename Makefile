@@ -18,6 +18,11 @@ jobs:
 	docker compose up manager
 	venv/bin/rq info
 
+# Run the spider.
+# OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.
+spider:
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES venv/bin/rq --verbose --burst high default low
+
 export:
 	docker run --rm -ti \
 		-v $(PWD)/secrets:/secrets \
