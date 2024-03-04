@@ -53,5 +53,11 @@ test:
 		$(IMAGE) \
 			python3 -m unittest discover -p '*_test.py' -v
 
+# Create Python virtual environment
+venv:
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install -r requirements.txt
+
 VERSION:
 	@echo $(VERSION) > VERSION
