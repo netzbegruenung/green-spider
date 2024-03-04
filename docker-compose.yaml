@@ -13,13 +13,14 @@ services:
     ports:
       - "6379:6379"
 
-  # manager manages the job queue.
+  # manager fills the job queue with spider jobs.
   manager:
     image: ghcr.io/netzbegruenung/green-spider:latest
     command: >
       python3 cli.py
       --credentials-path /secrets/datastore-writer.json
-      --loglevel debug manager
+      --loglevel debug
+      manager
     environment:
       REDIS_URL: redis://redis:6379/0
       GIT_USERNAME: ${GIT_USERNAME}
@@ -33,17 +34,18 @@ services:
     depends_on:
       - redis
 
-  dashboard:
-    image: eoranged/rq-dashboard:v0.6.1
-    environment:
-      RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
-    networks:
-      - internal_network
-      - external_network
-    ports:
-      - "9181:9181"
-    depends_on:
-      - redis
+  # rq dashboard for debugging/development
+  # dashboard:
+  #   image: eoranged/rq-dashboard:v0.6.1
+  #   environment:
+  #     RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
+  #   networks:
+  #     - internal_network
+  #     - external_network
+  #   ports:
+  #     - "9181:9181"
+  #   depends_on:
+  #     - redis
 
 networks:
   internal_network:

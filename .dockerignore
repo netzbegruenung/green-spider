@@ -1,7 +1,5 @@
 .git
-docs
 /screenshots
-secrets
-temp
-venv
-/export-*
+/secrets
+/venv
+/cache
