@@ -34,7 +34,7 @@ dryrun:
 # Run the spider.
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.
 spider:
-	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES venv/bin/rq --verbose --burst high default low
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES venv/bin/rq worker --burst high default low
 
 export:
 	docker run --rm -ti \
