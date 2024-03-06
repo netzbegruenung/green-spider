@@ -34,6 +34,10 @@ if __name__ == "__main__":
     # subcommands
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
 
+    # 'spider' subcommand to execute a job from the queue and store the result.
+    spider_parser = subparsers.add_parser('spider', help='Execute a spider job from the queue and store the result.')
+    spider_parser.add_argument('--job', help='JSON job data')
+
     # 'dryrun' subcommand to spider one URL without writing results back.
     dryrun_parser = subparsers.add_parser('dryrun', help='Spider an arbitrary URL without storing results. ')
     dryrun_parser.add_argument('url', help='Spider a URL instead of using jobs from the queue. For testing/debugging only.')
@@ -81,6 +85,12 @@ if __name__ == "__main__":
 
         result = spider.check_and_rate_site({"url": args.url, "type": "REGIONAL_CHAPTER", "level": "DE:KREISVERBAND", "state": "Unnamed", "district": "Unnamed"})        
         print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder))
+
+    elif args.command == 'spider':
+        from spider import spider
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
+        job = json.loads(args.job)
+        spider.execute_single_job(datastore_client, job, "spider-results")
 
     else:
         parser.print_help()

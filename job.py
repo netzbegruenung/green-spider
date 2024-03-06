@@ -12,7 +12,7 @@ import logging
 import docker
 from google.cloud import datastore
 
-# Maximum oper-job runtime in seconds. This can be increased for second, third attempt
+# Maximum per-job runtime in seconds. This can be increased for second, third attempt
 # via the environment JOB_TIMEOUT variable.
 TIMEOUT = int(os.environ.get("JOB_TIMEOUT", "50"))
 
