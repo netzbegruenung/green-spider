@@ -17,14 +17,12 @@ services:
   manager:
     image: ghcr.io/netzbegruenung/green-spider:latest
     command: >
-      python3 cli.py
+      python3 -u cli.py
       --credentials-path /secrets/datastore-writer.json
       --loglevel debug
       manager
     environment:
       REDIS_URL: redis://redis:6379/0
-      GIT_USERNAME: ${GIT_USERNAME}
-      GIT_PASSWORD: ${GIT_PASSWORD}
     volumes:
       - ${PWD}/secrets:/secrets
       - ${PWD}/cache/green-directory:/workdir/cache/green-directory

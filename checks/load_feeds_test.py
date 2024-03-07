@@ -6,6 +6,7 @@ from checks import html_head, page_content
 from checks import load_feeds
 from checks.config import Config
 from datetime import datetime
+from datetime import timezone
 
 from pprint import pprint
 
@@ -63,8 +64,8 @@ class TestFeed(unittest.TestCase):
         self.assertEqual(result['http://example.com/feed.xml'], {
             'exception': None,
             'average_interval': 340359,
-            'first_entry': datetime(2003, 5, 30, 11, 6, 42),
-            'latest_entry': datetime(2003, 6, 3, 9, 39, 21),
+            'first_entry': datetime(2003, 5, 30, 11, 6, 42, tzinfo=timezone.utc),
+            'latest_entry': datetime(2003, 6, 3, 9, 39, 21, tzinfo=timezone.utc),
             'num_entries': 2,
             'title': 'Liftoff News',
         })
