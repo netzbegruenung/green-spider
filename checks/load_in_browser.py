@@ -22,7 +22,8 @@ import json
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.by import By
+
 import tenacity
 
 from google.cloud import storage
@@ -47,41 +48,35 @@ class Checker(AbstractChecker):
         super().__init__(config, previous_results)
 
         # Our selenium user agent using Chrome headless as an engine
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('enable-automation')
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--dns-prefetch-disable')
-        chrome_options.add_argument('--disable-extensions')
-        chrome_options.add_argument('--disk-cache-size=0')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument('--verbose')
-        chrome_options.page_load_strategy = 'normal'
+        options = webdriver.ChromeOptions()
+        options.add_argument('--enable-automation')
+        options.add_argument('--headless=new')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--dns-prefetch-disable')
+        options.add_argument('--disable-extensions')
+        options.add_argument('--disable-component-extensions-with-background-pages')
+        options.add_argument('--disable-default-apps')
+        options.add_argument('--hide-scrollbars')
+        options.add_argument('--disk-cache-size=0')
+        options.add_argument('--no-default-browser-check')
+        options.add_argument('--no-first-run')
+        options.add_argument('--ash-no-nudges')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-search-engine-choice-screen')
+        options.add_argument('--verbose')
+        options.page_load_strategy = 'normal'
 
         # path where to get cookies from
-        chrome_options.add_argument("--user-data-dir=/opt/chrome-userdir")
-
-        # mobile_emulation = {
-        #     "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
-        #     "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
-        # }
-        #mobile_emulation = { "deviceName": "Nexus 5" }
-        #chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+        options.add_argument("--user-data-dir=/opt/chrome-userdir")
 
         # empty /opt/chrome-userdir
         shutil.rmtree('/opt/chrome-userdir', ignore_errors=True)
 
-        # activate performance logging (includes network logging)
-        capabilities = DesiredCapabilities.CHROME
-        capabilities['goog:loggingPrefs'] = {'performance': 'ALL'}
+        # Enable performance logging
+        options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
 
-        # TODO: also do this
-        # (from https://stackoverflow.com/questions/60375633/capture-logs-from-chrome-during-test-is-running-python#comment106827817_60385493)
-        capabilities['loggingPrefs'] = {'performance': 'ALL'}
-
-
-        self.driver = webdriver.Chrome(options=chrome_options, desired_capabilities=capabilities)
+        self.driver = webdriver.Chrome(options=options)
         self.driver.set_page_load_timeout(self.page_load_timeout)
 
         # We capture the browser engine's user agent string
@@ -139,7 +134,7 @@ class Checker(AbstractChecker):
             font_families = None
 
             try:
-                elements = self.driver.find_elements_by_xpath("//*")
+                elements = self.driver.find_elements(By.XPATH, "//*")
                 font_families = set()
                 for element in elements:
                     try:
