@@ -39,4 +39,4 @@ soupsieve==2.5
 tenacity==8.2.3
 urllib3==1.26.18 # v2 requires code changes in timeout handling
 w3lib==2.1.2
-websocket-client==1.7.0
+websocket-client==1.8.0
