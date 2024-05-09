@@ -18,7 +18,7 @@ google-cloud-storage==2.16.0
 googleapis-common-protos==1.63.0
 html-similarity==0.3.3
 httpretty==1.1.4
-idna==3.6
+idna==3.7
 kubernetes==29.0.0
 parsel==1.6.0 # html-similarity 0.3.3 depends on parsel==1.6.0
 protobuf==4.25.3 # <5.0.0 requested by google-api-core 2.18.0
