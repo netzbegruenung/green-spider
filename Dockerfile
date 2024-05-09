@@ -1,5 +1,6 @@
 FROM alpine:3.19@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
 
+# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/
 ENV CHROMIUM_VERSION=124.0.6367.78-r0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.19/community" >> /etc/apk/repositories && \
