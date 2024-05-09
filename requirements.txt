@@ -27,7 +27,7 @@ pyasn1-modules==0.4.0
 pycparser==2.22
 pyOpenSSL==24.1.0
 pytz==2024.1
-redis==5.0.3
+redis==5.0.4
 requests==2.31.0
 responses==0.25.0
 rq==1.16.1
