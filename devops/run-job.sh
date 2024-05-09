@@ -164,13 +164,36 @@ echo "Cloning green-directory"
 $SSHCMD git clone --progress --depth 1 https://$GIT_TOKEN@git.verdigado.com/NB-Public/green-directory.git /root/cache/green-directory
 
 echo ""
-echo "Pulling container images"
-$SSHCMD docker compose pull --quiet redis manager
+echo "Pulling redis container image"
+$SSHCMD docker compose pull redis
+
+echo ""
+echo "Set 'sysctl vm.overcommit_memory=1' to avoid OOM errors and allow background saving in redis"
+$SSHCMD sysctl "vm.overcommit_memory=1"
+
+echo ""
+echo "Creating volume directories for redis"
+$SSHCMD mkdir -p ./volumes/redis-data && chmod 777 ./volumes/redis-data
 
 echo ""
 echo "Starting redis in background"
 $SSHCMD docker compose up --detach redis
 sleep 5
+
+echo ""
+echo "Allow writing to various paths in the redis container"
+$SSHCMD docker compose exec redis chown -R redis:redis /var/spool/cron
+$SSHCMD docker compose exec redis chown -R redis:redis /etc
+
+echo ""
+echo "Debugging redis: dir"
+$SSHCMD docker compose exec redis redis-cli config get dir
+echo "Debugging redis: dbfilename"
+$SSHCMD docker compose exec redis redis-cli config get dbfilename
+
+echo ""
+echo "Pulling green-spider container image"
+$SSHCMD docker compose pull manager
 
 echo ""
 echo "Creating jobs"

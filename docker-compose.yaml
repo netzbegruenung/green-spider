@@ -1,17 +1,13 @@
-version: "2"
 services:
 
   redis:
-    image: redis:5-alpine
-    command: redis-server --save "" --appendonly no
+    image: redis:6-alpine
+    command: redis-server
     volumes:
-      - ${PWD}/volumes/redis-data:/data
+      - ${PWD}/volumes/redis-data:/data:rw
     restart: unless-stopped
-    networks:
-      - internal_network
-      - external_network
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
 
   # manager fills the job queue with spider jobs.
   manager:
@@ -26,9 +22,6 @@ services:
     volumes:
       - ${PWD}/secrets:/secrets
       - ${PWD}/cache/green-directory:/workdir/cache/green-directory
-    networks:
-      - internal_network
-      - external_network
     depends_on:
       - redis
 
@@ -37,16 +30,7 @@ services:
   #   image: eoranged/rq-dashboard:v0.6.1
   #   environment:
   #     RQ_DASHBOARD_REDIS_URL: redis://redis:6379/0
-  #   networks:
-  #     - internal_network
-  #     - external_network
   #   ports:
   #     - "9181:9181"
   #   depends_on:
   #     - redis
-
-networks:
-  internal_network:
-    internal: true
-  external_network:
-    internal: false
