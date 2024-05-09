@@ -14,7 +14,7 @@ class TestCertificateChecker(unittest.TestCase):
         result = checker.run()
         self.assertIn(url, result)
         self.assertIsNone(result[url]['exception'])
-        self.assertEqual(result[url]['issuer']['O'], 'Google Trust Services LLC')
+        self.assertEqual(result[url]['issuer']['O'], 'Google Trust Services')
 
     def test_kaarst(self):
         """Real-workd example"""
