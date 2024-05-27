@@ -20,7 +20,7 @@ Wir prüfen Sites nach den folgenden Kriterien:
 
 - `CONTACT_LINK`: Die Site hat einen Link "Kontakt"
 
-- `USE_SPECIFIC_FONTS`: Die Site verwendet die Schriftart Arvo
+- `USE_SPECIFIC_FONTS`: Die Site verwendet die Schriftart GrueneType
 
 - `FEEDS`: Die Site verweist auf RSS oder Atom Feeds via `rel=alternate` Link Tag.
 
