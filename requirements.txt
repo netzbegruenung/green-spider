@@ -28,7 +28,7 @@ pycparser==2.22
 pyOpenSSL==24.1.0
 pytz==2024.1
 redis==5.0.4
-requests==2.31.0
+requests==2.32.3
 responses==0.25.0
 rq==1.16.1
 rsa==4.9
