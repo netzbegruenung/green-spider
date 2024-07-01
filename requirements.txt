@@ -10,7 +10,7 @@ docker==5.0.3
 feedparser==6.0.11
 gitdb==4.0.11
 GitPython==3.1.43
-google-api-core==2.18.0
+google-api-core==2.19.1
 google-auth==2.29.0
 google-cloud-core==2.4.1
 google-cloud-datastore==2.19.0
