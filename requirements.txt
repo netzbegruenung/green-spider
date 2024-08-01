@@ -21,7 +21,7 @@ httpretty==1.1.4
 idna==3.6
 kubernetes==29.0.0
 parsel==1.6.0 # html-similarity 0.3.3 depends on parsel==1.6.0
-protobuf==4.25.3 # <5.0.0 requested by google-api-core 2.18.0
+protobuf==5.27.3 # <5.0.0 requested by google-api-core 2.18.0
 pyasn1==0.6.0
 pyasn1-modules==0.4.0
 pycparser==2.22
