@@ -36,7 +36,7 @@ selenium==3.141.0
 smmap==5.0.1
 smmap2==3.0.1
 soupsieve==2.5
-tenacity==8.2.3
+tenacity==9.0.0
 urllib3==1.26.18 # v2 requires code changes in timeout handling
 w3lib==2.1.2
 websocket-client==1.7.0
