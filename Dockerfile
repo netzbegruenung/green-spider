@@ -35,3 +35,5 @@ ADD spider /workdir/spider
 ADD export /workdir/export
 ADD job.py /workdir/
 ADD VERSION /workdir/VERSION
+
+ENV PYTHONPATH="/workdir"
