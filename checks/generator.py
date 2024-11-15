@@ -7,12 +7,12 @@ from checks.abstract_checker import AbstractChecker
 
 class Checker(AbstractChecker):
 
-    # IP address of the newthinking GCMS server
-    gcms_ip = "91.102.13.20"
+    # IP address of the main verdigado eG GCMS server
+    gcms_ip = "168.119.31.10"
 
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
-    
+
     def depends_on_results(self):
         return ['page_content', 'html_head', 'dns_resolution']
 
@@ -51,15 +51,15 @@ class Checker(AbstractChecker):
                 generator = 'joomla'
             if 'drupal' in generator:
                 generator = 'drupal'
-        
+
         # Qualify certain CMS flavours in more detail
         if generator == "typo3":
-            # Typo3-Gruene advertises in the page content
-            if 'typo3-gruene.de' in page_content['content']:
-                generator = "typo3-gruene"
-            # newthinking GCMS in some page hrefs
-            elif 'ntc_gcms' in page_content['content']:
+            # typo3-gruene and verdigado GCMS
+            if 'Developed by die-netzmacher.de and verdigado eG.' in page_content['content']:
                 generator = "typo3-gcms"
+            # Typo3-Gruene advertises in the page content
+            elif 'typo3-gruene.de' in page_content['content']:
+                generator = "typo3-gruene"
             # check if one of the IPs matches the well-known GCMS Server IP
             elif url in dns_resolution:
                 for addr in dns_resolution[url]['ipv4_addresses']:
@@ -79,8 +79,8 @@ class Checker(AbstractChecker):
         elif ('/themes/sunflower' in page_content['content']):
             generator = 'wordpress-sunflower'
 
-        elif ('/themes/sunflower' in page_content['content']):
-            generator = 'wordpress-sunflower'
+        elif ('/themes/gruenesinternet' in page_content['content']):
+            generator = 'wordpress-gruenesinternet'
 
         elif ('josephknowsbest' in page_content['content'] or
             'Joseph-knows-best' in page_content['content']):
