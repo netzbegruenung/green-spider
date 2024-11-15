@@ -4,6 +4,7 @@ Command line utility for spider, export etc.
 
 import argparse
 import logging
+import os
 import signal
 import sys
 import json
@@ -87,9 +88,11 @@ if __name__ == "__main__":
         print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder))
 
     elif args.command == 'spider':
-        from spider import spider
+        if not os.path.exists(args.credentials_path):
+            raise Exception("Credentials file not found at %s" % args.credentials_path)
         datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
         job = json.loads(args.job)
+        from spider import spider
         spider.execute_single_job(datastore_client, job, "spider-results")
 
     else:
