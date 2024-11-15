@@ -1,4 +1,4 @@
-FROM alpine:3.19@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
+FROM alpine:3.19@sha256:7a85bf5dc56c949be827f84f9185161265c58f589bb8b2a6b6bb6d3076c1be21
 
 # Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/
 ARG CHROMIUM_VERSION=124.0.6367.78-r0
@@ -16,7 +16,7 @@ RUN apk info -v | sort
 WORKDIR /workdir
 
 # Execute time consuming compilations in a separate step
-RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0 --break-system-packages
+RUN python3 -m pip install libcst==0.4.10 sgmllib3k==1.0.0 --break-system-packages
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
 ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
