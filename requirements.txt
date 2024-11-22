@@ -32,7 +32,7 @@ requests==2.32.3
 responses==0.25.0
 rq==1.16.2
 rsa==4.9
-selenium==3.141.0
+selenium==4.19.0
 smmap==5.0.1
 smmap2==3.0.1
 soupsieve==2.5
