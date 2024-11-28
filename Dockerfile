@@ -1,9 +1,9 @@
-FROM alpine:3.19@sha256:7a85bf5dc56c949be827f84f9185161265c58f589bb8b2a6b6bb6d3076c1be21
+FROM alpine:3.20@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a
 
-# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/
-ARG CHROMIUM_VERSION=124.0.6367.78-r0
+# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.20/community/x86_64/
+ARG CHROMIUM_VERSION=131.0.6778.85-r0
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.19/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.20/community" >> /etc/apk/repositories && \
     apk --update --no-cache add ca-certificates \
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
