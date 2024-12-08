@@ -22,7 +22,7 @@ class TestLoadInBrowser(unittest.TestCase):
 
         self.assertTrue(result[url]['min_document_width'] < 360)
         self.assertEqual(result[url]['cookies'], [])
-        self.assertEqual(result[url]['logs'], [])
+        self.assertEqual(len(result[url]['logs']), 1) # one log entry regarding favicon.ico is expected
         self.assertEqual(result[url]['font_families'], ['"times new roman"'])
 
 
