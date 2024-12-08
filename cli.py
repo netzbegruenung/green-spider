@@ -4,6 +4,7 @@ Command line utility for spider, export etc.
 
 import argparse
 import logging
+import os
 import signal
 import sys
 import json
@@ -33,6 +34,10 @@ if __name__ == "__main__":
 
     # subcommands
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
+
+    # 'spider' subcommand to execute a job from the queue and store the result.
+    spider_parser = subparsers.add_parser('spider', help='Execute a spider job from the queue and store the result.')
+    spider_parser.add_argument('--job', help='JSON job data')
 
     # 'dryrun' subcommand to spider one URL without writing results back.
     dryrun_parser = subparsers.add_parser('dryrun', help='Spider an arbitrary URL without storing results. ')
@@ -81,6 +86,14 @@ if __name__ == "__main__":
 
         result = spider.check_and_rate_site({"url": args.url, "type": "REGIONAL_CHAPTER", "level": "DE:KREISVERBAND", "state": "Unnamed", "district": "Unnamed"})        
         print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False, cls=DateTimeEncoder))
+
+    elif args.command == 'spider':
+        if not os.path.exists(args.credentials_path):
+            raise Exception("Credentials file not found at %s" % args.credentials_path)
+        datastore_client = datastore.Client.from_service_account_json(args.credentials_path)
+        job = json.loads(args.job)
+        from spider import spider
+        spider.execute_single_job(datastore_client, job, "spider-results")
 
     else:
         parser.print_help()

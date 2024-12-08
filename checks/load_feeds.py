@@ -5,6 +5,7 @@ Loads feeds linked from pages and collects information on the contained content
 import logging
 from time import mktime
 from datetime import datetime
+from datetime import timezone
 
 import feedparser
 
@@ -102,7 +103,7 @@ class Checker(AbstractChecker):
                 max_date = timestamp
         
         if max_date is not None:
-            return datetime.fromtimestamp(max_date)
+            return datetime.fromtimestamp(max_date).replace(tzinfo=timezone.utc)
 
 
     def find_first_entry(self, entries):
@@ -117,4 +118,4 @@ class Checker(AbstractChecker):
                 min_date = timestamp
         
         if min_date is not None:
-            return datetime.fromtimestamp(min_date)
+            return datetime.fromtimestamp(min_date).replace(tzinfo=timezone.utc)

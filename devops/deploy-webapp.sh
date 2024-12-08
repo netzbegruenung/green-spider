@@ -135,7 +135,7 @@ wait_for_server
 echo "Executing remote commands..."
 
 ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP << EOF
-  DEBIAN_FRONTEND=noninteractive
+  export DEBIAN_FRONTEND=noninteractive
   
   echo ""
   echo "Update package sources"

@@ -126,10 +126,11 @@ def create_jobs(url=None):
 
     count = 0
     errorcount = 0
+    jobscount = 0
     logging.info("Writing jobs")
 
-    count = 0
     for entry in input_entries:
+        count += 1
         try:
             _ = queue.enqueue('job.run',
                 job_timeout=JOB_TTL,
@@ -141,7 +142,7 @@ def create_jobs(url=None):
 
             # Print job for debugging purposes
             logging.debug(f"Created job: {json.dumps(entry)}")
-            count += 1
+            jobscount += 1
         except Exception as e:
             errorcount += 1
             logging.error("Error adding job for URL %s: %s" % (entry['url'], e))
@@ -149,10 +150,9 @@ def create_jobs(url=None):
         # Write kubernetes Job
         make_k8s_job(entry, count)
 
-        count += 1
-
-    logging.info("Writing jobs done, %s jobs added", count)
-    logging.info("%d errors while writing jobs", errorcount)
+    logging.info("Processed %s entries", count)
+    logging.info("Created %s jobs", jobscount)
+    logging.info("%d errors", errorcount)
 
 
 def make_k8s_job(job_data, count):

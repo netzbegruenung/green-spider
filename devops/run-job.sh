@@ -98,21 +98,22 @@ function wait_for_server()
 create_server $1
 wait_for_server
 
-echo "\nExecuting remote commands..."
+echo ""
+echo "Executing remote commands..."
 
 SSHCMD="ssh -o StrictHostKeyChecking=no -q root@$SERVER_IP"
 SCPCMD="scp -o StrictHostKeyChecking=no -q"
 
 $SSHCMD << EOF
-  DEBIAN_FRONTEND=noninteractive
-  
+  export DEBIAN_FRONTEND=noninteractive
+
   echo ""
   echo "Update package sources"
   apt-get update -q
 
   echo ""
   echo "Install dependencies"
-  apt-get install -y apt-transport-https ca-certificates curl git gnupg2 lsb-release software-properties-common
+  apt-get install -y apt-transport-https git gnupg2 software-properties-common
 
   echo ""
   echo "Add Docker key"
@@ -140,55 +141,92 @@ $SSHCMD << EOF
 
   echo ""
   echo "Test docker"
+  docker pull hello-world
   docker run --rm hello-world
 
   mkdir /root/secrets
 EOF
 
-echo "\nCopying files to server"
+echo ""
+echo "Copying files to server"
 $SCPCMD secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
 $SCPCMD docker-compose.yaml root@$SERVER_IP:/root/docker-compose.yaml
 $SCPCMD job.py root@$SERVER_IP:/root/job.py
 $SCPCMD requirements.txt root@$SERVER_IP:/root/requirements.txt
 
-echo "\nInstalling Python dependencies"
-$SSHCMD apt-get install -y python3-pip build-essential
+echo ""
+echo "Installing Python dependencies"
+$SSHCMD DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip build-essential
 $SSHCMD pip3 install -r requirements.txt
 
-echo "\nCloning green-directory"
+echo ""
+echo "Cloning green-directory"
 $SSHCMD git clone --progress --depth 1 https://$GIT_TOKEN@git.verdigado.com/NB-Public/green-directory.git /root/cache/green-directory
 
-echo "\nPulling Docker images"
-$SSHCMD docker compose pull --quiet redis manager
+echo ""
+echo "Pulling redis container image"
+$SSHCMD docker compose pull redis
 
-echo "\nStarting redis in background"
-$SSHCMD docker compose up -d redis
+echo ""
+echo "Set 'sysctl vm.overcommit_memory=1' to avoid OOM errors and allow background saving in redis"
+$SSHCMD sysctl "vm.overcommit_memory=1"
+
+echo ""
+echo "Creating volume directories for redis"
+$SSHCMD mkdir -p ./volumes/redis-data && chmod 777 ./volumes/redis-data
+
+echo ""
+echo "Starting redis in background"
+$SSHCMD docker compose up --detach redis
 sleep 5
 
-echo "\nCreating jobs"
+echo ""
+echo "Allow writing to various paths in the redis container"
+$SSHCMD docker compose exec redis chown -R redis:redis /var/spool/cron
+$SSHCMD docker compose exec redis chown -R redis:redis /etc
+
+echo ""
+echo "Debugging redis: dir"
+$SSHCMD docker compose exec redis redis-cli config get dir
+echo "Debugging redis: dbfilename"
+$SSHCMD docker compose exec redis redis-cli config get dbfilename
+
+echo ""
+echo "Pulling green-spider container image"
+$SSHCMD docker compose pull manager
+
+echo ""
+echo "Creating jobs"
 $SSHCMD docker compose up manager
 
-echo "\nQueue status:"
-$SSHCMD rq info --url redis://localhost:6379/0
+echo ""
+echo "Queue status"
+$SSHCMD rq info --url redis://localhost:6379
 
-echo "\nStarting worker (first run)"
-$SSHCMD rq worker --burst high default low --url redis://localhost:6379/0
+echo ""
+echo "Starting worker for first run"
+$SSHCMD rq worker --burst high default low --url redis://localhost:6379
 
-echo "\nRe-queuing failed jobs"
+echo ""
+echo "Re-queuing failed jobs"
 $SSHCMD rq requeue --queue low --all --url redis://localhost:6379
 
-echo "\nQueue status:"
-$SSHCMD rq info --url redis://localhost:6379/0
+echo ""
+echo "Queue status:"
+$SSHCMD rq info --url redis://localhost:6379
 
-echo "\nStarting worker (second run)"
-$SSHCMD rq worker --burst high default low --url redis://localhost:6379/0
+echo ""
+echo "Starting worker for second run"
+$SSHCMD JOB_TIMEOUT=100 rq worker --burst high default low --url redis://localhost:6379
 
-echo "\nDone."
+echo ""
+echo "Done."
   
 
 
 # Delete the box
-echo "\nDeleting server $SERVERNAME with ID $SERVER_ID"
+echo ""
+echo "Deleting server $SERVERNAME with ID $SERVER_ID"
 curl -s -X DELETE -H "Content-Type: application/json" \
   -H "Authorization: Bearer $API_TOKEN" \
   https://api.hetzner.cloud/v1/servers/$SERVER_ID

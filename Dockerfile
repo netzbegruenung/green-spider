@@ -1,8 +1,9 @@
-FROM alpine:3.19@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
+FROM alpine:3.20@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a
 
-ENV CHROMIUM_VERSION=122.0.6261.94-r0
+# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.20/community/x86_64/
+ARG CHROMIUM_VERSION=131.0.6778.85-r0
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.19/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.20/community" >> /etc/apk/repositories && \
     apk --update --no-cache add ca-certificates \
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
@@ -15,7 +16,7 @@ RUN apk info -v | sort
 WORKDIR /workdir
 
 # Execute time consuming compilations in a separate step
-RUN python3 -m pip install libcst==0.4.7 sgmllib3k==1.0.0 --break-system-packages
+RUN python3 -m pip install libcst==0.4.10 sgmllib3k==1.0.0 --break-system-packages
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
 ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
@@ -34,3 +35,5 @@ ADD spider /workdir/spider
 ADD export /workdir/export
 ADD job.py /workdir/
 ADD VERSION /workdir/VERSION
+
+ENV PYTHONPATH="/workdir"

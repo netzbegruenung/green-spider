@@ -18,7 +18,9 @@ jobs:
 	docker compose up manager
 	venv/bin/rq info
 
-# Spider a single URL and inspect the result
+# Spider a single URL and inspect the result.
+# Example:
+#   make dryrun ARGS="https://gruene-roesrath.de/"
 dryrun:
 	docker run --rm -ti \
 	  -v $(PWD)/volumes/dev-shm:/dev/shm \
@@ -34,7 +36,7 @@ dryrun:
 # Run the spider.
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.
 spider:
-	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES venv/bin/rq --verbose --burst high default low
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES JOB_TIMEOUT=100 venv/bin/rq worker --burst high default low
 
 export:
 	docker run --rm -ti \
