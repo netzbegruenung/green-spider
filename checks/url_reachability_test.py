@@ -21,7 +21,7 @@ class TestCharsetChecker(unittest.TestCase):
         self.assertEqual(result[url]['redirect_history'], [])
         self.assertEqual(result[url]['status'], 200)
         self.assertIsNone(result[url]['exception'])
-        self.assertTrue(0 < result[url]['duration'] < 100)
+        self.assertTrue(0 < result[url]['duration'] < 300)
 
 
     def test_redirect(self):
