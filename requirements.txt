@@ -23,7 +23,7 @@ kubernetes==29.0.0
 parsel==1.6.0 # html-similarity 0.3.3 depends on parsel==1.6.0
 protobuf==5.29.1
 pyasn1==0.6.1
-pyasn1-modules==0.4.0
+pyasn1-modules==0.4.1
 pycparser==2.22
 pyOpenSSL==24.1.0
 pytz==2024.1
