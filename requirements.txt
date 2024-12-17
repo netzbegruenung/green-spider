@@ -19,7 +19,7 @@ googleapis-common-protos==1.66.0
 html-similarity==0.3.3
 httpretty==1.1.4
 idna==3.10
-kubernetes==29.0.0
+kubernetes==31.0.0
 parsel==1.6.0 # html-similarity 0.3.3 depends on parsel==1.6.0
 protobuf==5.29.1
 pyasn1==0.6.1
