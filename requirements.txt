@@ -1,6 +1,6 @@
 beautifulsoup4==4.12.3
 cachetools==5.3.3
-certifi==2024.7.4
+certifi==2024.12.14
 cffi==1.17.1
 chardet==5.2.0
 click==7.1.2
