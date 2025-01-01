@@ -3,7 +3,7 @@ cachetools==5.3.3
 certifi==2024.12.14
 cffi==1.17.1
 chardet==5.2.0
-click==7.1.2
+click==8.1.8
 cssselect==1.2.0
 dnspython==2.7.0
 docker==5.0.3
