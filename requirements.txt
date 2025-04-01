@@ -30,7 +30,7 @@ pytz==2024.2
 redis==5.2.1
 requests==2.32.3
 responses==0.25.6
-rq==1.16.2
+rq==2.2.0
 rsa==4.9
 selenium==3.141.0
 smmap==5.0.1
