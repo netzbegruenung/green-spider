@@ -1,0 +1,16 @@
+---
+alwaysApply: true
+---
+
+## Python venv
+
+- The Python virtual environment is in `venv`.
+- If it doesn't exist, create the environment using `make venv`.
+
+## RQ management
+
+- To empty queues and remove failed jobs: `venv/bin/rq requeue --all --queue low && venv/bin/rq empty --all`
+
+## Container image management
+
+- When in doubt, make sure to build the container image with `--no-cache`

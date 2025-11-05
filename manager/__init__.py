@@ -129,10 +129,14 @@ def create_jobs(url=None):
     jobscount = 0
     logging.info("Writing jobs")
 
+    # Import the job function here to avoid triggering module-level checks
+    # in job.py when the manager module is imported
+    from job import run
+
     for entry in input_entries:
         count += 1
         try:
-            _ = queue.enqueue('job.run',
+            _ = queue.enqueue(run,
                 job_timeout=JOB_TTL,
                 at_front=random.choice([True, False]), # queue shuffling
                 # keywords args passes on the job function
