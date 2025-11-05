@@ -1,4 +1,4 @@
-FROM alpine:3.21@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099
+FROM alpine:3.21@sha256:5405e8f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b
 
 # Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/
 ARG CHROMIUM_VERSION=136.0.7103.113-r0
