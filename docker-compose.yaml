@@ -14,7 +14,6 @@ services:
     image: ghcr.io/netzbegruenung/green-spider:latest
     command: >
       python3 -u cli.py
-      --credentials-path /secrets/datastore-writer.json
       --loglevel debug
       manager
     environment:
