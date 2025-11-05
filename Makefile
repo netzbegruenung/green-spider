@@ -10,11 +10,16 @@ VERSION = $(shell git describe --exact-match --tags 2> /dev/null || git rev-pars
 dockerimage: VERSION
 	docker build --progress plain -t $(IMAGE) .
 
+dockerimage-nocache: VERSION
+	docker build --progress plain --no-cache -t $(IMAGE) .
+
+
 # Fill the queue with spider jobs, one for each site.
 jobs:
 	mkdir -p cache
 	test -d cache/green-directory || git clone --depth 1 https://git.verdigado.com/NB-Public/green-directory.git cache/green-directory	
 	git -C cache/green-directory fetch && git -C cache/green-directory pull
+	docker compose rm -f manager
 	docker compose up manager
 	venv/bin/rq info
 
@@ -36,7 +41,13 @@ dryrun:
 # Run the spider.
 # OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES is a workaround for mac OS.
 spider:
-	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES JOB_TIMEOUT=100 venv/bin/rq worker --burst high default low
+	PYTHONPATH=$(PWD) \
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
+	JOB_TIMEOUT=100 \
+	venv/bin/rq worker \
+	--burst \
+	--logging_level debug \
+	high default low
 
 export:
 	docker run --rm -ti \

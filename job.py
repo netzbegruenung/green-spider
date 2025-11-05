@@ -29,36 +29,6 @@ CREDENTIALS_PATH_CONTAINER = '/secrets/datastore-writer.json'
 # as used right here in this script for logging the spider run
 CREDENTIALS_PATH_LOCAL = './secrets/datastore-writer.json'
 
-if not os.path.exists(CREDENTIALS_PATH_LOCAL):
-    raise Exception("Credentials file not found at %s" % CREDENTIALS_PATH_LOCAL)
-
-client = docker.from_env()
-low_level_client = docker.APIClient(base_url='unix://var/run/docker.sock')
-
-datastore_client = datastore.Client.from_service_account_json(CREDENTIALS_PATH_LOCAL)
-
-pwd = os.path.abspath(".")
-
-# Volumes to be mounted in the spider container.
-# Key is the host path. "bind" value is the container path.
-volumes = {
-    pwd + "/secrets": {
-        "bind": "/secrets",
-        "mode": "ro",
-    },
-    pwd + "/volumes/chrome-userdir": {
-        "bind": "/opt/chrome-userdir",
-        "mode": "rw",
-    },
-    pwd + "/screenshots": {
-        "bind": "/screenshots",
-        "mode": "rw",
-    },
-}
-
-logger = logging.getLogger('rq.worker')
-logger.setLevel(logging.DEBUG)
-
 def run(job):
     """
     Runs a spider container with the given job.
@@ -67,6 +37,35 @@ def run(job):
     duration defined by the JOB_TIMEOUT environment variable (in seconds),
     the container gets killed.
     """
+    logger = logging.getLogger('rq.worker')
+    logger.setLevel(logging.DEBUG)
+    
+    # Initialize Docker and Datastore clients when the job runs
+    if not os.path.exists(CREDENTIALS_PATH_LOCAL):
+        raise Exception("Credentials file not found at %s" % CREDENTIALS_PATH_LOCAL)
+
+    client = docker.from_env()
+    low_level_client = docker.APIClient(base_url='unix://var/run/docker.sock')
+    datastore_client = datastore.Client.from_service_account_json(CREDENTIALS_PATH_LOCAL)
+
+    pwd = os.path.abspath(".")
+
+    # Volumes to be mounted in the spider container.
+    volumes = {
+        pwd + "/secrets": {
+            "bind": "/secrets",
+            "mode": "ro",
+        },
+        pwd + "/volumes/chrome-userdir": {
+            "bind": "/opt/chrome-userdir",
+            "mode": "rw",
+        },
+        pwd + "/screenshots": {
+            "bind": "/screenshots",
+            "mode": "rw",
+        },
+    }
+
     cmd_template = ("python cli.py --credentials-path={path} "
                     " --loglevel=debug "
                     " spider "
