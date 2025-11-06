@@ -1,35 +1,19 @@
 name: Python tests
 
-on: [push]
+on:
+  pull_request: {}
+  workflow_dispatch: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Build Docker image
+      - name: Build container image
         run: make dockerimage
       - name: Create placeholder secrets
         run: |
           mkdir ./secrets
           echo '{"token_uri": "", "client_email": "", "private_key": "", "private_key_id": "", "client_id": ""}' >> ./secrets/screenshots-uploader.json
-      - name: Run tests in Docker image
+      - name: Run tests in container
         run: make test
-      # - name: Set up Python ${{ matrix.python-version }}
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: ${{ matrix.python-version }}
-      # - name: Install dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install flake8 pytest
-      #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      # - name: Lint with flake8
-      #   run: |
-      #     # stop the build if there are Python syntax errors or undefined names
-      #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-      #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      # - name: Execute unit tests
-      #   run: |
-      #     python -m unittest discover -p '*_test.py' -v
