@@ -20,7 +20,7 @@ google-cloud-datastore==2.20.2
 google-cloud-storage==2.18.2
 google-crc32c==1.7.1
 google-resumable-media==2.7.2
-googleapis-common-protos==1.71.0
+googleapis-common-protos==1.72.0
 grpcio==1.76.0
 grpcio-status==1.71.2
 html-similarity==0.3.3
