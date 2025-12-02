@@ -1,9 +1,9 @@
-FROM alpine:3.21@sha256:5405e8f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b
+FROM alpine:3.22@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
 
-# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/
-ARG CHROMIUM_VERSION=136.0.7103.113-r0
+# Find an eligible version at https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/
+ARG CHROMIUM_VERSION=142.0.7444.59-r0
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.21/community" >> /etc/apk/repositories && \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.22/community" >> /etc/apk/repositories && \
     apk --update --no-cache add ca-certificates \
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
@@ -16,6 +16,7 @@ RUN apk info -v | sort
 WORKDIR /workdir
 
 # Execute time consuming compilations in a separate step
+# TODO: update libcst to v1.8.6
 RUN python3 -m pip install libcst==0.4.10 sgmllib3k==1.0.0 --break-system-packages
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
