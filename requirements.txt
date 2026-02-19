@@ -1,4 +1,4 @@
-beautifulsoup4==4.12.3
+beautifulsoup4==4.14.3
 cachetools==5.5.0
 certifi==2024.12.14
 cffi==1.17.1
@@ -20,7 +20,7 @@ google-cloud-datastore==2.20.2
 google-cloud-storage==2.18.2
 google-crc32c==1.7.1
 google-resumable-media==2.7.2
-googleapis-common-protos==1.71.0
+googleapis-common-protos==1.72.0
 grpcio==1.76.0
 grpcio-status==1.71.2
 html-similarity==0.3.3
@@ -31,8 +31,8 @@ lxml==6.0.2
 oauthlib==3.3.1
 parsel==1.6.0 # html-similarity 0.3.3 depends on parsel==1.6.0
 proto-plus==1.26.1
-protobuf==5.29.5
-pyasn1==0.6.1
+protobuf==5.29.6
+pyasn1==0.6.2
 pyasn1_modules==0.4.1
 pycparser==2.22
 pyOpenSSL==25.0.0
