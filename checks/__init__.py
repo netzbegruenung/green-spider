@@ -21,6 +21,7 @@ from checks import load_in_browser
 from checks import page_content
 from checks import url_canonicalization
 from checks import url_reachability
+from checks import green_power
 
 from checks.config import Config
 
@@ -50,6 +51,7 @@ def perform_checks(input_url):
         ('load_favicons', load_favicons),
         ('load_feeds', load_feeds),
         ('load_in_browser', load_in_browser),
+        ('green_power', green_power),
     ]
 
     results = {}
