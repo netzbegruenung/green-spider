@@ -33,7 +33,7 @@ dependencies = [
     "grpcio-status==1.71.2",
     "html-similarity==0.3.3",
     "httpretty==1.1.4",
-    "idna==3.10",
+    "idna==3.14",
     "kubernetes==34.1.0",
     "lxml==6.1.0",
     "oauthlib==3.3.1",
