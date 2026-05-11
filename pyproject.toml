@@ -45,7 +45,7 @@ dependencies = [
     "pycparser==2.22",
     "pyOpenSSL==25.0.0",
     "python-dateutil==2.9.0.post0",
-    "pytz==2024.2",
+    "pytz==2026.2",
     "PyYAML==6.0.3",
     "redis==5.2.1",
     "requests==2.33.0",
