@@ -2,7 +2,8 @@ version = 1
 revision = 3
 requires-python = ">=3.12"
 resolution-markers = [
-    "python_full_version >= '3.13'",
+    "python_full_version >= '3.14'",
+    "python_full_version == '3.13.*'",
     "python_full_version < '3.13'",
 ]
 
@@ -307,18 +308,19 @@ wheels = [
 
 [[package]]
 name = "google-cloud-datastore"
-version = "2.20.2"
+version = "2.24.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core", extra = ["grpc"] },
     { name = "google-auth" },
     { name = "google-cloud-core" },
+    { name = "grpcio" },
     { name = "proto-plus" },
     { name = "protobuf" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1e/e0/09b42cd2e658ced8477dc0a7f696eb691cf08f04344c7e8a88d018addeb7/google_cloud_datastore-2.20.2.tar.gz", hash = "sha256:9665d009729d9551329d9476f4d5bda9c11d3469243ea8a2c0d9490b65aa899f", size = 246519, upload-time = "2024-12-12T18:54:31.666Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/69/1389655f6949d0da0c1c5a359e64aece0a199ba177b33b7a070aa86bf672/google_cloud_datastore-2.24.0.tar.gz", hash = "sha256:f087c02a6aa4ac68bbf17f0c048ae3ee355856bf09c51439bfba193741387792", size = 266157, upload-time = "2026-03-30T22:49:52.688Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/0f/7af12d058dc907663a0d97fc268f02ebcecb31ca963e0d6ef439d65e09c4/google_cloud_datastore-2.20.2-py2.py3-none-any.whl", hash = "sha256:d2190180343b807d4aa3b0b3bb837606349b71e5e74e29aa9009c0ae38c0b6a0", size = 197362, upload-time = "2024-12-12T18:54:28.868Z" },
+    { url = "https://files.pythonhosted.org/packages/5b/88/357efc6b331fd29155dcb92a5dfb0030a8a6feddb7bbf8a6215defbed6c7/google_cloud_datastore-2.24.0-py3-none-any.whl", hash = "sha256:81f1d1c12c2906f59507f72742545ab04c38f62ed70b0542057e3cf04a53aa65", size = 207690, upload-time = "2026-03-30T22:47:49.48Z" },
 ]
 
 [[package]]
@@ -468,7 +470,7 @@ requires-dist = [
     { name = "google-api-core", specifier = "==2.23.0" },
     { name = "google-auth", specifier = "==2.52.0" },
     { name = "google-cloud-core", specifier = "==2.6.0" },
-    { name = "google-cloud-datastore", specifier = "==2.20.2" },
+    { name = "google-cloud-datastore", specifier = "==2.24.0" },
     { name = "google-cloud-storage", specifier = "==2.18.2" },
     { name = "google-crc32c", specifier = "==1.7.1" },
     { name = "google-resumable-media", specifier = "==2.9.0" },
