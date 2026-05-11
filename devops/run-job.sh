@@ -152,12 +152,15 @@ echo "Copying files to server"
 $SCPCMD secrets/datastore-writer.json root@$SERVER_IP:/root/secrets/datastore-writer.json
 $SCPCMD docker-compose.yaml root@$SERVER_IP:/root/docker-compose.yaml
 $SCPCMD job.py root@$SERVER_IP:/root/job.py
-$SCPCMD requirements.txt root@$SERVER_IP:/root/requirements.txt
+$SCPCMD pyproject.toml root@$SERVER_IP:/root/pyproject.toml
+$SCPCMD uv.lock root@$SERVER_IP:/root/uv.lock
+$SCPCMD .python-version root@$SERVER_IP:/root/.python-version
 
 echo ""
-echo "Installing Python dependencies"
-$SSHCMD DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip build-essential
-$SSHCMD pip3 install -r requirements.txt
+echo "Installing uv and Python dependencies"
+$SSHCMD DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential curl
+$SSHCMD 'curl -LsSf https://astral.sh/uv/install.sh | sh'
+$SSHCMD 'cd /root && /root/.local/bin/uv sync --frozen'
 
 echo ""
 echo "Cloning green-directory"
@@ -199,25 +202,27 @@ echo ""
 echo "Creating jobs"
 $SSHCMD docker compose up manager
 
+UV_RUN="cd /root && /root/.local/bin/uv run --frozen"
+
 echo ""
 echo "Queue status"
-$SSHCMD rq info --url redis://localhost:6379
+$SSHCMD "$UV_RUN rq info --url redis://localhost:6379"
 
 echo ""
 echo "Starting worker for first run"
-$SSHCMD rq worker --burst high default low --url redis://localhost:6379
+$SSHCMD "$UV_RUN rq worker --burst high default low --url redis://localhost:6379"
 
 echo ""
 echo "Re-queuing failed jobs"
-$SSHCMD rq requeue --queue low --all --url redis://localhost:6379
+$SSHCMD "$UV_RUN rq requeue --queue low --all --url redis://localhost:6379"
 
 echo ""
 echo "Queue status:"
-$SSHCMD rq info --url redis://localhost:6379
+$SSHCMD "$UV_RUN rq info --url redis://localhost:6379"
 
 echo ""
 echo "Starting worker for second run"
-$SSHCMD JOB_TIMEOUT=100 rq worker --burst high default low --url redis://localhost:6379
+$SSHCMD "cd /root && JOB_TIMEOUT=100 /root/.local/bin/uv run --frozen rq worker --burst high default low --url redis://localhost:6379"
 
 echo ""
 echo "Done."

@@ -21,7 +21,7 @@ jobs:
 	git -C cache/green-directory fetch && git -C cache/green-directory pull
 	docker compose rm -f manager
 	docker compose up manager
-	venv/bin/rq info
+	uv run rq info
 
 # Spider a single URL and inspect the result.
 # Example:
@@ -44,7 +44,7 @@ spider:
 	PYTHONPATH=$(PWD) \
 	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
 	JOB_TIMEOUT=100 \
-	venv/bin/rq worker \
+	uv run rq worker \
 	--burst \
 	--logging_level debug \
 	high default low
@@ -69,11 +69,9 @@ test:
 		$(IMAGE) \
 			python3 -m unittest discover -p '*_test.py' -v
 
-# Create Python virtual environment
+# Create local Python virtual environment (.venv) via uv
 venv:
-	python3 -m venv venv
-	venv/bin/pip install --upgrade pip
-	venv/bin/pip install -r requirements.txt
+	uv sync
 
 VERSION:
 	@echo $(VERSION) > VERSION
