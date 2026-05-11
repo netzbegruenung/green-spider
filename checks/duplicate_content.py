@@ -3,11 +3,66 @@ This checker looks at the similarity between previously downloaded pages
 and removes duplicates from the config URLs
 """
 
+import difflib
 import logging
+from io import StringIO
 
-import html_similarity
+import lxml.html
 
 from checks.abstract_checker import AbstractChecker
+
+
+def _get_tags(doc):
+    tags = []
+    for el in doc.getroot().iter():
+        if isinstance(el, lxml.html.HtmlElement):
+            tags.append(el.tag)
+        elif isinstance(el, lxml.html.HtmlComment):
+            tags.append('comment')
+        else:
+            raise ValueError("Don't know what to do with element: {}".format(el))
+    return tags
+
+
+def _structural_similarity(document_1, document_2):
+    document_1 = lxml.html.parse(StringIO(document_1))
+    document_2 = lxml.html.parse(StringIO(document_2))
+    tags1 = _get_tags(document_1)
+    tags2 = _get_tags(document_2)
+    diff = difflib.SequenceMatcher()
+    diff.set_seq1(tags1)
+    diff.set_seq2(tags2)
+    return diff.ratio()
+
+
+def _get_classes(html):
+    doc = lxml.html.fromstring(html)
+    classes = set()
+    for el in doc.iter():
+        cls = el.get('class') if hasattr(el, 'get') else None
+        if cls:
+            for c in cls.split():
+                classes.add(c)
+    return classes
+
+
+def _jaccard_similarity(set1, set2):
+    set1 = set(set1)
+    set2 = set(set2)
+    intersection = len(set1 & set2)
+    if len(set1) == 0 and len(set2) == 0:
+        return 1.0
+    denominator = len(set1) + len(set2) - intersection
+    return intersection / max(denominator, 0.000001)
+
+
+def _style_similarity(page1, page2):
+    return _jaccard_similarity(_get_classes(page1), _get_classes(page2))
+
+
+def _similarity(document_1, document_2, k=0.5):
+    return (k * _structural_similarity(document_1, document_2)
+            + (1 - k) * _style_similarity(page1=document_1, page2=document_2))
 
 
 class Checker(AbstractChecker):
@@ -72,7 +127,7 @@ class Checker(AbstractChecker):
                     continue
 
                 try:
-                    s = html_similarity.similarity(content[url1], content[url2])
+                    s = _similarity(content[url1], content[url2])
                     logging.debug("Comparing pages for URLs %s and %s: similarity=%s", url1, url2, s)
                     pairs[pair_key] = {
                         'similarity': s,
