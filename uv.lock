@@ -278,11 +278,11 @@ wheels = [
 
 [[package]]
 name = "cssselect"
-version = "1.2.0"
+version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d1/91/d51202cc41fbfca7fa332f43a5adac4b253962588c7cc5a54824b019081c/cssselect-1.2.0.tar.gz", hash = "sha256:666b19839cfaddb9ce9d36bfe4c969132c647b92fc9088c4e23f786b30f1b3dc", size = 41423, upload-time = "2022-10-27T13:25:41.71Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/2e/cdfd8b01c37cbf4f9482eefd455853a3cf9c995029a46acd31dfaa9c1dd6/cssselect-1.4.0.tar.gz", hash = "sha256:fdaf0a1425e17dfe8c5cf66191d211b357cf7872ae8afc4c6762ddd8ac47fc92", size = 40589, upload-time = "2026-01-29T07:00:26.701Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/06/a9/2da08717a6862c48f1d61ef957a7bba171e7eefa6c0aa0ceb96a140c2a6b/cssselect-1.2.0-py2.py3-none-any.whl", hash = "sha256:da1885f0c10b60c03ed5eccbb6b68d6eff248d91976fcde348f395d54c9fd35e", size = 18687, upload-time = "2022-10-27T13:25:40.153Z" },
+    { url = "https://files.pythonhosted.org/packages/20/0c/7bb51e3acfafd16c48875bf3db03607674df16f5b6ef8d056586af7e2b8b/cssselect-1.4.0-py3-none-any.whl", hash = "sha256:c0ec5c0191c8ee39fcc8afc1540331d8b55b0183478c50e9c8a79d44dbceb1d8", size = 18540, upload-time = "2026-01-29T07:00:24.994Z" },
 ]
 
 [[package]]
@@ -512,13 +512,11 @@ dependencies = [
     { name = "googleapis-common-protos" },
     { name = "grpcio" },
     { name = "grpcio-status" },
-    { name = "html-similarity" },
     { name = "httpretty" },
     { name = "idna" },
     { name = "kubernetes" },
     { name = "lxml" },
     { name = "oauthlib" },
-    { name = "parsel" },
     { name = "proto-plus" },
     { name = "protobuf" },
     { name = "pyasn1" },
@@ -558,7 +556,7 @@ requires-dist = [
     { name = "charset-normalizer", specifier = "==3.4.7" },
     { name = "click", specifier = "==8.3.3" },
     { name = "cryptography", specifier = "==44.0.3" },
-    { name = "cssselect", specifier = "==1.2.0" },
+    { name = "cssselect", specifier = "==1.4.0" },
     { name = "dnspython", specifier = "==2.8.0" },
     { name = "docker", specifier = "==7.1.0" },
     { name = "durationpy", specifier = "==0.10" },
@@ -575,13 +573,11 @@ requires-dist = [
     { name = "googleapis-common-protos", specifier = "==1.75.0" },
     { name = "grpcio", specifier = "==1.80.0" },
     { name = "grpcio-status", specifier = "==1.71.2" },
-    { name = "html-similarity", specifier = "==0.3.3" },
     { name = "httpretty", specifier = "==1.1.4" },
     { name = "idna", specifier = "==3.14" },
     { name = "kubernetes", specifier = "==35.0.0" },
     { name = "lxml", specifier = "==6.1.0" },
     { name = "oauthlib", specifier = "==3.3.1" },
-    { name = "parsel", specifier = "==1.6.0" },
     { name = "proto-plus", specifier = "==1.28.0" },
     { name = "protobuf", specifier = "==5.29.6" },
     { name = "pyasn1", specifier = "==0.6.3" },
@@ -673,18 +669,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/01/ee/02a2c011bdab74c6fb3c75474d40b3052059d95df7e73351460c8588d963/h11-0.16.0.tar.gz", hash = "sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1", size = 101250, upload-time = "2025-04-24T03:35:25.427Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86", size = 37515, upload-time = "2025-04-24T03:35:24.344Z" },
-]
-
-[[package]]
-name = "html-similarity"
-version = "0.3.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "parsel" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/bb/fc/a26aaaf6d68c3981aabd655d40df80468f3dc4bdf1155c5d63ef9cda4b58/html-similarity-0.3.3.tar.gz", hash = "sha256:d132b32f0906e91fe635118cb13c44f7f31b72b06e2d17a84054dff8ffbdca7c", size = 3477, upload-time = "2020-09-22T01:13:52.249Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/dc/9b01c726a9a3193e10f85ce70f43be98613376deedffed8d7a5c0ddc4f0c/html_similarity-0.3.3-py3-none-any.whl", hash = "sha256:ba0eb5801a600ca53e185fc0eb6b800bd29ce61cf0a8d291aa1f9f75a530f887", size = 5304, upload-time = "2020-09-22T01:13:50.528Z" },
 ]
 
 [[package]]
@@ -821,21 +805,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/98/df/77698abfac98571e65ffeb0c1fba8ffd692ab8458d617a0eed7d9a8d38f2/outcome-1.3.0.post0.tar.gz", hash = "sha256:9dcf02e65f2971b80047b377468e72a268e15c0af3cf1238e6ff14f7f91143b8", size = 21060, upload-time = "2023-10-26T04:26:04.361Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/55/8b/5ab7257531a5d830fc8000c476e63c935488d74609b50f9384a643ec0a62/outcome-1.3.0.post0-py2.py3-none-any.whl", hash = "sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b", size = 10692, upload-time = "2023-10-26T04:26:02.532Z" },
-]
-
-[[package]]
-name = "parsel"
-version = "1.6.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "cssselect" },
-    { name = "lxml" },
-    { name = "six" },
-    { name = "w3lib" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/57/20/8e7aef69de46de1c991d7880ffb6c046e0cb94ad41e20dcd6a74d02c1c1a/parsel-1.6.0.tar.gz", hash = "sha256:70efef0b651a996cceebc69e55a85eb2233be0890959203ba7c3a03c72725c79", size = 41812, upload-time = "2020-05-07T20:46:57.11Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/23/1e/9b39d64cbab79d4362cdd7be7f5e9623d45c4a53b3f7522cd8210df52d8e/parsel-1.6.0-py2.py3-none-any.whl", hash = "sha256:9e1fa8db1c0b4a878bf34b35c043d89c9d1cbebc23b4d34dbc3c0ec33f2e087d", size = 13022, upload-time = "2020-05-07T20:46:55.472Z" },
 ]
 
 [[package]]
