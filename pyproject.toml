@@ -11,7 +11,7 @@ dependencies = [
     "certifi==2026.4.22",
     "cffi==1.17.1",
     "chardet==7.4.3",
-    "charset-normalizer==3.4.4",
+    "charset-normalizer==3.4.7",
     "click==7.1.2",
     "cryptography==44.0.3",
     "cssselect==1.2.0",
