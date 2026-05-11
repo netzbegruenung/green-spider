@@ -8,25 +8,33 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.23/community" >> /etc/apk/repo
     apk --update --no-cache add ca-certificates \
           chromium=$CHROMIUM_VERSION \
           chromium-chromedriver=$CHROMIUM_VERSION \
-          py3-cryptography python3-dev py3-grpcio py3-wheel py3-pip py3-lxml py3-yaml \
+          python3 python3-dev \
           build-base git icu-libs libssl3 libxml2 libxml2-dev libxslt libxslt-dev \
           libffi-dev openssl-dev cargo
 
 RUN apk info -v | sort
 
-WORKDIR /workdir
+# Copy the uv binary from the official image
+COPY --from=ghcr.io/astral-sh/uv:0.11.6 /uv /uvx /usr/local/bin/
 
-# Execute time consuming compilations in a separate step
-# TODO: update libcst to v1.8.6
-RUN python3 -m pip install libcst==0.4.10 sgmllib3k==1.0.0 --break-system-packages
+WORKDIR /workdir
 
 ADD https://pki.google.com/roots.pem /google_roots.pem
 ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/google_roots.pem
 
-ADD requirements.txt /workdir/
-RUN pip install -r requirements.txt --break-system-packages
+# Configure uv for container-friendly behavior
+ENV UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PROJECT_ENVIRONMENT=/workdir/.venv
 
-RUN python3 -m pip freeze
+# Install dependencies in a separate, cacheable layer
+COPY pyproject.toml uv.lock /workdir/
+RUN uv sync --frozen --no-install-project
+
+# Make the venv's binaries available on PATH
+ENV PATH="/workdir/.venv/bin:$PATH" \
+    VIRTUAL_ENV="/workdir/.venv"
 
 ADD cli.py /workdir/
 ADD manager /workdir/manager
