@@ -8,7 +8,7 @@ import os
 import random
 import time
 import json
-from datetime import datetime
+from datetime import datetime, UTC
 
 from rq import Queue
 import redis
@@ -163,7 +163,7 @@ def make_k8s_job(job_data, count):
     """
     Generate a Kubernetes Job resource for this spider job.
     """
-    now = datetime.utcnow().strftime('%Y%m%d%H%M')
+    now = datetime.now(UTC).strftime('%Y%m%d%H%M')
     urlhash = sha256(job_data['url'].encode('utf-8')).hexdigest()[0:12]
     job_name = f'gs-{now}-{urlhash}'
     filename = f'{job_name}.yaml'

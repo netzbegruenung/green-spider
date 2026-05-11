@@ -7,7 +7,7 @@
 import config
 
 import os
-from datetime import datetime
+from datetime import datetime, UTC
 import time
 import random
 from pathlib import Path
@@ -36,7 +36,7 @@ def main():
     v1client = kubernetes.client.CoreV1Api()
     k8sclient = kubernetes.client.ApiClient()
 
-    start = datetime.utcnow()
+    start = datetime.now(UTC)
     jobs_queued = 0
 
     while len(jobs) > 0:
@@ -54,7 +54,7 @@ def main():
             label_selector='app=green-spider')
         running = list(running_pods.items)
 
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
         duration = now - start
         
         # Add new job to the queue

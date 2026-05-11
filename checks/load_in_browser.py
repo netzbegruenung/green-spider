@@ -9,7 +9,7 @@ Information includes:
 - what cookies are set during loading the page
 """
 
-from datetime import datetime
+from datetime import datetime, UTC
 import hashlib
 import logging
 import math
@@ -284,7 +284,7 @@ class Checker(AbstractChecker):
             os.makedirs(abs_folder, exist_ok=True)
             filename = urlhash + '.png'
             abs_filepath = "%s/%s" % (abs_folder, filename)
-            created = datetime.utcnow()
+            created = datetime.now(UTC)
 
             success = self.driver.save_screenshot(abs_filepath)
 
