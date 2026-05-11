@@ -42,7 +42,7 @@ dependencies = [
     "protobuf==5.29.6",
     "pyasn1==0.6.3",
     "pyasn1-modules==0.4.2",
-    "pycparser==2.22",
+    "pycparser==3.0",
     "pyOpenSSL==25.0.0",
     "python-dateutil==2.9.0.post0",
     "pytz==2026.2",
