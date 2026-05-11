@@ -44,6 +44,7 @@ spider:
 	PYTHONPATH=$(PWD) \
 	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
 	JOB_TIMEOUT=100 \
+	VIRTUAL_ENV= \
 	uv run rq worker \
 	--burst \
 	--logging_level debug \
