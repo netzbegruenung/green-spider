@@ -51,7 +51,7 @@ dependencies = [
     "requests==2.33.1",
     "requests-oauthlib==2.0.0",
     "responses==0.26.0",
-    "rq==1.16.2",
+    "rq==2.8.0",
     "rsa==4.9.1",
     "selenium==3.141.0",
     "setuptools==82.0.1",
