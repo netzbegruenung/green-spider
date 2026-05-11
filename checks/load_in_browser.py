@@ -9,6 +9,7 @@ Information includes:
 - what cookies are set during loading the page
 """
 
+from dataclasses import dataclass
 from datetime import datetime, UTC
 import hashlib
 import logging
@@ -31,18 +32,58 @@ from google.cloud import datastore
 
 from checks.abstract_checker import AbstractChecker
 
+
+# Mobile user agent strings used for device emulation. Kept up-to-date
+# enough to look like a current smartphone to user-agent-sniffing sites.
+IPHONE_USER_AGENT = (
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) "
+    "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+)
+ANDROID_USER_AGENT = (
+    "Mozilla/5.0 (Linux; Android 14; Pixel 7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+)
+
+
+@dataclass(frozen=True)
+class Device:
+    """
+    A viewport the browser should render at. When ``mobile`` is true,
+    Chromium's device-emulation CDP commands are applied so the page
+    receives a mobile user agent, the right device pixel ratio, and
+    touch-event support — i.e. roughly what a real phone would see.
+    """
+    width: int
+    height: int
+    device_scale_factor: float = 1.0
+    mobile: bool = False
+    has_touch: bool = False
+    user_agent_override: str | None = None
+
+
 class Checker(AbstractChecker):
 
     page_load_timeout = 120
 
-    # sizes we check for (width, height)
+    # Viewports we check. Desktop entries come first so that
+    # ``sizes[0]`` keeps its meaning for rating/responsive_layout.py.
+    # Mobile entries enable Chromium's device emulation (DPR, mobile UA,
+    # touch). Saved screenshots are at physical resolution, so a 390x844
+    # entry at deviceScaleFactor=3 produces a ~1170x2532 PNG.
     sizes = (
-        (1920, 1080), # Full HD horizontal
-        (1500, 1500), # useful window size we also use for the main screenshot
-        (1024, 768), # older desktop or horiz. tablet
-        (768, 1024), # older tablet or newer smartphone
-        (360, 640), # rather old smartphone
+        Device(1920, 1080),  # Full HD horizontal
+        Device(1500, 1500),  # useful window size we also use for the main screenshot
+        Device(1024, 768),   # older desktop or horiz. tablet
+        Device(768, 1024),   # older tablet or newer smartphone
+        Device(360, 640),    # rather old smartphone (desktop-resize, no emulation)
+        Device(390, 844, device_scale_factor=3.0, mobile=True, has_touch=True,
+               user_agent_override=IPHONE_USER_AGENT),  # modern iPhone-class
+        Device(360, 800, device_scale_factor=2.0, mobile=True, has_touch=True,
+               user_agent_override=ANDROID_USER_AGENT),  # small Android
     )
+    # rating/responsive_layout.py reads sizes[0]['viewport_width'] as the
+    # desktop baseline — keep a desktop viewport first.
+    assert not sizes[0].mobile, "sizes[0] must be a desktop viewport"
 
     def __init__(self, config, previous_results=None):
         super().__init__(config, previous_results)
@@ -252,6 +293,32 @@ class Checker(AbstractChecker):
         
         return cookies
 
+    def _apply_emulation(self, device):
+        """Switch the live Chromium session into mobile-device emulation."""
+        self.driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride", {
+            "width": device.width,
+            "height": device.height,
+            "deviceScaleFactor": device.device_scale_factor,
+            "mobile": device.mobile,
+        })
+        self.driver.execute_cdp_cmd("Emulation.setTouchEmulationEnabled", {
+            "enabled": device.has_touch,
+        })
+        if device.user_agent_override is not None:
+            self.driver.execute_cdp_cmd("Emulation.setUserAgentOverride", {
+                "userAgent": device.user_agent_override,
+            })
+
+    def _clear_emulation(self):
+        """Undo any emulation overrides so subsequent viewports start clean."""
+        try:
+            self.driver.execute_cdp_cmd("Emulation.clearDeviceMetricsOverride", {})
+            self.driver.execute_cdp_cmd("Emulation.setTouchEmulationEnabled", {"enabled": False})
+            # An empty userAgent removes the override per the CDP spec.
+            self.driver.execute_cdp_cmd("Emulation.setUserAgentOverride", {"userAgent": ""})
+        except Exception as e:
+            logging.warning("Failed to clear Chromium emulation overrides: %s" % e)
+
     @tenacity.retry(stop=tenacity.stop_after_attempt(3),
                     retry=tenacity.retry_if_exception_type(TimeoutException))
     def check_responsiveness(self, url):
@@ -261,46 +328,53 @@ class Checker(AbstractChecker):
         }
 
         # set window to the first size initially
-        self.driver.set_window_size(self.sizes[0][0], self.sizes[0][1])
+        self.driver.set_window_size(self.sizes[0].width, self.sizes[0].height)
 
-        for (width, height) in self.sizes:
-            self.driver.set_window_size(width, height)
-            
-            # wait for re-render/re-flow
-            time.sleep(1.0)
-            doc_width = self.driver.execute_script("return document.body.scrollWidth")
-            
-            result['sizes'].append({
-                'viewport_width': width,
-                'document_width': int(doc_width),
-            })
+        for device in self.sizes:
+            try:
+                if device.mobile:
+                    self._apply_emulation(device)
+                else:
+                    self.driver.set_window_size(device.width, device.height)
 
-            # Make screenshot
-            urlhash = hashlib.md5(bytearray(url, 'utf-8')).hexdigest()
-            folder = "%sx%s" % (width, height)
-            abs_folder = "/screenshots/%s" % folder
-            os.makedirs(abs_folder, exist_ok=True)
-            filename = urlhash + '.png'
-            abs_filepath = "%s/%s" % (abs_folder, filename)
-            created = datetime.now(UTC)
+                # wait for re-render/re-flow
+                time.sleep(1.0)
+                doc_width = self.driver.execute_script("return document.body.scrollWidth")
 
-            success = self.driver.save_screenshot(abs_filepath)
+                result['sizes'].append({
+                    'viewport_width': device.width,
+                    'document_width': int(doc_width),
+                })
 
-            if not success:
-                logging.warning("Failed to create screenshot %s" % abs_filepath)
-                continue
+                # Make screenshot
+                urlhash = hashlib.md5(bytearray(url, 'utf-8')).hexdigest()
+                folder = "%sx%s" % (device.width, device.height)
+                abs_folder = "/screenshots/%s" % folder
+                os.makedirs(abs_folder, exist_ok=True)
+                filename = urlhash + '.png'
+                abs_filepath = "%s/%s" % (abs_folder, filename)
+                created = datetime.now(UTC)
 
-            result['screenshots'].append({
-                'local_path': abs_filepath,
-                'folder': folder,
-                'filename': filename,
-                'url': url,
-                'size': [width, height],
-                'screenshot_url': 'http://%s/%s/%s' % (
-                    self.config.screenshot_bucket_name, folder, filename),
-                'user_agent': self.user_agent,
-                'created': created,
-            })
+                success = self.driver.save_screenshot(abs_filepath)
+
+                if not success:
+                    logging.warning("Failed to create screenshot %s" % abs_filepath)
+                    continue
+
+                result['screenshots'].append({
+                    'local_path': abs_filepath,
+                    'folder': folder,
+                    'filename': filename,
+                    'url': url,
+                    'size': [device.width, device.height],
+                    'screenshot_url': 'http://%s/%s/%s' % (
+                        self.config.screenshot_bucket_name, folder, filename),
+                    'user_agent': device.user_agent_override or self.user_agent,
+                    'created': created,
+                })
+            finally:
+                if device.mobile:
+                    self._clear_emulation()
 
         return result
     

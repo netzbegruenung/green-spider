@@ -25,6 +25,10 @@ class TestLoadInBrowser(unittest.TestCase):
         self.assertEqual(len(result[url]['logs']), 1) # one log entry regarding favicon.ico is expected
         self.assertEqual(result[url]['font_families'], ['"times new roman"'])
 
+        viewport_widths = [s['viewport_width'] for s in result[url]['sizes']]
+        self.assertIn(390, viewport_widths)  # emulated iPhone
+        self.assertIn(360, viewport_widths)  # emulated Android (and legacy desktop 360x640)
+
 
 if __name__ == '__main__':
     unittest.main()
