@@ -8,7 +8,7 @@ import logging
 import re
 import statistics
 import time
-from datetime import datetime
+from datetime import datetime, UTC
 from pprint import pprint
 
 from google.api_core.exceptions import InvalidArgument
@@ -87,7 +87,7 @@ def execute_single_job(datastore_client, job, entity_kind):
     key = datastore_client.key(entity_kind, job["url"])
     entity = datastore.Entity(key=key)
     record = {
-        'created': datetime.utcnow(),
+        'created': datetime.now(UTC),
         'meta': result['meta'],
         'checks': result['checks'],
         'rating': result['rating'],

@@ -5,7 +5,7 @@ Spider-Warteschlange abzuarbeiten.
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, UTC
 from datetime import timezone
 import time
 import logging
@@ -103,7 +103,7 @@ def run(job):
     }
 
     # wait for finish
-    start = datetime.utcnow()
+    start = datetime.now(UTC)
     while True:
         time.sleep(1)
 
@@ -145,7 +145,7 @@ def run(job):
                 # This means we didn't get proper stats
                 pass
             
-            runtime = (datetime.utcnow() - start).seconds
+            runtime = (datetime.now(UTC) - start).seconds
             results['duration_seconds'] = round(runtime)
 
             #if c.status != "running":
