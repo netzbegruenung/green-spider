@@ -35,7 +35,7 @@ protobuf==5.29.6
 pyasn1==0.6.2
 pyasn1_modules==0.4.1
 pycparser==2.22
-pyOpenSSL==25.0.0
+pyOpenSSL==26.0.0
 python-dateutil==2.9.0.post0
 pytz==2024.2
 PyYAML==6.0.3
