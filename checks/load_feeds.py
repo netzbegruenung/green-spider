@@ -2,8 +2,8 @@
 Loads feeds linked from pages and collects information on the contained content
 """
 
+import calendar
 import logging
-from time import mktime
 from datetime import datetime
 from datetime import timezone
 
@@ -98,12 +98,12 @@ class Checker(AbstractChecker):
             published_parsed = entry.get('published_parsed')
             if published_parsed is None:
                 return
-            timestamp = mktime(published_parsed)
+            timestamp = calendar.timegm(published_parsed)
             if max_date is None or timestamp > max_date:
                 max_date = timestamp
-        
+
         if max_date is not None:
-            return datetime.fromtimestamp(max_date).replace(tzinfo=timezone.utc)
+            return datetime.fromtimestamp(max_date, tz=timezone.utc)
 
 
     def find_first_entry(self, entries):
@@ -113,9 +113,9 @@ class Checker(AbstractChecker):
             published_parsed = entry.get('published_parsed')
             if published_parsed is None:
                 return
-            timestamp = mktime(published_parsed)
+            timestamp = calendar.timegm(published_parsed)
             if min_date is None or timestamp < min_date:
                 min_date = timestamp
-        
+
         if min_date is not None:
-            return datetime.fromtimestamp(min_date).replace(tzinfo=timezone.utc)
+            return datetime.fromtimestamp(min_date, tz=timezone.utc)
