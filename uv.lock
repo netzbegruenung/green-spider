@@ -295,15 +295,15 @@ wheels = [
 
 [[package]]
 name = "google-cloud-core"
-version = "2.4.1"
+version = "2.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
     { name = "google-auth" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b8/1f/9d1e0ba6919668608570418a9a51e47070ac15aeff64261fb092d8be94c0/google-cloud-core-2.4.1.tar.gz", hash = "sha256:9b7749272a812bde58fff28868d0c5e2f585b82f37e09a1f6ed2d4d10f134073", size = 35587, upload-time = "2023-12-07T21:12:32.127Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a8/dd/1eef226e470369b26824a505c34482c0b493bc35fe8e0c6b003b5feca21a/google_cloud_core-2.6.0.tar.gz", hash = "sha256:e76149739f90fac1fc6757c09f47eaccb3145b54adbd7759b0f7c4b235f46c83", size = 36001, upload-time = "2026-05-07T08:04:04.124Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5e/0f/2e2061e3fbcb9d535d5da3f58cc8de4947df1786fe6a1355960feb05a681/google_cloud_core-2.4.1-py2.py3-none-any.whl", hash = "sha256:a9e6a4422b9ac5c29f79a0ede9485473338e2ce78d91f2370c01e730eab22e61", size = 29233, upload-time = "2023-12-07T21:12:29.894Z" },
+    { url = "https://files.pythonhosted.org/packages/84/4a/98da8930ab109c73d9a5d13782a9ebb81ea8c111f6d534a567b71d23e52b/google_cloud_core-2.6.0-py3-none-any.whl", hash = "sha256:6d63ac8e5eca6d9e4319d0a1e2265fadcd7f1049904378caecfa01cf52dd869e", size = 29390, upload-time = "2026-05-07T08:02:34.672Z" },
 ]
 
 [[package]]
@@ -468,7 +468,7 @@ requires-dist = [
     { name = "gitpython", specifier = "==3.1.44" },
     { name = "google-api-core", specifier = "==2.23.0" },
     { name = "google-auth", specifier = "==2.38.0" },
-    { name = "google-cloud-core", specifier = "==2.4.1" },
+    { name = "google-cloud-core", specifier = "==2.6.0" },
     { name = "google-cloud-datastore", specifier = "==2.20.2" },
     { name = "google-cloud-storage", specifier = "==2.18.2" },
     { name = "google-crc32c", specifier = "==1.7.1" },
