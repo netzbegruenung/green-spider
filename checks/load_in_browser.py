@@ -50,26 +50,27 @@ class Checker(AbstractChecker):
         # Our selenium user agent using Chrome headless as an engine
         chrome_options = webdriver.ChromeOptions()
         chrome_options.binary_location = '/usr/bin/chromium'
-        chrome_options.add_argument('enable-automation')
-        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--enable-automation')
+        chrome_options.add_argument('--headless=new')
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--dns-prefetch-disable')
         chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-component-extensions-with-background-pages')
+        chrome_options.add_argument('--disable-default-apps')
+        chrome_options.add_argument('--hide-scrollbars')
         chrome_options.add_argument('--disk-cache-size=0')
+        chrome_options.add_argument('--no-default-browser-check')
+        chrome_options.add_argument('--no-first-run')
         chrome_options.add_argument('--disable-dev-shm-usage')
+        # Suppress the Chrome 127+ EU search-engine-choice modal that would
+        # otherwise block navigation on a fresh profile.
+        chrome_options.add_argument('--disable-search-engine-choice-screen')
         chrome_options.add_argument('--verbose')
         chrome_options.page_load_strategy = 'normal'
 
         # path where to get cookies from
         chrome_options.add_argument("--user-data-dir=/opt/chrome-userdir")
-
-        # mobile_emulation = {
-        #     "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
-        #     "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
-        # }
-        #mobile_emulation = { "deviceName": "Nexus 5" }
-        #chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 
         # empty /opt/chrome-userdir
         shutil.rmtree('/opt/chrome-userdir', ignore_errors=True)
