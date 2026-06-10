@@ -4,14 +4,24 @@ DB_ENTITY := spider-results
 
 VERSION = $(shell git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
 
-.PHONY: dockerimage spider export dryrun test
+.PHONY: dockerimage dockerimage-nocache dockerimage-multiarch spider export dryrun test
 
-# Build docker image
+# Build docker image for the host architecture (loadable into the local Docker daemon).
 dockerimage: VERSION
 	docker build --progress plain -t $(IMAGE) .
 
 dockerimage-nocache: VERSION
 	docker build --progress plain --no-cache -t $(IMAGE) .
+
+# Build and push a multi-arch (amd64 + arm64) image.
+# Multi-platform output cannot be loaded into the local Docker daemon, so this
+# target pushes directly to the registry. Requires a logged-in registry
+# (docker login ghcr.io) and a docker-container buildx builder
+# (docker buildx create --use).
+dockerimage-multiarch: VERSION
+	docker buildx build --progress plain \
+		--platform linux/amd64,linux/arm64 \
+		--push -t $(IMAGE) .
 
 
 # Fill the queue with spider jobs, one for each site.
