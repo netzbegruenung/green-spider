@@ -34,7 +34,7 @@ dependencies = [
     "httpretty==1.1.4",
     "idna==3.18",
     "kubernetes==35.0.0",
-    "lxml==6.1.0",
+    "lxml==6.1.1",
     "oauthlib==3.3.1",
     "proto-plus==1.28.0",
     "protobuf==5.29.6",
