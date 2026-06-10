@@ -29,7 +29,7 @@ dependencies = [
     "google-crc32c==1.8.0",
     "google-resumable-media==2.9.0",
     "googleapis-common-protos==1.75.0",
-    "grpcio==1.80.0",
+    "grpcio==1.81.0",
     "grpcio-status==1.71.2",
     "httpretty==1.1.4",
     "idna==3.18",
