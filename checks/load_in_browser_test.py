@@ -20,7 +20,10 @@ class TestLoadInBrowser(unittest.TestCase):
         self.assertIn('min_document_width', result[url])
         self.assertIn('sizes', result[url])
 
-        self.assertTrue(result[url]['min_document_width'] < 360)
+        # A page that reflows to fit a 360px-wide viewport reports a document
+        # width of exactly 360 (it fills the viewport without overflowing), so
+        # "fits" means <= 360, not < 360.
+        self.assertLessEqual(result[url]['min_document_width'], 360)
         self.assertEqual(result[url]['cookies'], [])
         self.assertEqual(len(result[url]['logs']), 1) # one log entry regarding favicon.ico is expected
         self.assertEqual(result[url]['font_families'], ['"times new roman"'])
