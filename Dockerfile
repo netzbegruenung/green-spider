@@ -2,7 +2,7 @@ FROM alpine:3.23@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a50
 
 # Find an eligible version at
 # https://dl-cdn.alpinelinux.org/alpine/v3.23/community/x86_64/
-ARG CHROMIUM_VERSION=147.0.7727.116-r0
+ARG CHROMIUM_VERSION=149.0.7827.53-r0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.23/community" >> /etc/apk/repositories && \
     apk --update --no-cache add ca-certificates \
