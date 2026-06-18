@@ -46,7 +46,7 @@ dependencies = [
     "pytz==2026.2",
     "PyYAML==6.0.3",
     "redis==7.4.0",
-    "requests==2.33.1",
+    "requests==2.34.2",
     "requests-oauthlib==2.0.0",
     "responses==0.26.1",
     "rq==2.9.1",
